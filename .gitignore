@@ -1,0 +1,14 @@
+.idea
+nbproject
+
+MyProject/data/backup/*.sql
+
+MyProject/config/local.php
+
+
+
+
+
+
+
+
