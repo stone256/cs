@@ -17,7 +17,7 @@ define('_XP_MYSQL_LOG', false);
 
 
 
-$config['DATABASE']['a'] = array( //for testing database
+$config['default']['db'] = array( //for testing database
 'host'=>'localhost',
 'database'=>'xs_cs',
 'user'=>'xs',
@@ -25,7 +25,7 @@ $config['DATABASE']['a'] = array( //for testing database
 
 );
 
-$cfg = ['db' => $config['DATABASE']['a']];
+$cfg = ['db' => $config['default']['db']];
 
 //change with care
 define('_X_SERVER_KEY', 'mSpPzv8GyiJM9yb84YxMImlFmxoUGKmf4rDSFgsfGsdfGdsfesgvXB+UCrM5sTYZ26DSl5ADx39aErqzCa');
