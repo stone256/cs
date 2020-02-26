@@ -6,7 +6,12 @@
  * project cli enter point
  *  e.g. $php x2cli.php /mytest/show/info
  */
-include "config/x2cli.php";
+
+ // DIRECTORY_SEPARATOR
+ if(!defined('DS')) define('DS', '/');
+ if(!defined('PHP_EOL')) define('PHP_EOL', "\n");
+
+include 'code' . DS . 'config' . DS . 'x2cli.php';
 
 define('_X_CLI_CALL', true);
 
@@ -17,4 +22,4 @@ parse_str(implode('&', array_slice($argv, 2)), $_REQUEST);
 $_SERVER['REQUEST_TIME'] = time();
 $_SERVER['REQUEST_TIME_FLOAT'] = microtime(true);
 
-include "public/index.php";
+include "index.php";

@@ -1,0 +1,25 @@
+<?php
+
+
+
+ ?>
+<?php $page_title = $rs['TITLE']; ?>
+<?php include _X_LAYOUT . DS . 'sitemin' . DS . 'header.phtml'; ?>
+<?php include _X_LAYOUT . DS . 'sitemin' . DS . 'nav.phtml'; ?>
+<!--  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">  -->
+<!-- <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">  -->
+<div class="sitemin-content-wrapper ">
+    <div class="container-fluid">
+
+
+    	<?php
+                $pattern = '/^\\' .DS . '/';
+    		$path =  preg_match($pattern , $rs['tpl']) ? _X_MODULE : '';
+
+    		include $path . $rs['tpl'];
+    	?>
+
+    </div>
+</div>
+
+<?php include _X_LAYOUT . '/sitemin/footer.phtml'; ?>

@@ -1,0 +1,6 @@
+<?php
+
+
+$modules["testing"] = "/testing";
+
+

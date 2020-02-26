@@ -40,8 +40,11 @@ RewriteRule ^package/ - [L]
 #RewriteRule ^pma/ - [L]
 
 
+
 # everything to index.php ecxept those ..
 RewriteRule .*\.(swf|flv|mov|xml|mxml|css|js|jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF|doc|DOC|docx|DOCX|pdf|PDF|html|HTML|xls|XLS|xlsx|XLSX|ico|rot|ttf|svg|woff|woff2)$ - [L]
+#all stuff under public
+RewriteRule ^public\/.*$ - [L]
 
 #follow may not work for some v-host
 #RewriteCond %{QUERY_STRING}  ^(.*)$
