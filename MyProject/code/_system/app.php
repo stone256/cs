@@ -11,7 +11,7 @@
 //load  config and setting (global and *local)
 
 //load system config
-require_once (_X_CODE . DS .'config' . DS . '.system.php');
+require_once ('config.php');
 //load framework global config
 require_once (_X_CONFIG . DS . 'general.php');
 

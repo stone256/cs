@@ -19,7 +19,7 @@ define('_X_MODULE_ENABLED', _X_CONFIG . DS.'enabled');
 define('_X_MODEL_OVERWRITE', _X_CONFIG . DS.'overwrite');
 
 define('_X_MODULE', _X_CODE .DS. 'module');
-define('_X_PACKAGE', _X_CODE . DS.'_package');
+define('_X_PACKAGE', _X_CODE . DS.'package');
 define('_X_PACKAGE_LIB', _X_PACKAGE . DS.'_lib');
 define('_X_PACKAGE_VENDOR', _X_PACKAGE .DS. '_vendor');
 define('_X_DATA', _X_ROOT . DS.'data');
