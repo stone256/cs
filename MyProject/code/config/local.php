@@ -28,8 +28,8 @@ $config['DATABASE']['a'] = array( //for testing database
 $cfg = ['db' => $config['DATABASE']['a']];
 
 //change with care
-define(_X_SERVER_KEY, 'mSpPzv8GyiJM9yb84YxMImlFmxoUGKmf4rDSFgsfGsdfGdsfesgvXB+UCrM5sTYZ26DSl5ADx39aErqzCa');
-define(_API_SALT, 'aSDfaW34Aw3er@Q#QRe3FQ#4rF0V1bYXBzc5TC9aErzCqRfQWRw432qrASrwerqwerq23r23afwE');
+define('_X_SERVER_KEY', 'mSpPzv8GyiJM9yb84YxMImlFmxoUGKmf4rDSFgsfGsdfGdsfesgvXB+UCrM5sTYZ26DSl5ADx39aErqzCa');
+define('_API_SALT', 'aSDfaW34Aw3er@Q#QRe3FQ#4rF0V1bYXBzc5TC9aErzCqRfQWRw432qrASrwerqwerq23r23afwE');
 
 //ini_set('memory_limit', '256M');
 

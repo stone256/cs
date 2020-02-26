@@ -7,13 +7,13 @@
  * framework x application class
  *
  */
- //error_reporting(E_ALL);
 //load  config and setting (global and *local)
 
 //load system config
 require_once (_X_CODE . DS .'config' . DS . '.system.php');
 //load framework global config
 require_once (_X_CONFIG . DS . 'general.php');
+error_reporting(E_ALL);
 
 //loading local setting
 include _X_CONFIG . DS . 'local.php';
@@ -41,26 +41,34 @@ class app {
 
 	static $models = array();
 	function __construct() {
+
 		$this->helper = new defaultHelper();
 		//load routers
 		//1>system routers (only routers are inclued in system routers)
 		global $routers, $modules;
 		$this->routers = (array)$routers;
+
+
 		//load customer routers, looking into each enabled modules for router.php
+			_d($modules);
 		foreach ($modules as $km => $vm) {
 			$routers=array();
 			//load router.php
 			$router_file = _X_MODULE . $vm . DS .'.router.php';
 			if (file_exists($router_file)) {
+				_d($vm);
 				include_once ($router_file);
 				$this->routers += (array)$routers;
 			}
+
 			//load modules update scritps, if any
 			$us = glob(_X_MODULE . $vm. DS .'.setup.*.php');
 			sort($us);
 			$this->update_scripts = $this->update_scripts + $us;
 		}
+		_d($modules, 1);
 		$routers = $this->routers;
+
 	}
 
 	function at_404($v){
@@ -83,7 +91,6 @@ class app {
 		$router = $this->find_controller(self::$_url, self::$_mapper);
 		//additional params
 		$_REQUEST = xpAS::merge($router['query'], $_REQUEST);
-
 
 
 		self::$_controller = $router['controller'];
