@@ -101,4 +101,4 @@ $routers=[
 
 
 //first time will start install screen
-#include "installer.php";
+include "installer.php";

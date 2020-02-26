@@ -20,7 +20,6 @@ define('_X_CODE', _X_ROOT . DS .'code');
 //load framework
 require_once(_X_CODE . DS . '_system' . DS . 'app.php');
 
-
 //_ud(1);
 //init framework
 $app= new app();
