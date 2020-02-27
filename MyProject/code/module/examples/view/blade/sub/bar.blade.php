@@ -5,7 +5,7 @@
 <h4>Bar header</h4>
 
 <ul>
-	<li><?php echo 'You can use standard php line';?></li>
+	<li><?php echo 'You can use standard php line'; ?></li>
 	<li>Or passed var $controller={{$controller}}</li>
 	<li>aaaaaaaaaaaaaaaaaaaaaaaaaa</li>
 </ul>

@@ -10,8 +10,9 @@ var common ={
 			common.mask.on = true;
 			var w=$(window).width();
 			var h1=$(window).height();
-			var h2=$(document).height();
-			var h = Math.max(h1, h2);
+			//var h2=$(document).height();
+			//var h = Math.max(h1, h2);
+			var h = h1;
 			var loader = con ? '' : '<div style="margin-top:'+(h/2)+'px;margin-left:'+(w/2-16)+'px" class="loader"></div>' ;
 			var opacity = con ? "1" : "0.7"
 			var msg = con ? '<b class="blinking" style="line-height:4px;font-weight:400;color:#fff"><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>'+(con || '')+'</b>' : '';

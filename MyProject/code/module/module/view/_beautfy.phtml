@@ -63,13 +63,17 @@ var aa=0;
 
 function beautify(){
 
-	if(!$('#sixthTable input:checked')) return;
+	if(!$('#sixthTable input:checked').length){
+		return common.mask.down();
+
+	}
 
 
 	var e = $('#sixthTable input:checked')[0];
 	$(e).prop( "checked", false );
 	if($(e).hasClass('final')){
 		var file = $(e).val().replace(/^\s+\d+\s+.*?\s+/g,'');
+		common.mask.down();
 		common.mask.up();
 		$.ajax({
 			url: "<?=_r_url();?>/?cmd=apply&v="+file,
@@ -78,7 +82,11 @@ function beautify(){
 			success: function(data) {
 				$('.status').append("<p >"+data.replace('<?=_X_ROOT;?>', '')+"</p>");
 				setTimeout(function(){ beautify(); }, 1);
-				common.mask.down();
+				var t = $('.status').offset().top
+				var h = $('.status').height()
+				var wh = $(window).height();
+				if((h+t) > wh) window.scrollTo(0, h-t);
+
 			}
 		});
 	}else{

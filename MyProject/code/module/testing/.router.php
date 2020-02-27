@@ -8,10 +8,5 @@
  * 	 3> custom router always overwrites defaultone
  */
 $routers = array(
-//testing   
-'/testing' => '/testing/index@index',
-
-'/testing/myip' => '/testing/index@myip',
-
-
-);
+//testing
+'/testing' => '/testing/index@index', '/testing/myip' => '/testing/index@myip',);
