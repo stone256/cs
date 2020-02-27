@@ -1,0 +1,89 @@
+<?php
+
+
+?>
+
+
+<?php include _X_LAYOUT . '/sitemin/include_vue.phtml'; ?>
+
+<script>
+var _token='<?=$rs['_token'];?>';
+</script>
+
+<div class="container-fluid" id="sixthTable">
+	<div class="container">
+
+			<h3 class="text-uppercase mt-5">PHP Code Beautfy</h3>
+
+	</div>
+	<div class="row">
+		<div class="col-md-5">
+			<div class="CODE status"></div>
+		</div>
+		<div class="col-md-7">
+			<?php if(!$rs['beautifier']):?>
+				<div class="alert alert-Warning">
+				<strong>Missing command line "PHP_Beautifier"!</strong> run "pear install PHP_Beautifier" ,  click <a href="https://pear.php.net/package/PHP_Beautifier" target="_blank" class="alert-link">here</a> for more info.
+				</div>
+			<?php else:?>
+				<div>
+					<button type="button" class="btn btn-primary" onclick="beautify()">Apply Now</button>
+				</div>
+			<?php endif;?>
+			<p><?=$rs['tree'];?></p>
+
+		</div>
+	</div>
+
+</div>
+<script>
+var aa=0;
+(function(){
+	//apply to php only
+	$('.xp-tree-file .name').each(function(){
+		var name = $(this).html();
+		if(!name.match(/\.php$/ig))
+			$(this).parent().parent().parent().remove();
+		$(this).attr('data-path', name).html(name.replace(/\s+[\/].*[\/]/ig, ''))
+		$(this).prev().val(name)
+
+	})
+	$('#sixthTable ul').each(function(){
+		if($(this).find('.xp-tree-file').length==0)
+			$(this).remove();
+	})
+	$('#sixthTable li.xp-tree-dir').each(function(){
+		if($(this).next().find('.xp-tree-file').length==0)
+			$(this).remove();
+			//console.log($(this).css({border:"3px red solid"}));
+	})
+})()
+
+
+
+function beautify(){
+
+	if(!$('#sixthTable input:checked')) return;
+
+
+	var e = $('#sixthTable input:checked')[0];
+	$(e).prop( "checked", false );
+	if($(e).hasClass('final')){
+		var file = $(e).val().replace(/^\s+\d+\s+.*?\s+/g,'');
+		common.mask.up();
+		$.ajax({
+			url: "<?=_r_url();?>/?cmd=apply&v="+file,
+			//dataType: 'json',
+			//data: $(e.form).serialize(),
+			success: function(data) {
+				$('.status').append("<p >"+data.replace('<?=_X_ROOT;?>', '')+"</p>");
+				setTimeout(function(){ beautify(); }, 1);
+				common.mask.down();
+			}
+		});
+	}else{
+		setTimeout(function(){ beautify(); }, 1);
+	}
+}
+</script>
+<hr>

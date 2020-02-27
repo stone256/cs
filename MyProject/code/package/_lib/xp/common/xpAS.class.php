@@ -9,8 +9,8 @@
  *  and some extend function
  */
 class xpAS {
-	
-	
+
+
 	/**
 	 * switch between https and http request
 	 *
@@ -64,7 +64,7 @@ class xpAS {
 		return (int)$r;
 	}
 	/**
-	 * create hash code string from array 
+	 * create hash code string from array
 	 *
 	 * @param array $arr
 	 * @param string $key
@@ -221,8 +221,8 @@ class xpAS {
 		return $brr;
 	}
 	/**
-	 * change array from 
-	 * 	array(a=>array(1,2,3), b=>array(b1,b2,b3)....)  
+	 * change array from
+	 * 	array(a=>array(1,2,3), b=>array(b1,b2,b3)....)
 	 * to
 	 * 	array(array(a=>1,b=>b1 ..), array(a=>2,b=>b2 ..), array(a=>3,b=>b3 ..))
 	 *
@@ -237,7 +237,7 @@ class xpAS {
 			}
 		}
 		return $arr;
-	}	
+	}
 	/**
 	 * change back flaten tree from database;
 	 *	note orphan child will be omitted
@@ -283,15 +283,15 @@ class xpAS {
 	 * 		array(a=>10, b=>20),
 	 * 		array(a=>11, b=>90),
 	 * 		)
-	 * 
+	 *
 	 * 	$k = array(age=>a, point=>b)
-	 * => 
+	 * =>
 	 *	$arr =	array(
 	 * 		array(age=>10, point=>20),
 	 * 		array(age=>11, point=>90),
 	 * 		)
-	 * 
-	 * 
+	 *
+	 *
 	 * @param array  $arr
 	 * @param array $map_name
 	 * @return array
@@ -320,7 +320,7 @@ class xpAS {
 		list($k, $v) = each($crr);
 		return $v;
 	}
-	/** @ php5 : 
+	/** @ php5 :
 	 *	  1> if one of it is null, it return wrong
 	 *	  2> it not retain the key value if the key is number
 	 *    3> lose key index if key is number
@@ -336,7 +336,7 @@ class xpAS {
 		foreach ($arr as $k => $v) $crr[$k] = $v;
 		foreach ($brr as $k => $v)  if($onduplicated && isset($crr[$k])) {  $crr[$onduplicated.'_'.$k] = $v; }else{$crr[$k] = $v; }
 		return $crr;
-	}	
+	}
 	/**
 	 * merge to default setting
 	 *
@@ -540,7 +540,7 @@ class xpAS {
 		foreach ($names as $k => $v) if (isset($arr[$v])) $brr[$v] = $arr[$v];
 		return $brr;
 	}
-	
+
 	/**
 	 * set key to array, use a column as key
 	 *
@@ -556,7 +556,7 @@ class xpAS {
 		}
 		return $brr;
 	}
-	
+
 	/**
 	 * set key to array, use a column as key
 	 *
@@ -679,7 +679,7 @@ class xpAS {
 		}
 		return null;
 	}
-	
+
 	function value_search($arr, $value, $level = 50, $current = 0){
 		if ($current == $level || !is_array($arr)) return null; //hit max level
 		$search = '/'.preg_quote($value).'/ims';
@@ -689,13 +689,13 @@ class xpAS {
 		}
 		foreach($arr as $k=>$v){
 			if (!is_array($v) && preg_match($search, $v)) return $arr;
-			if (is_array($v) && ($m = self::value_search($v, $value, $level, $current + 1))) if($array) $brr[$k] = $m; else  return $arr; 
+			if (is_array($v) && ($m = self::value_search($v, $value, $level, $current + 1))) if($array) $brr[$k] = $m; else  return $arr;
 		}
 		return $brr;
 	}
-	
+
 	/**
-	 * locate position in multi-dimension array , return key e.g.locate(products, postcode, 2000) => "2,address,1" 
+	 * locate position in multi-dimension array , return key e.g.locate(products, postcode, 2000) => "2,address,1"
 	 *
 	 * @param array $arr		: searched object
 	 * @param string $field 	: field name
@@ -751,7 +751,7 @@ class xpAS {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * get all values with key in m-array regardless what levels they are
 	 *
@@ -825,8 +825,8 @@ class xpAS {
 			}
 		}
 	}
-	
-	
+
+
 	/**
 	 * pack multi-dimensional array to one level with flat key e.g. ['ab,cd']
 	 *
@@ -836,25 +836,25 @@ class xpAS {
 	 * @param int $current	: do not set
 	 * @return mix
 	 */
-	function pack($arr, $return=false, $level = 50, $current = 0){ 
+	function pack($arr, $return=false, $level = 50, $current = 0){
 		if ($level == $current) return array('max-depth'=>json_encode($arr));
 		if(!is_array($arr)) return $arr;
-			
+
 		$brr = array();
 		foreach ($arr as $k=>$v){
 			if(!is_array($v)) $brr[$k] = $v;
 			else foreach (self::pack($v, $flat, $level, $current + 1) as $ks=>$vs) $brr["$k,$ks"] = $vs;
 		}
-		
+
 		switch ($return){
 			case 'key' : return array_keys($brr);
 			case 'value' : return array_values($brr);
 			default: /*return $brr*/;
 		}
 		return $brr;
-		
+
 	}
-	
+
 	/**
 	 * clear a key in multi - demansion
 	 * @param array $arr	: array;
@@ -1069,7 +1069,7 @@ class xpAS {
 		return $a;
 	}
 	/**
-	 * escape string 
+	 * escape string
 	 *
 	 * @param mix $a
 	 * @param int $level		: max recurring level
@@ -1178,7 +1178,7 @@ class xpAS {
 		$a = $descent ? krsort($arr) : ksort($arr);
 		$arr = self::cuts($arr, $temp_key);
 		return array_values($arr);
-	
+
 	}
 	/**
 	 * multi-dimension array sort on any level key	*,*,*,key1
@@ -1187,7 +1187,7 @@ class xpAS {
 	 * @param string/int $keys	: keys : "*,f,*,key"
 	 * @param boolean  $descent	: sort by ascent(default) or descent
 	 * @return array
-	 */	
+	 */
 	function sort($arr, $keys, $descent = false) {
 		$_REQUEST['_xpAS_sort'] = array('key' => $keys, 'descent' => $descent);
 		function cmp($a, $b) {
@@ -1325,7 +1325,7 @@ class xpAS {
 		}
 		return $str;
 	}
-	
+
 	/**
 	 * cancel the null elements
 	 * 	mostly for amfphp zamf to convert flex object
@@ -1345,9 +1345,9 @@ class xpAS {
 		}
 		return $arr;
 	}
-	
+
 	/**
-	 * check is wildcarded string 
+	 * check is wildcarded string
 	 *
 	 * @param string $str
 	 * @return string
@@ -1355,7 +1355,7 @@ class xpAS {
 	function is_wildcard($str) {
 		return preg_match('/(?<![\\\])[\?|\*]/', $str);
 	}
-	
+
 
 	/**
 	 * brief of info
@@ -1411,7 +1411,7 @@ class xpAS {
 			$d = func_get_arg($i);
 			if (trim($d) !== '' && $d !== null) return $d;
 			//if(isset($d)) return $d;
-			
+
 		}
 		return null;
 	}
@@ -1483,7 +1483,7 @@ class xpAS {
 		}
 		if (($i = strpos($str, $ptn)) === false) return false;
 		return ($after ? $ptn : '') . substr($str, $i); //+($after?-strlen($ptn):0));
-		
+
 	}
 	/**
 	 * read til anchor
@@ -1506,7 +1506,7 @@ class xpAS {
 		if (($i = strpos($str, $ptn)) === false) return false;
 		return substr($str, 0, $i) . ($after ? $ptn : '');
 	}
-	
+
 	/**
 	 * msak out credit card number for safe display
 	 *
@@ -1522,7 +1522,7 @@ class xpAS {
 		//return $pattern;
 		return preg_replace($pattern, '$1' . $stars . '$3', $str);
 	}
-	
+
 	/**
 	 * change string to hex string, for safe encode string during transport.
 	 *
@@ -1537,8 +1537,8 @@ class xpAS {
 		}
 		return $hex;
 	}
-	
-	
+
+
 	/**
 	 * change hex to string. this is mostly to reverse str2hex
 	 *
@@ -1552,7 +1552,7 @@ class xpAS {
 		}
 		return $string;
 	}
-	
+
 	/**
 	 * break long string (for table td)
 	 *
@@ -1703,7 +1703,7 @@ class xpAS {
 				if (isset($attributes)) {
 					foreach ($attributes as $attr => $val) {
 						if ($get_attributes == 1) $result[$attr] = $val; //Set all the attributes in a array called 'attr'
-						
+
 						/**  :TODO: should we change the key name to '_attr'? Someone may use the tagname 'attr'. Same goes for 'value' too */
 					}
 				}
@@ -1734,10 +1734,10 @@ class xpAS {
 					if ((is_array($current[$tag]) and $get_attributes == 0) //If it is already an array...
 					 or (isset($current[$tag][0]) and is_array($current[$tag][0]) and $get_attributes == 1)) {
 						array_push($current[$tag], $result); // ...push the new element into that array.
-						
+
 					} else { //If it is not an array...
 						$current[$tag] = array($current[$tag], $result); //...Make it an array using using the existing value and the new value
-						
+
 					}
 				}
 			} elseif ($type == 'close') { //End of tag '</tag>'
@@ -1795,7 +1795,7 @@ class xpAS {
 		return $vars;
 	}
 	/**
-	 * convert array to class objetc for some stupid software 
+	 * convert array to class objetc for some stupid software
 	 *
 	 * @param array $arr
 	 * @return object
@@ -1866,52 +1866,52 @@ class xpAS {
 		$myid = $id . '_tree_block';
 		$con.= ($level ? '' : '<ul style="padding:0;margin:0;">');
 		if (is_array($x) || is_object($x)) {
-			$con.= "<li style=\"border-bottom:dotted 1px #eee;\"><input value='1' type=\"checkbox\" name=\"tree[$path]\" onclick=\"tree_with_tick_dir(this,'$id')\"style=\"float:left;\"/> <a href=\"javascript:void(0)\" onclick=\"xp_tree_with_tick_expend(this,'$id');\"><span class=\"symbol\"><b>" . ($level >= $close ? "+" : "-") . "</b>" . $name . "</span></a> <span> &rarr;</li><li id=\"$id\" style=\"display:" . ($level >= $close ? "none" : "") . "\"><ul >";
+			$con.= "<li class=\"xp-tree-dir\" style=\"border-bottom:dotted 1px #eee;\"><input value=\"1\" type=\"checkbox\" name=\"tree[$path]\" onclick=\"xp_tree_with_tick_dir(this,'$id')\"style=\"float:left;\"/> <a href=\"javascript:void(0)\" onclick=\"xp_tree_with_tick_expend(this,'$id');\"><span class=\"symbol\"><b>" . ($level >= $close ? "+" : "-") . "</b><span class=\"name\">" . $name . "</span></span></a> <span> &rarr;</li><li id=\"$id\" style=\"display:" . ($level >= $close  ? "none" : "") . "\"><ul >";
 			foreach ($x as $k => $v) $con.= self::tree_with_tick($v, $k, $close, $deep, $level + 1, $path . ",$k");
 			$con.= "</ul></li>";
 		} else {
-			$con.= "<li id=\"$id\"><div><div style=\"float:left;margin-right:12px;\"><input value='1' type=\"checkbox\" name=\"tree[$path]\" onclick=\"\" style=\"float:left;\"> <span> $name &rarr; " . implode('<br>', self::clean(explode('*#', str_replace('*#', '*#&bull; ', $x)))) . "</span></div><div style=\"clear:both;\" ></div></div></li>";
+			$con.= "<li id=\"$id\" class=\"xp-tree-file\"><div><div style=\"float:left;margin-right:12px;\"><input value=\"1\" class=\"final\" type=\"checkbox\" name=\"tree[$path]\" onclick=\"\" style=\"float:left;\"> <span class=\"name\"> $name &rarr; " . implode('<br>', self::clean(explode('*#', str_replace('*#', '*#&bull; ', $x)))) . "</span></div><div style=\"clear:both;\" ></div></div></li>";
 		}
 		$con.= $level ? '' : '</ul>';
 		//			if(!$level) $con = ""
 		//					   .$con;
 		if (!$level) {
-?>
+			$cs = '
 			<style type="text/css">
 				/*
-				b{margin:0 3px 0 0;} 
-				.bbb{color:#ddd;font-size:0.6em;} 
-				sup,sub{color:#bbb; font-size:0.6em;} 
-				sub{ margin-left:-5px;} 
+				b{margin:0 3px 0 0;}
+				.bbb{color:#ddd;font-size:0.6em;}
+				sup,sub{color:#bbb; font-size:0.6em;}
+				sub{ margin-left:-5px;}
 				*/
-				.symbol{height:0.8em;font-size:0.8em;padding:0 3px 0 10px;margin: 0 3px; background:#fff0b0;border:#eee solid 1px;border-right:#ddd solid 2px;border-bottom:#ddd solid 2px;} 
-				ul {font-family: courier new;margin-left:40px;padding-top:0;display:block;list-style-type:none;} 
-				li{margin:7px 0;} a{text-decoration:none;}			
-			</style>			
+				.symbol{height:0.8em;font-size:0.8em;padding:0 3px 0 10px;margin: 0 3px; background:#fff0b0;border:#eee solid 1px;border-right:#ddd solid 2px;border-bottom:#ddd solid 2px;}
+				ul {font-family: courier new;margin-left:40px;padding-top:0;display:block;list-style-type:none;}
+				li{margin:7px 0;} a{text-decoration:none;}
+			</style>
 			<script type="text/javascript">
 				function xp_tree_with_tick_dir(t,id){
 					var e=document.getElementById(id);
-					var ip = e.getElementsByTagName('input');
+					var ip = e.getElementsByTagName("input");
 					for(var i=0,l=ip.length;i<l; i++){
 						ip[i].checked=t.checked;
 					}
 				}
 
 				function xp_tree_with_tick_expend(t,id){
-					t.blur(); 
+					t.blur();
 					var e=document.getElementById(id);
-					var d=e.style.display; 
+					var d=e.style.display;
 					if(d){
-						e.style.display='';
-						this.childNodes[0].childNodes[0].innerHTML='-';
+						e.style.display="";
+						t.childNodes[0].childNodes[0].innerHTML="-";
 					}else{
-						e.style.display='none';
-						this.childNodes[0].childNodes[0].innerHTML='+';
-					}	
+						e.style.display="none";
+						t.childNodes[0].childNodes[0].innerHTML="+";
+					}
 				}
 
-			</script>
-			<?php
+			</script>';
+			$con .= $cs;
 		}
 		return $con;
 	}
@@ -1931,9 +1931,9 @@ class xpAS {
 			$d = xpAS::preg_get($size,'/^([\d|\.]+)(.)*/',1);
 			$base = strtoupper($base);
 			if(($p = strpos($suffixes, $base))!==false){
-				$d = ceil($d*pow(1024,$p+1)); 
+				$d = ceil($d*pow(1024,$p+1));
 			}
-			return $d;			
+			return $d;
 		}
 	}
 	/**
@@ -1947,7 +1947,7 @@ class xpAS {
 		header("location:$location");
 		die();
 		exit; //stop script
-		
+
 	}
 	/**
 	 * redirect to url
@@ -1962,7 +1962,7 @@ class xpAS {
 	/**
 	 * get global variable
 	 *
-	 * @param string $part : which part of global var such as user_data, _SESSION 
+	 * @param string $part : which part of global var such as user_data, _SESSION
 	 * @return unknown
 	 */
 	function get_globals($part = null) {

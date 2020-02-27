@@ -29,14 +29,14 @@ class xpFile {
 		$name = preg_replace('/' . preg_quote("$on.$ext") . '$/', "$nn.$ext", $name);
 		return $name;
 	}
-	
+
 	/**
 	 * walk throught a array and apply function to each file
 	 *
 	 * @param string $directory
 	 * @param function  $func
 	 * @return
-	 */	
+	 */
 	function dir_walk($directory, $file_func = null, $dir_func = null, $max_level = 30, $level = 0) {
 		if ($level++ > $max_level) return;
 		if ($directory && substr($directory, -1, 1) != '/') $directory.= '/';
@@ -132,14 +132,14 @@ class xpFile {
 		foreach ($entry as $f) {
 			if ($f == '.') continue;
 			if ($f == '..') continue;
-			if (!is_dir($path . '/' . $f)) {
+			if (!is_dir($path . DS . $f)) {
 				$pp = str_replace($root, '', $path);
 				if ($detail) {
-					if ($flat) $files[$pp . DS . $f] = array('name' => $f, 'time' => filectime($path . DS . $f), 'size' => filesize($path . DS . $f));
-					else $files[] = array('name' => $f, 'time' => filectime($path . DS . $f), 'size' => filesize($path . DS . $f));
+					if ($flat) $files[$pp . DS . $f] = array('name' => $path. DS. $f, 'time' => filectime($path . DS . $f), 'size' => filesize($path . DS . $f));
+					else $files[] = array('name' => $path. DS. $f, 'time' => filectime($path . DS . $f), 'size' => filesize($path . DS . $f));
 				} else {
-					if ($flat) $files[$pp][$f] = $f;
-					else $files[] = $f;
+					if ($flat) $files[$pp][$f] = $path. DS. $f;
+					else $files[] = $path. DS. $f;
 				}
 			} else {
 				if ($flat) $files = xpAS::merge($files, self::dir_tree($path . DS . $f, $detail, $flat, $root));
@@ -148,7 +148,7 @@ class xpFile {
 		}
 		return $files;
 	}
-	
+
 	/**
 	 * get dir tree
 	 *
@@ -167,7 +167,7 @@ class xpFile {
 			if (is_dir($directory . $r)) {
 				$dirs[] = $r;
 				//$dirs[$r] = self::dir_array($directory.$r,$max_level,$level);
-				
+
 			} else {
 				$files[] = $r;
 			}
@@ -181,8 +181,8 @@ class xpFile {
 		}
 		$d->close();
 		return xpAS::merge($rs, $files);
-	}	
-	
+	}
+
 	function image_out($image, $type = 'jpg') {
 		if (is_string($image)) $image = self::image_get($image); //from a file
 		self::show($image, $type);
@@ -414,7 +414,7 @@ class xpFile {
 				//				$dy = max(0,($ny - $oy)/2);
 				//				$nw = $ow= $ox < $nx ? $ox : $nx;
 				//				$nh = $oh= $oy < $ny ? $oy : $ny;
-				
+
 			break;
 		}
 		$img = imagecreatetruecolor($nw, $nh);

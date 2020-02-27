@@ -3,16 +3,21 @@
 
 class module_model {
        function gets() {
+            $do_not_touch = ['module', 'sitemin'];       //not control here
 	    $enrr = $this->_enabled_modules();
 	    //all modules
 	    foreach(xpFile::file_in_dir(_X_MODULE, array('level'=>10, 'path'=>1)) as $k=>$v){
 		if(!preg_match('/\.router\.php$/ims', $v)) continue;
 		$path = str_replace(array(_X_MODULE.'/', '/.router.php'), array('', ''), $v);
-		$crr[] = array(
+		$arr = array(
 			'name'=> $enrr['/'.$path] ? $enrr['/'.$path] : str_replace('/', '-', $path),
 			'path'=> '/'.$path,
 			'enabled'=> $enrr['/'.$path] ? 'YES' : 'NO',
 		);
+                if(in_array($arr['name'], $do_not_touch)){
+                        $arr['enabled'] = 'Manual control!';
+                }
+                $crr[] = $arr;
 	    }
 	    return $crr;
        }
