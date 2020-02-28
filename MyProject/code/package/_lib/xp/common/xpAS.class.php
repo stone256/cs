@@ -1223,6 +1223,7 @@ class xpAS {
      * @return string
      */
     function path($str) {
+        return preg_replace('/(?<!:)\/\//', '/', $str . '/');
         return self::path_short(preg_replace('/(?<!:)\/\//', '/', $str . '/'));
     }
     /**
@@ -1920,9 +1921,9 @@ class xpAS {
      */
     function go($location) {
         //relative path;
-        if (!preg_match('/^https*\:\/\//i', $location) && ($location{0} != '/' && $_SERVER['REDIRECT_URL'])) $location = xpAS::path_short(xpAS::path($_SERVER['REDIRECT_URL']) . $location);
+        //if (!preg_match('/^https*\:\/\//i', $location) && ($location{0} != '/' && $_SERVER['REDIRECT_URL'])) $location = xpAS::path_short(xpAS::path($_SERVER['REDIRECT_URL']) . $location);
+        if (!preg_match('/^https*\:\/\//i', $location) && ($location{0} != '/' && $_SERVER['REDIRECT_URL'])) $location = xpAS::path($_SERVER['REDIRECT_URL']) . $location;
         header("location:$location");
-        die();
         exit; //stop script
         
     }

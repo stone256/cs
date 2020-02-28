@@ -277,7 +277,7 @@ function _factory() {
     //  return  $objects[$name] = call_user_func_array([ $name, '__construct'], $args[0]);
     
 }
-function _config($name) {
+function _config($name, $value=null) {
     static $cnf;
     if (!$cnf) {
         global $config;
@@ -296,7 +296,7 @@ function _r_url() {
     
 }
 function _rp($path) {
-    return str_replace(_X_ROOT, '', $path);
+    return str_replace(_X_ROOT, '', _WDF($path));
 }
 function _mapper() {
     return app::$_mapper;
@@ -310,4 +310,8 @@ function _router() {
 }
 function _ud($d) {
     _d(xpAS::get_globals('user'), $d);
+}
+//fix windows directory divider
+function _WDF($d){
+    return str_replace('\\', '/', $d);
 }

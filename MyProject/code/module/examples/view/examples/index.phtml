@@ -1,5 +1,5 @@
 <?php $page_title = 'X-FRAME | examples | INDEX'; ?>
-<?php if(_X_SITEMIN  === true):?>
+<?php if(_X_SITEMIN  === true && !defined('_X_INSTALL_URL')):?>
 	<?php include _X_LAYOUT . "/sitemin/header.phtml"; ?>
 	<?php include _X_LAYOUT . '/sitemin/nav.phtml'; ?>
 <?php else: ?>

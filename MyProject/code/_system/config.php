@@ -10,7 +10,9 @@ error_reporting(E_ERROR);
 //error_reporting(E_ALL);
 ini_set('display_errors', 1);
 //site root definde in index.php at project root of cs
-define('_X_OFFSET', STR_REPLACE(realpath($_SERVER['DOCUMENT_ROOT']), '', _X_ROOT));
+$_root = realpath($_SERVER['DOCUMENT_ROOT']);
+$_root = str_replace('\\', '/', $_root);
+define('_X_OFFSET', str_replace($_root, '', _X_ROOT));
 define('_X_SYSTEM', _X_CODE . DS . '.system');
 define('_X_CONFIG', _X_CODE . DS . 'config');
 define('_X_MODULE_ENABLED', _X_CONFIG . DS . 'enabled');
@@ -38,7 +40,9 @@ define('_X_LAYOUT', _X_CODE . DS . 'layout');
 //root of the URL,  e.g. service.page.com.au:85/myclient/project3
 // * http:// or https://
 define('_X_URL_P', $_SERVER['HTTPS'] ? 'https://' : 'http://');
-define('_X_URI', $_SERVER['HTTP_HOST'] . _X_OFFSET);
+define('_X_URL_OFFSET', str_replace('\\', '/', _X_OFFSET));
+
+define('_X_URI', $_SERVER['HTTP_HOST'] . _X_URL_OFFSET);
 define('_X_URL', _X_URL_P . _X_URI);
 define('_X_URL_PUBLIC', _X_URL . '/public');
 define('_X_URL_ROUTER', preg_replace('/\/public\/*$/ims', '', _X_URL_PUBLIC));

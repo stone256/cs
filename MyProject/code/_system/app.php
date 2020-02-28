@@ -64,6 +64,7 @@ class app {
      * start x application
      */
     function run() {
+
         //get requested url path
         self::$_request_url = $this->_get_url();
         //change url to custom one , if has one
@@ -74,19 +75,23 @@ class app {
         $_REQUEST = xpAS::merge($router['query'], $_REQUEST);
         self::$_controller = $router['controller'];
         //load controller file
-        include_once ($router['file']);
-        //init control
-        $controller = new $router['controller']($router);
-        if (!method_exists($controller, $action = $router['action'])) $this->at_404("missing action : {$controller}->{$action}");
+
         include_once (_X_CONFIG . '/init.php');
         //start modules update scripts, if any.
         foreach ((array)$this->update_scripts as $k => $v) {
             include_once $v;
             rename($v, $v . ".done");
         }
+
+        include_once ($router['file']);
+        //init control
+        $controller = new $router['controller']($router);
+        if (!method_exists($controller, $action = $router['action'])) $this->at_404("missing action : {$controller}->{$action}");
+
         if (!is_array($ret = $controller->$action($router))) die($ret); //none standard controller return ! not to handle, directly output
         $name = preg_replace('/Action$/', '', $action);
         $_v = $ret['view'] ? $ret['view'] : $name . '.phtml';
+    
         switch (true) {
                 //FOR _SYSTEM
                 
@@ -94,14 +99,14 @@ class app {
                     0
             } . $ret['view'] {
                     1
-            } == DS . '_':
+            } == '/' . '_':
                 $view = _X_ROOT . $_v;
             break;
                 //FOR ALL OTHER
                 
             case $ret['view'] {
                     0
-            } == DS:
+            } == '/':
                 $view = _X_MODULE . $_v;
             break;
                 //FOR DEFAULT WITH PATH, IT USE CONTROLLER POSITION AS GUIDE
@@ -149,7 +154,7 @@ class app {
      * @return custom url if has one
      */
     function _get_custom_router() {
-        $_u = preg_split('/\/+/', self::$_request_url);
+        $_u = preg_split('/\/+/', str_replace(_X_URL_OFFSET, '', self::$_request_url) );
         while (count($_u)) {
             $_p = str_replace('//', '/', '/' . implode('/', $_u));
             if ($this->routers[$_p]) return array($_p, $this->routers[$_p]);

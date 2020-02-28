@@ -7,9 +7,9 @@
  *  e.g. $php x2cli.php /mytest/show/info
  */
 
- // DIRECTORY_SEPARATOR
- if(!defined('DS')) define('DS', '/');
- if(!defined('PHP_EOL')) define('PHP_EOL', "\n");
+// DIRECTORY_SEPARATOR force window into the correct way 
+define('DS', '/');	
+if(!defined('PHP_EOL')) define('PHP_EOL', "\n");
 
 include 'code' . DS . 'config' . DS . 'x2cli.php';
 

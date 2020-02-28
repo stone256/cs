@@ -1,6 +1,6 @@
 <?php
-error_reporting(E_ERROR);
-if (!defined(XP_ROOT)) define(XP_ROOT, __DIR__);
+//error_reporting(E_ERROR);
+if (!defined('XP_ROOT')) define('XP_ROOT', __DIR__);
 function xp_class_autoload($classname) {
     if (file_exists(XP_ROOT . '/common/' . $classname . '.class.php')) {
         require_once (XP_ROOT . '/common/' . $classname . '.class.php');
