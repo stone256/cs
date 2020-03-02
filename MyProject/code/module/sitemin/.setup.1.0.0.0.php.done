@@ -446,6 +446,7 @@ INSERT INTO `var` (`name`, `value`, `note`, `date`) VALUES
 ('sitemin/note/max', '6', 'max note number', '2018-07-05 08:07:53'),
 ('sitemin/testing/value', '36', 'for testing', '2018-08-06 09:26:08'),
 ('sitemin/log', '0', 'values:\r\n0: log off; \r\n1: log on;\r\n', '2020-01-07 22:47:42'),
+('sitemin/resetpassword/hash/valid'. '7200', 'two hours(in seconds)', '2020-01-07 22:47:42'),
 ('sitemin/google/captcha/api', 'https://www.google.com/recaptcha/api/siteverify', '', '2020-01-07 22:14:50'),
 ('sitemin/google/captcha/key', '6LdVH2EUAAAAAD_CVXDvOmRZ3IQvM60XkBy_Kke_', '', '2020-01-07 22:15:54'),
 ('sitemin/google/captcha/secret', '6LdVH2EUAAAAAOuilzwTZko59-xxMP5s30WBO_Mz', '', '2020-01-07 22:17:31'),

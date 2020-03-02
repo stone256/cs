@@ -2,7 +2,7 @@
 /**
  * installer ver 1.0
  */
-define('_X_INSTALL_FILE0', _X_INSTALL_ROOT . '/.router.php');
+define('_X_INSTALL_FILE0', _X_INSTALL_ROOT . '/.install.done');
 define('_X_INSTALL_FILE1', _X_INSTALL_ROOT . '/.setup.1.0.0.0.php.done');
 define('_X_INSTALL_FILE2', _X_INSTALL_ROOT . '/.setup.1.0.0.1.php.done');
 define('_X_INSTALL_FILE3', _X_CONFIG);
@@ -36,9 +36,7 @@ class sitemin_installer_install {
         rename(_X_INSTALL_FILE1, preg_replace('/\.done$/ims', '', _X_INSTALL_FILE1));
         rename(_X_INSTALL_FILE2, preg_replace('/\.done$/ims', '', _X_INSTALL_FILE2));
         //stop install act one next entry
-        $con = file_get_contents(_X_INSTALL_FILE0);
-        $con = str_replace('include "installer.php";', '#include "installer.php";', $con);
-        file_put_contents(_X_INSTALL_FILE0, $con);
+        file_put_contents(_X_INSTALL_FILE0, "install done @ " . date("Y-m-d H:i:s"));
         //rebuild x2cli.php
         $con = $_SERVER;
         $con['X2CLI_CALL'] = true;
@@ -64,8 +62,8 @@ class sitemin_installer_install {
         $con = preg_replace('/\s*\'database\'\s*\=\>\s*\'mydatabase\'\s*\,/ims', "\n'database'=>'{$q['database']}',", $con);
         $con = preg_replace('/\s*\'user\'\s*\=\>\s*\'myusername\'\s*\,/ims', "\n'user'=>'{$q['user']}',", $con);
         $con = preg_replace('/\s*\'password\'\s*\=\>\s*\'mypassword\'\s*\,/ims', "\n'password'=>'{$q['password']}',\n", $con);
-        file_put_contents(_X_INSTALL_FILE5, $con);
-        rename(_X_INSTALL_FILE5, str_replace('.sample', '', _X_INSTALL_FILE5));
+        file_put_contents(str_replace('.sample', '', _X_INSTALL_FILE5), _X_INSTALL_FILE5, $con);
+        //rename(_X_INSTALL_FILE5, str_replace('.sample', '', _X_INSTALL_FILE5));
         return;
     }
 }

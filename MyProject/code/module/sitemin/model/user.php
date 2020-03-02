@@ -185,7 +185,7 @@ class sitemin_model_user {
         return false;
     }
     function passwordhashsend($email) {
-        $time = time() + _factory('sitemin_model_var')->get('/sitemin/resetpassword/hash/valid');
+        $time = time() + _factory('sitemin_model_var')->get('sitemin/resetpassword/hash/valid');
         //check usser
         $r = xpTable::load($this->user_table)->get(array('email' => $email));
         if (!$r) {

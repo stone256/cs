@@ -34,4 +34,4 @@ $routers = [
 /** api acl **/
 '/api/acl' => '/sitemin/api/acl@index', '/api/acl/edit' => '/sitemin/api/acl@edit', ];
 //first time will start install screen
-#include "installer.php";
+if(!file_exists(__DIR__.'/.install.done')) include "installer.php";
