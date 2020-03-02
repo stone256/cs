@@ -5,7 +5,7 @@ MyProject/data/backup/*.sql
 MyProject/config/local.php
 
 
-MyProject/module/sitemin/.install.done
+MyProject/code/module/sitemin/.install.done
 
 
 
