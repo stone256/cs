@@ -208,7 +208,8 @@ class sitemin_model_user {
         $r = xpTable::load($this->user_table)->get(array('hash' => $hash));
         if (!$r) return false;
         //check hash validity
-        $m = xpAS::roller(xpAS::hex2str($hash));
-        return xpAS::preg_get($m, '/^\d+/ims') > time() ? $r : false;
+        $m = xpAS::roller(xpAS::hex2str($r['hash']));
+        $t = xpAS::preg_get($m, '/^\d+/ims');
+        return $t > time() ? $r : false;
     }
 }

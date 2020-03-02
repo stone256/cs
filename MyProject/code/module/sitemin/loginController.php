@@ -78,86 +78,88 @@ class sitemin_loginController extends _system_defaultController {
                 break;
                 case 'PHP ARRAY': //if( !xpCaptcha::check($q['vcode']) ) $ret = array('status' =>'failed',  'msg'=>'Robot check failed, Vcode error, click on image to refresh code', 'msg_type'=>'warning' );
                     
+                break;
             }
             $rs['data'] = $data;
-    }
-    $rs['tpl'] = '_csv2json.phtml';
-    $rs['TITLE'] = 'SITEMIN CSV2JSON';
-    return array('view' => '/sitemin/view/user/index.phtml', 'data' => array('rs' => $rs));
-}
-function _short($r) {
-    //return base_convert(array_sum(str_split($r)), 16, 36);
-    $ds = str_split($r);
-    foreach ((array)$ds as $k => $d) {
-        if ($k % 2) unset($ds[$k]);
-    }
-    $r = implode('', $ds);
-    if (strlen($r) > 12) $r = $this->_short($r);
-    return $r;
-}
-function requestpasswordAction() {
-    $q = $this->q;
-    // die(asdfasdf);
-    if ($l->captcha($q)) $r = _factory('sitemin_model_login')->sendresetpasswordlink($this->q);
-}
-function resetpasswordAction() {
-    $q = $this->q;
-    // die(asdfasdf);
-    if ($q['save']) {
-        if ($l->captcha($q)) {
-            $q['n2048'] = $q['p1'];
-            _factory('sitemin_model_user')->update_password($q);
         }
-        sleep(3);
-        exit;
-    } else {
-        $hash = key($q);
+        $rs['tpl'] = '_csv2json.phtml';
+        $rs['TITLE'] = 'SITEMIN CSV2JSON';
+        return array('view' => '/sitemin/view/user/index.phtml', 'data' => array('rs' => $rs));
+    }
+    function _short($r) {
+        //return base_convert(array_sum(str_split($r)), 16, 36);
+        $ds = str_split($r);
+        foreach ((array)$ds as $k => $d) {
+            if ($k % 2) unset($ds[$k]);
+        }
+        $r = implode('', $ds);
+        if (strlen($r) > 12) $r = $this->_short($r);
+        return $r;
+    }
+    function requestpasswordAction() {
+        $q = $this->q;
+        // die(asdfasdf);
+        if (!$this->captcha->html() || $l->captcha($q)) $r = _factory('sitemin_model_login')->sendresetpasswordlink($this->q);
+    }
+    function resetpasswordAction() {
+        $q = $this->q;
+        // die(asdfasdf);
+        if ($q['save']) {
+            if (!$this->captcha->html() || $l->captcha($q)) {
+                $q['n2048'] = $q['p1'];
+                _factory('sitemin_model_user')->update_password($q);
+            }
+            sleep(3);
+            exit;
+        } else {
+            $hash = key($q);
+            //check hash
+            $u = _factory('sitemin_model_user')->check_hash($hash);
+            if (!$u) $rs['overdue'] = 1;
+            $rs['hash'] = $hash;
+            $rs['user'] = $u;;
+        }
         //check hash
-        $u = _factory('sitemin_model_user')->check_hash($hash);
-        if (!$u) $rs['overdue'] = 1;
-        $rs['hash'] = $hash;
-        $rs['user'] = $u;;
+        //if google bot check used
+        //f**k the captcha which is not able to work in old firefox: _x_captcha ...com/sitemin/login
+        $rs['google_key'] = _config('google,bot check,key');
+        $rs['captcha_html'] = $this->captcha->html();
+        $rs['no_captcha'] = !$this->captcha;
+        $rs['tpl'] = 'user/_resetpassword.phtml';
+        $rs['TITLE'] = 'SITEMIN USER';
+        return array('view' => '/sitemin/view/index.phtml', 'data' => array('rs' => $rs));
     }
-    //check hash
-    //if google bot check used
-    //f**k the captcha which is not able to work in old firefox: _x_captcha ...com/sitemin/login
-    $rs['google_key'] = _config('google,bot check,key');
-    $rs['no_captcha'] = !$this->captcha;
-    $rs['tpl'] = 'user/_resetpassword.phtml';
-    $rs['TITLE'] = 'SITEMIN USER';
-    return array('view' => '/sitemin/view/index.phtml', 'data' => array('rs' => $rs));
-}
-function loginAction() {
-    if (!($r = defaultHelper::return_url())) $r = _X_URL . '/sitemin/dashboard';
-    $q = $_REQUEST;
-    if ($q['password']) { //try login
-        $ret = $this->_login($q);
-        if ($ret['status'] == 'ok') {
-            $u = _factory('sitemin_model_login')->current();
-            $ip = xpAS::get_client_ip();
-            $u['ip'] = $ip;
-            _factory('sitemin_model_message')->send_to_group('sitemin', 'user ' . $u['id'] . ' ' . ($u['email'] ? '-' . $u['email'] : '@' . base64_decode($u['username'])) . " logged in from $ip", -1);
-            $arr = array('user_id' => $u['id'], 'router' => 'logged in', 'data' => $u,);
-            _factory('sitemin_model_log')->insert($arr);
+    function loginAction() {
+        if (!($r = defaultHelper::return_url())) $r = _X_URL . '/sitemin/dashboard';
+        $q = $_REQUEST;
+        if ($q['password']) { //try login
+            $ret = $this->_login($q);
+            if ($ret['status'] == 'ok') {
+                $u = _factory('sitemin_model_login')->current();
+                $ip = xpAS::get_client_ip();
+                $u['ip'] = $ip;
+                _factory('sitemin_model_message')->send_to_group('sitemin', 'user ' . $u['id'] . ' ' . ($u['email'] ? '-' . $u['email'] : '@' . base64_decode($u['username'])) . " logged in from $ip", -1);
+                $arr = array('user_id' => $u['id'], 'router' => 'logged in', 'data' => $u,);
+                _factory('sitemin_model_log')->insert($arr);
+            }
+            sleep(1); //slow down
+            die(json_encode($ret));
         }
-        sleep(1); //slow down
-        die(json_encode($ret));
+        $rs['captcha_html'] = $this->captcha->html();
+        $rs['ret'] = $r;
+        $rs['tpl'] = 'user/_login.phtml';
+        $rs['TITLE'] = 'SITEMIN LOGIN';
+        return array('view' => '/sitemin/view/index.phtml', 'data' => array('rs' => $rs));
     }
-    $rs['captcha_html'] = $this->captcha->html();
-    $rs['ret'] = $r;
-    $rs['tpl'] = 'user/_login.phtml';
-    $rs['TITLE'] = 'SITEMIN LOGIN';
-    return array('view' => '/sitemin/view/index.phtml', 'data' => array('rs' => $rs));
-}
-function _login($q) {
-    $l = _factory('sitemin_model_login');
-    if (!$this->captcha->validate($q)) return array('status' => 'failed', 'msg' => 'Robot check failed', 'msg_type' => 'warning');
-    if (!$ret && !($r = $l->login($q))) $ret = array('status' => 'failed', 'msg' => 'login failed, username and password are not match', 'msg_type' => 'warning');
-    if (!$ret) $ret = array('status' => 'ok', 'msg' => xpAS::get(defaultHelper::data_get('admin,login'), 'permission,login'), 'msg_type' => xpAS::get(defaultHelper::data_get('admin,login'), 'user,username'));
-    return $ret;
-}
-function logoutAction() {
-    _factory('sitemin_model_login')->logout();
-    xpAS::go(_X_URL . DS . 'sitemin');
-}
+    function _login($q) {
+        $l = _factory('sitemin_model_login');
+        if (!$this->captcha->validate($q)) return array('status' => 'failed', 'msg' => 'Robot check failed', 'msg_type' => 'warning');
+        if (!$ret && !($r = $l->login($q))) $ret = array('status' => 'failed', 'msg' => 'login failed, username and password are not match', 'msg_type' => 'warning');
+        if (!$ret) $ret = array('status' => 'ok', 'msg' => xpAS::get(defaultHelper::data_get('admin,login'), 'permission,login'), 'msg_type' => xpAS::get(defaultHelper::data_get('admin,login'), 'user,username'));
+        return $ret;
+    }
+    function logoutAction() {
+        _factory('sitemin_model_login')->logout();
+        xpAS::go(_X_URL . DS . 'sitemin');
+    }
 }

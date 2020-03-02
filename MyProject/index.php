@@ -6,6 +6,8 @@
  * @version 2.1
  *
  */
+//var_export($_SERVER);die("use this to get x2cli's config (/config/x2cli.php)");
+
 //fix issue $_SERVER['REQUEST_TIME.. with microtime
 define('_X_START_TIME', microtime(1));
 

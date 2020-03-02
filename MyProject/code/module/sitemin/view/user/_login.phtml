@@ -126,7 +126,7 @@ $captcha = !$rs['no_captcha'];
 function reset_my_password(){
     common.mask.up("Sending request to your email");
     $.ajax({
-        url: '/sitemin/requestpassword',
+        url: 'sitemin/requestpassword',
         data: {email:$('#rsemail').val()},
         success: function(data){
             common.mask.down();

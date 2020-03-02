@@ -114,8 +114,8 @@ function test_file_permission(){
 	$('.re-test-file').hide();
 	common.mask.up();
 	$.ajax({
-        dataType:'json',
-        data:{step:'file permission', a:Math.random()},
+		dataType:'json',
+		data:{step:'file permission', a:Math.random()},
 		type:'post',
 		success: function(ret){
 			if(ret.data.ok)

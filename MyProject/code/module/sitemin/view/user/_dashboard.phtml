@@ -223,12 +223,12 @@ var _token = '<?=$rs['token'];?>';
 			},
 			mounted: function () {
                 /*
-				$.ajax({ url: '/sitemin/status?cmd=users&_token='+_token,
+				$.ajax({ url: 'sitemin/status?cmd=users&_token='+_token,
 					success: function(ret){
 						sixthTable.users = parseInt(0+ret);
 					}
 				});
-				$.ajax({ url: '/sitemin/status?cmd=login24&_token='+_token,
+				$.ajax({ url: 'sitemin/status?cmd=login24&_token='+_token,
 					success: function(ret){
 						sixthTable.login24 = parseInt(0+ret);
 					}
@@ -239,7 +239,7 @@ var _token = '<?=$rs['token'];?>';
 						sixthTable.top10url = ret;
 					}
 				});
-		                // $.ajax({ url: '/sitemin/status?cmd=last24&_token='+_token, dataType:'json',
+		                // $.ajax({ url: 'sitemin/status?cmd=last24&_token='+_token, dataType:'json',
 		                //     success: function(ret){
 		                //         sixthTable.last24 = ret;
 				// 	ret =  [ ["January", 10], ["February", 8], ["March", 4], ["April", 13], ["May", 17], ["June", 9] ];

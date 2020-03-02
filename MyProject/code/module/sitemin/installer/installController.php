@@ -23,4 +23,3 @@ class sitemin_installer_installController extends _system_defaultController {
         return array('view' => '/sitemin/view/index.phtml', 'data' => array('rs' => $rs));
     }
 }
-
