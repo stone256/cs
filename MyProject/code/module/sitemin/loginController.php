@@ -98,7 +98,6 @@ class sitemin_loginController extends _system_defaultController {
     }
     function requestpasswordAction() {
         $q = $this->q;
-        // die(asdfasdf);
         if (!$this->captcha->html() || $l->captcha($q)) $r = _factory('sitemin_model_login')->sendresetpasswordlink($this->q);
     }
     function resetpasswordAction() {
