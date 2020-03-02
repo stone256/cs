@@ -10,7 +10,7 @@ define('_X_INSTALL_FILE4', _X_CONFIG . '/x2cli.php');
 define('_X_INSTALL_FILE5', _X_CONFIG . '/local.php.sample');
 //model
 class sitemin_installer_install {
-    var $access_file = [_X_INSTALL_FILE0, _X_INSTALL_FILE1, _X_INSTALL_FILE2, _X_INSTALL_FILE3, _X_INSTALL_FILE4, _X_INSTALL_FILE5, ];
+    var $access_file = [/*_X_INSTALL_FILE0, no to test*/ _X_INSTALL_FILE1, _X_INSTALL_FILE2, _X_INSTALL_FILE3, _X_INSTALL_FILE4, _X_INSTALL_FILE5, ];
     function test_permission() {
         foreach ($this->access_file as $f) {
             $p[is_writable($f) ? 'ok' : 'failed'][] = $f;

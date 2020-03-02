@@ -67,6 +67,26 @@ class sitemin_api_model_user {
         $r = xpTable::load($this->user_table)->get(array('login_id' => $id, 'password' => $this->password($pwd)));
         return $r;
     }
+
+    /**
+     * authentication and authorization
+     * it's good Abbreviation, i'll drink for that!!
+     */
+    function AA($q){
+            $time = time();
+            switch(true){
+                case $q['token']:
+                        if($r = xpTable::load($this->user_table)->get(array('taken' => $q['token'], "ttl > '$time'"))){
+                                $date = date('Y-m-d');
+                                
+                        }
+                        break;
+                case $q['key']:
+                default:
+
+                        break;
+            }
+    }
     /**
      *suspend api user
      */

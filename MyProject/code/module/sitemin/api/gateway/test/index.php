@@ -8,7 +8,7 @@ class sitemin_api_gateway_test_index {
      * testing function return "ssss"
      */
     function a() {
-        echo "ssss";
+        return ['value' => __FILE__. ' - ' . __LINE__];
     }
     /**
      * testing function return php array
