@@ -63,7 +63,7 @@ class sitemin_installer_install {
         $con = preg_replace('/\s*\'database\'\s*\=\>\s*\'mydatabase\'\s*\,/ims', "\n'database'=>'{$q['database']}',", $con);
         $con = preg_replace('/\s*\'user\'\s*\=\>\s*\'myusername\'\s*\,/ims', "\n'user'=>'{$q['user']}',", $con);
         $con = preg_replace('/\s*\'password\'\s*\=\>\s*\'mypassword\'\s*\,/ims', "\n'password'=>'{$q['password']}',\n", $con);
-        file_put_contents(str_replace('.sample', '', _X_INSTALL_FILE5), _X_INSTALL_FILE5, $con);
+        file_put_contents(str_replace('.sample', '', _X_INSTALL_FILE5), $con);
         //rename(_X_INSTALL_FILE5, str_replace('.sample', '', _X_INSTALL_FILE5));
         return;
     }
