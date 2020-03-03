@@ -64,28 +64,53 @@ class sitemin_api_model_user {
      *check login
      */
     function login_check($id, $pwd) {
-        $r = xpTable::load($this->user_table)->get(array('login_id' => $id, 'password' => $this->password($pwd)));
+        $r = xpTable::load($this->user_table)->get(array('login_id' => $id, 'password' => $this->password($pwd), 'status'=>'active'));
         return $r;
     }
 
     /**
      * authentication and authorization
-     * it's good Abbreviation, i'll drink for that!!
+     * Name AA is good Abbreviation, I'll drink for that!!
      */
     function AA($q){
-            $time = time();
+            $date = date("Y-m-d");
+            $u = xpTable::load($this->user_table)->get(array('login_id' => $q['login_id'], 'password' => $this->password($q['key']), 'status'=>'active'));
+            if(!$u) return false;
+            $now = explode('-', $date);
+            $quota_start = explode('-', $u['quota_start']);
             switch(true){
-                case $q['token']:
-                        if($r = xpTable::load($this->user_table)->get(array('taken' => $q['token'], "ttl > '$time'"))){
-                                $date = date('Y-m-d');
-                                
-                        }
-                        break;
-                case $q['key']:
-                default:
+                    case $u['quota_type'] == 'day':
+                            if($quota_start[2] < $now[2] ){
+                                    //reset to quota-remain
+                                    $u['quota_remain'] = $u['quota'];
+                                    $u['quota_start'] = $date;
+                            }
+                            break;
+                    case $u['quota_type'] == 'month':
+                            if($quota_start[1] < $now[1] ){
+                                    //reset to quota-remain
+                                    $u['quota_remain'] = $u['quota'];
+                                    $u['quota_start'] = $date;
+                            }
+                            break;
+                    case $u['quota_type'] == 'year':
+                            if($quota_start[0] < $now[0] ){
+                                    //reset to quota-remain
+                                    $u['quota_remain'] = $u['quota'];
+                                    $u['quota_start'] = $date;
+                            }
+                            break;
+                    case $u['quota_type'] == 'topup':
+                    default:
+                            break;
 
-                        break;
             }
+
+            if($u['quota_remain']<1) return false;
+            $u['quota_remain'] --;
+            $arr = xpAS::round_up($u, 'quota_remain,quota_start');
+            xpTable::load($this->user_table)->updates($arr, ['id'=>$u['id']]);
+            return $u;
     }
     /**
      *suspend api user
@@ -105,11 +130,10 @@ class sitemin_api_model_user {
     function save($q) {
         if (!$q['login_id']) $msg[] = 'login id';
         if (!$q['quota']) $msg[] = 'quota';
-        if (!$q['quota_start_seconds']) $msg[] = 'quota start';
-        if (!$q['quota_period_seconds']) $msg[] = 'quota period';
-        $q['quota_start_seconds'] = xpDate::returnUNIXTimestampFromMYSQL($q['quota_start_seconds']);
+        if (!$q['quota_start']) $msg[] = 'quota start';
+        if (!$q['quota_type']) $msg[] = 'quota type';
         $q['created'] = $q['created'] ? $q['created'] : date("Y-m-d H:i:s");
-        $arr = xpAS::round_up($q, 'login_id,detail,quota,quota_start_seconds,quota_counter,quota_period_seconds,status,created');
+        $arr = xpAS::round_up($q, 'login_id,detail,quota,quota_type,quota_start,quota_remain,status,created');
         if ($msg) return $msg;
         xpTable::load($this->user_table)->write($arr, array('id' => (int)$q['id']));
     }

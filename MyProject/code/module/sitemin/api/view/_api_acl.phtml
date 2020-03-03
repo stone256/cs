@@ -68,7 +68,7 @@
 			        <?php foreach($rs['data'] as $k=>$v):?>
 			        <tr>
 				        <td class="Hide"><?=$v['id'];?></td>
-				        <td><?=$v['login_id'];?></td>
+				        <td>[<a href="api/user/edit/?id=<?=$v['id'];;?>"><?=$v['login_id'];?></a>]</td>
 				        <td><?=$v['detail'];?></td>
 				        <td><?=$v['status'];?></td>
 				        <td><?=xpAS::preg_get($v['created'], '/\d\d\d\d\-\d\d\-\d\d/');?></td>

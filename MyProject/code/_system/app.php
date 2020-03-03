@@ -10,7 +10,7 @@
 //error_reporting(E_ALL);
 //load  config and setting (global and *local)
 //load system config
-require_once ('config.php');
+require_once ('define.php');
 //load framework global config
 require_once (_X_CONFIG . DS . 'general.php');
 //loading local setting
@@ -91,10 +91,10 @@ class app {
         if (!is_array($ret = $controller->$action($router))) die($ret); //none standard controller return ! not to handle, directly output
         $name = preg_replace('/Action$/', '', $action);
         $_v = $ret['view'] ? $ret['view'] : $name . '.phtml';
-    
+
         switch (true) {
                 //FOR _SYSTEM
-                
+
             case $ret['view'] {
                     0
             } . $ret['view'] {
@@ -103,14 +103,14 @@ class app {
                 $view = _X_ROOT . $_v;
             break;
                 //FOR ALL OTHER
-                
+
             case $ret['view'] {
                     0
             } == '/':
                 $view = _X_MODULE . $_v;
             break;
                 //FOR DEFAULT WITH PATH, IT USE CONTROLLER POSITION AS GUIDE
-                
+
             default:
                 $view = dirname($router['file']) . DS . 'view' . DS . xpAS::preg_get($router['controller'], '|\_([a-zA-Z0-9]*?)Controller|', 1) . DS . $_v;
         }
@@ -122,7 +122,7 @@ class app {
         include_once ($view);
         //echo (int)((microtime(1)-$_SERVER['REQUEST_TIME_FLOAT'])*1000)."ms<br/>";
         //ended/stopped here
-        
+
     }
     /**
      * find mapped controllers

@@ -1,4 +1,10 @@
 <?php
+/**
+ * @name 	: cli local config
+ * @author 	: peter<stone256@hotmail.com>
+ *
+ *  follow value is similated $_SERVER values of web call.
+ */
 $apache_data = array (
         'REDIRECT_SERVER_ENV' => 'LOCAL_TEST',
         'REDIRECT_STATUS' => '200',
@@ -14,8 +20,7 @@ $apache_data = array (
         'HTTP_PRAGMA' => 'no-cache',
         'HTTP_CACHE_CONTROL' => 'no-cache',
         'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        'SERVER_SIGNATURE' => '<address>Apache/2.4.38 (Debian) Server at www.mx19 Port 80</address>
-      ',
+        'SERVER_SIGNATURE' => '<address>Apache/2.4.38 (Debian) Server at www.mx19 Port 80</address>',
         'SERVER_SOFTWARE' => 'Apache/2.4.38 (Debian)',
         'SERVER_NAME' => 'www.mx19',
         'SERVER_ADDR' => '192.168.1.51',
@@ -38,6 +43,11 @@ $apache_data = array (
         'PHP_SELF' => '/html/cs/MyProject/index.php',
         'REQUEST_TIME_FLOAT' => 1583111060.285,
         'REQUEST_TIME' => 1583111060,
-        'X2CLI_CALL' => true,
-);      
+);
+
+/**
+ * confirm it's a cli calls
+ */
+$apache_data['X2CLI_CALL'] = true;
+
 define('__X_DEBUG', true);

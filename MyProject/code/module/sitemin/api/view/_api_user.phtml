@@ -68,9 +68,9 @@
 					<a href="javascript:void(0)" onclick="TheSort('detail')">Detail &nbsp;<i class="fa  <?=preg_match('/^.?detail$/',$rs['sort'])? (preg_match('/^\-/',$rs['sort'])?'fa-sort-amount-desc':'fa-sort-amount-asc') :'fa-task';?> "></i></a>
 				</th>
 				<th>Quota</th>
+				<th>Quota Type</th>
 				<th>Quota Start</th>
-				<th>Quota Period</th>
-				<th>Quota Counter</th>
+				<th>Quota Remain</th>
 				<th>
 					<a href="javascript:void(0)" onclick="TheSort('status')">Status &nbsp;<i class="fa  <?=preg_match('/^.?status$/',$rs['sort'])? (preg_match('/^\-/',$rs['sort'])?'fa-sort-amount-desc':'fa-sort-amount-asc') :'fa-task';?>"></i></a>
 				</th>
@@ -86,9 +86,9 @@
 				<td><?=$r['login_id'];?></td>
 				<td><?=$r['detail'];?></td>
 				<td><?=$r['quota'];?></td>
-				<td><?=date("Y-m-d", $r['quota_start_seconds']);?></td>
-				<td><?=$r['quota_period_seconds']/24/60/60;?> day<?=$r['quota_period_seconds'] > 86400 ?'s':'';?></td>
-				<td><?=$r['quota_counter'];?></td>
+                                <td><?=$r['quota_type'];?></td>
+				<td><?=$r['quota_start'];?></td>
+				<td><?=$r['quota_remain'];?></td>
 				<td><?=$r['status'];?></td>
 				<td><?=$r['created'];?></td>
 				<td>
@@ -96,7 +96,8 @@
 					<a class="btn btn-extra-small btn-rounded btn-light-border" role="button" href="api/user/edit/?id=<?=$r['id']?>" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 <!--					<a class="btn btn-sm btn-info"  id="delete-<?=$r['id']?>" href="/api/user/delete/?id=<?=$r['id']?>&_token=<?=$rs['_token'];?>" ><i class="fa fa-trash"></i></a>-->
 					<!--<a class="btn btn-sm btn-warning" href="/api/user/<?php echo $r['status'] == 'active' ? 'suspend' : 'active'; ?>?id=<?=$r['id']?>&_token=<?=$rs['_token'];?>"><span class="fa fa<?php echo $r['status'] == 'active' ? '-pause' : 'fa  fa-play'; ?>"> <?php echo $r['status'] == 'active' ? 'Stop' : 'Active'; ?></span></a>-->
-					<button class="btn btn-extra-small btn-rounded btn-light-border" onclick="api_user_status_change(this, '<?php echo $r['status'] == 'active' ? 'suspend' : 'active'; ?>','<?=$r['id']?>','<?=$rs['_token'];?>')"><?=$r['status'] !== 'active' ? '<span class="fa fa-play">Active</span>' :'<span class="fa fa-pause">Suspend</span>';?></button>
+                                        <button class="btn btn-extra-small btn-rounded btn-light-border" onclick="api_user_status_change(this, '<?php echo $r['status'] == 'active' ? 'suspend' : 'active'; ?>','<?=$r['id']?>','<?=$rs['_token'];?>')"><?=$r['status'] !== 'active' ? '<span class="fa fa-play">Active</span>' :'<span class="fa fa-pause">Suspend</span>';?></button>
+					<a class="btn btn-extra-small btn-rounded btn-light-border" href="api/acl/edit?uid=<?=$r['id']?>">ACL</a>
 				</td>
 			</tr>
 		<?php endforeach; ?>
