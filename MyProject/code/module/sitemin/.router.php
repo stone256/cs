@@ -11,14 +11,7 @@ define('_X_SITEMIN', true);
 //error_reporting(E_ALL);
 $routers = [
 //for test controller
-'/sitemin/test' => '/sitemin/login@test', 
-'/sitemin/helper/vcode' => '/sitemin/helper@vcode', 
-'/sitemin/keepalive' => '/sitemin/index@keepalive', 
-'/sitemin/mail/queue' => '/sitemin/mail@queue', 
-'/sitemin/mail/cron' => '/sitemin/mail@cron', 
-'/sitemin/requestpassword' => '/sitemin/login@requestpassword', 
-'/sitemin/resetpassword' => '/sitemin/login@resetpassword', 
-'/sitemin/login' => '/sitemin/login@login', '/sitemin/logout' => '/sitemin/login@logout', '/sitemin/dashboard' => '/sitemin/login@dashboard', '/sitemin' => '/sitemin/login@dashboard', '/sitemin/user/profile' => '/sitemin/user@profile', '/sitemin/user/message' => '/sitemin/user@message', '/sitemin/user' => '/sitemin/user@list', '/sitemin/user/password' => '/sitemin/user@password', '/sitemin/user/edit' => '/sitemin/user@edit', '/sitemin/user/active' => '/sitemin/user@active', '/sitemin/user/suspend' => '/sitemin/user@suspend', '/sitemin/user/search' => '/sitemin/user@search', '/sitemin/acl/menutree' => '/sitemin/acl@menutree', '/sitemin/acl/menutree/item_move_1' => '/sitemin/acl@menutreeitemmove1', '/sitemin/acl/menutree/item_save' => '/sitemin/acl@menutreeitemsave', '/sitemin/acl/menutree/item_delete' => '/sitemin/acl@menutreeitemdelete', '/sitemin/acl/menutree/item_move_2' => '/sitemin/acl@menutreeitemmove2', '/sitemin/acl/router' => '/sitemin/acl@router', '/sitemin/acl/router/change' => '/sitemin/acl@routerchange', '/sitemin/acl/router/search' => '/sitemin/acl@routersearch', '/sitemin/acl/role' => '/sitemin/acl@role', '/sitemin/acl/role/edit' => '/sitemin/acl@roleedit', '/sitemin/acl/role/delete' => '/sitemin/acl@roledelete', '/sitemin/acl/role/search' => '/sitemin/acl@rolesearch',
+'/sitemin/test' => '/sitemin/login@test', '/sitemin/helper/vcode' => '/sitemin/helper@vcode', '/sitemin/keepalive' => '/sitemin/index@keepalive', '/sitemin/mail/queue' => '/sitemin/mail@queue', '/sitemin/mail/cron' => '/sitemin/mail@cron', '/sitemin/requestpassword' => '/sitemin/login@requestpassword', '/sitemin/resetpassword' => '/sitemin/login@resetpassword', '/sitemin/login' => '/sitemin/login@login', '/sitemin/logout' => '/sitemin/login@logout', '/sitemin/dashboard' => '/sitemin/login@dashboard', '/sitemin' => '/sitemin/login@dashboard', '/sitemin/user/profile' => '/sitemin/user@profile', '/sitemin/user/message' => '/sitemin/user@message', '/sitemin/user' => '/sitemin/user@list', '/sitemin/user/password' => '/sitemin/user@password', '/sitemin/user/edit' => '/sitemin/user@edit', '/sitemin/user/active' => '/sitemin/user@active', '/sitemin/user/suspend' => '/sitemin/user@suspend', '/sitemin/user/search' => '/sitemin/user@search', '/sitemin/acl/menutree' => '/sitemin/acl@menutree', '/sitemin/acl/menutree/item_move_1' => '/sitemin/acl@menutreeitemmove1', '/sitemin/acl/menutree/item_save' => '/sitemin/acl@menutreeitemsave', '/sitemin/acl/menutree/item_delete' => '/sitemin/acl@menutreeitemdelete', '/sitemin/acl/menutree/item_move_2' => '/sitemin/acl@menutreeitemmove2', '/sitemin/acl/router' => '/sitemin/acl@router', '/sitemin/acl/router/change' => '/sitemin/acl@routerchange', '/sitemin/acl/router/search' => '/sitemin/acl@routersearch', '/sitemin/acl/role' => '/sitemin/acl@role', '/sitemin/acl/role/edit' => '/sitemin/acl@roleedit', '/sitemin/acl/role/delete' => '/sitemin/acl@roledelete', '/sitemin/acl/role/search' => '/sitemin/acl@rolesearch',
 //sitemin config var
 '/sitemin/var' => '/sitemin/var@index', '/sitemin/status' => '/sitemin/index@status', '/sitemin/cron' => '/sitemin/cron@index',
 //called by system cron or external cron
@@ -34,4 +27,4 @@ $routers = [
 /** api acl **/
 '/api/acl' => '/sitemin/api/acl@index', '/api/acl/edit' => '/sitemin/api/acl@edit', ];
 //first time will start install screen
-if(!file_exists(__DIR__.'/.install.done')) include "installer.php";
+if (!file_exists(__DIR__ . '/.install.done')) include "installer.php";

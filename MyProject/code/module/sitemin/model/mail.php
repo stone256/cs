@@ -24,12 +24,12 @@ class sitemin_model_mail {
      * put in queue
      */
     function queuing($mrr) {
-        $arr = array('sender' => (int)$mrr['from'], 'subject' => $mrr['subject'], 'body' => $mrr['body'],'status'=>'queued', 'try'=>0);
+        $arr = array('sender' => (int)$mrr['from'], 'subject' => $mrr['subject'], 'body' => $mrr['body'], 'status' => 'queued', 'try' => 0);
         $id = xpTable::load($this->mail_table)->insert($arr);
         foreach ($this->recipients as $k => $v) {
             _d($v);
             if (!isset($mrr[$v])) continue;
-            $brr = is_array($mrr[$v]) ? $mrr[$v] : array($mrr[$v]);       
+            $brr = is_array($mrr[$v]) ? $mrr[$v] : array($mrr[$v]);
             foreach ($brr as $ka => $va) {
                 xpTable::load($this->recipient_table)->insert(array('mail_id' => $id, 'to' => $va, 'type' => $v));
             }
@@ -41,12 +41,10 @@ class sitemin_model_mail {
         }
         return $id;
     }
-
-    function cron(){
+    function cron() {
         $rs = xpTable::load($this->mail_table)->get(array('status != sent'));
         print_r($rs);
     }
-
     /**
      * send
      */

@@ -23,22 +23,19 @@ class sitemin_mailController extends sitemin_indexController {
                 die(json_encode($rs));
             default:
                 break;
+            }
+            $q['sort'] = $q['sort'] ? $q['sort'] : '-created';
+            $rs = _factory('sitemin_model_mail')->gets($q);
+            $rs['tpl'] = '_mailqueue.phtml';
+            $rs['TITLE'] = 'SITEMIN MAIL';
+            $rs['_token'] = defaultHelper::page_hash_set('sitemin,mail,queue');
+            return array('view' => '/sitemin/view/index.phtml', 'data' => array('rs' => $rs));
         }
-        $q['sort']= $q['sort'] ? $q['sort'] : '-created';
-        $rs = _factory('sitemin_model_mail')->gets($q);
-        $rs['tpl'] = '_mailqueue.phtml';
-        $rs['TITLE'] = 'SITEMIN MAIL';
-        $rs['_token'] = defaultHelper::page_hash_set('sitemin,mail,queue');
-        return array('view' => '/sitemin/view/index.phtml', 'data' => array('rs' => $rs));
+        function cronAction() {
+            //can only in cli
+            if (_X_CLI_CALL !== true) die('code red');
+            _factory('sitemin_model_mail')->cron();
+            die();
+        }
     }
-
-    function cronAction(){
-        //can only in cli
-        if(_X_CLI_CALL !== true) die('code red');
-        _factory('sitemin_model_mail')->cron();
-        die();        
-    }
-
-
-}
     
