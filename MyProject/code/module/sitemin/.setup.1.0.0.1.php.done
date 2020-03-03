@@ -52,7 +52,14 @@ ALTER TABLE `api_acl`
   ADD KEY `siteapi_user_id` (`api_user_id`),
   ADD KEY `modified` (`modified`),
   ADD KEY `siteapi_id_2` (`api_id`,`api_user_id`);
-
+--
+-- Dumping data for table `api_acl`
+--
+INSERT INTO `api_acl` (`api_id`, `api_user_id`, `modified`) VALUES
+  ('a16234c9ac4e13b9c15ead7db2034787', 3, '2020-03-03 02:20:00'),
+  ('4229544f96aa2e7d870648c6ad9556f2', 3, '2020-03-03 02:20:00'),
+  ('f2a49b6ccb37e9be5029b25d35adaef4', 3, '2020-03-03 02:20:00'),
+  ('d3d2d40c1ce68ea4d7f061f1fa723d8a', 3, '2020-03-03 02:20:00');
 -- --------------------------------------------------------
 --
 -- Table structure for table `api_user`

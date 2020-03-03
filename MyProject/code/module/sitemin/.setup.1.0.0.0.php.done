@@ -37,7 +37,7 @@ ALTER TABLE `acl_menu`
 --
 INSERT INTO `acl_menu` (`id`, `parent_id`, `display`, `router`, `order`) VALUES
 (1, 0, 'ROOT', NULL, 0),
-(2, 75, 'User Control', '', 1),
+(2, 75, 'User Control', '', 2),
 (82, 2, 'Users', '/sitemin/user', 0),
 (5, 5, 'Router', '/sitemin/acl/router', 0),
 (6, 2, 'Role', '/sitemin/acl/role', 2),
@@ -49,19 +49,22 @@ INSERT INTO `acl_menu` (`id`, `parent_id`, `display`, `router`, `order`) VALUES
 (19, 19, 'Menu Control', '/sitemin/acl/menutree', 0),
 (28, 10, 'Example', '/examples', 0),
 (91, 91, 'router', '/sitemin/acl/router', 0),
-(90, 75, 'mail queue', '/sitemin/mail/queue', 4),
-(77, 75, 'Var', '/sitemin/var', 3),
+(90, 75, 'mail queue', '/sitemin/mail/queue', 5),
+(77, 75, 'Var', '/sitemin/var', 4),
 (85, 85, 'API', '', 0),
 (73, 73, 'Cron', '/sitemin/cron', 0),
 (75, 1, 'Setting', '', 2),
 (88, 85, 'ACL', '/api/acl', 3),
 (92, 75, 'menu control', '/sitemin/acl/menutree', 0),
 (94, 2, 'router', '/sitemin/acl/router', 1),
-(93, 75, 'cron', '/sitemin/cron', 2),
+(93, 75, 'cron', '/sitemin/cron', 3),
 (95, 1, 'api', '', 1),
 (96, 95, 'list', '/api/list', 0),
 (97, 95, 'user', '/api/user', 2),
-(98, 95, 'acl', '/api/acl', 1);
+(98, 95, 'acl', '/api/acl', 1),
+(99, 75, 'modules', '', 1),
+(100, 99, 'enadle disable', '/module/control', 0),
+(101, 99, 'beautify', '/module/beautify', 1);
 -- --------------------------------------------------------
 
 --
@@ -123,6 +126,7 @@ ALTER TABLE `acl_router`
 --
 -- Dumping data for table `acl_router`
 --
+
 INSERT INTO `acl_router` (`id`, `router`, `role`, `modified`) VALUES
 (1, '/exception', 'public,sitemin,client,sales,cms,admin,Level 1,Level 2,crawler master,designer,', '2017-06-24 15:53:13'),
 (2, '/404', 'public,sitemin,admin,cms,Level 2,Level 1,crawler master,designer,', '2017-06-24 15:53:16'),
@@ -197,7 +201,16 @@ INSERT INTO `acl_router` (`id`, `router`, `role`, `modified`) VALUES
 (274, '/api/user/idcheck', 'sitemin,', NULL),
 (275, '/api/user/password', 'sitemin,', NULL),
 (276, '/api/user/search', 'sitemin,', NULL),
-(277, '/api/user/status_change', 'sitemin,', NULL);
+(277, '/api/user/status_change', 'sitemin,', NULL),
+(278, '/module/control', 'sitemin,', NULL),
+(279, '/myurl', 'public,', NULL),
+(280, '/module/beautfy', 'sitemin,', NULL),
+(281, '/module/beautify', 'sitemin,', NULL),
+(282, '/sitemin/helper/vcode', 'public,', NULL),
+(283, '/sitemin/mail/queue', 'sitemin,', NULL),
+(284, '/sitemin/requestpassword', 'sitemin,', NULL),
+(285, '/sitemin/resetpassword', 'sitemin,', NULL),
+(286, '/sitemin/mail/cron', 'public,', NULL);
 -- --------------------------------------------------------
 
 --
@@ -267,7 +280,85 @@ ALTER TABLE `sitemin_log`
 ALTER TABLE `sitemin_log`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 -- --------------------------------------------------------
+--
+-- Table structure for table `sitemin_mail`
+--
 
+DROP TABLE IF EXISTS `sitemin_mail`;
+CREATE TABLE `sitemin_mail` (
+  `id` bigint(20) NOT NULL,
+  `sender` bigint(20) NOT NULL,
+  `subject` varchar(222) NOT NULL,
+  `body` text NOT NULL,
+  `created` timestamp NOT NULL DEFAULT current_timestamp(),
+  `sent` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
+  `status` varchar(222) NOT NULL,
+  `try` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+--
+-- Indexes for table `sitemin_mail`
+--
+ALTER TABLE `sitemin_mail`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `sender` (`sender`),
+  ADD KEY `subject` (`subject`),
+  ADD KEY `created` (`created`),
+  ADD KEY `sent` (`sent`),
+  ADD KEY `status` (`status`),
+  ADD KEY `try` (`try`);
+--
+-- AUTO_INCREMENT for table `sitemin_mail`
+--
+ALTER TABLE `sitemin_mail`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+-- -----------------------------------------------------
+--
+-- Table structure for table `sitemin_mail_attachment`
+--
+DROP TABLE IF EXISTS `sitemin_mail_attachment`;
+CREATE TABLE `sitemin_mail_attachment` (
+  `id` bigint(20) NOT NULL,
+  `mail_id` bigint(20) NOT NULL,
+  `name` varchar(222) NOT NULL,
+  `content` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+--
+-- Indexes for table `sitemin_mail_attachment`
+--
+ALTER TABLE `sitemin_mail_attachment`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `mail_id` (`mail_id`),
+  ADD KEY `name` (`name`);
+--
+-- AUTO_INCREMENT for table `sitemin_mail_attachment`
+--
+ALTER TABLE `sitemin_mail_attachment`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+-- -------------------------------------------------
+--
+-- Table structure for table `sitemin_mail_recipient`
+--
+DROP TABLE IF EXISTS `sitemin_mail_recipient`;
+CREATE TABLE `sitemin_mail_recipient` (
+  `id` bigint(20) NOT NULL,
+  `mail_id` bigint(20) NOT NULL,
+  `to` varchar(222) NOT NULL,
+  `type` enum('to','cc','bcc') DEFAULT 'to'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+--
+-- Indexes for table `sitemin_mail_recipient`
+--
+ALTER TABLE `sitemin_mail_recipient`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `mail_id` (`mail_id`),
+  ADD KEY `to` (`to`),
+  ADD KEY `cc` (`type`);
+--
+-- AUTO_INCREMENT for table `sitemin_mail_recipient`
+--
+ALTER TABLE `sitemin_mail_recipient`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+-- -------------------------------------------------
 --
 -- Table structure for table `sitemin_message`
 --
@@ -299,7 +390,6 @@ ALTER TABLE `sitemin_message`
 ALTER TABLE `sitemin_message`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 -- --------------------------------------------------------
-
 --
 -- Table structure for table `sitemin_message_receiver`
 --
@@ -325,7 +415,6 @@ ALTER TABLE `sitemin_message_receiver`
 ALTER TABLE `sitemin_message_receiver`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 -- --------------------------------------------------------
-
 --
 -- Table structure for table `sitemin_role`
 --
@@ -368,10 +457,10 @@ INSERT INTO `sitemin_role` (`id`, `sitemin_id`, `acl_role_id`) VALUES
 (354, 20, 900),
 (355, 25, 900),
 (356, 21, 900),
-(357, 13, 900),
 (358, 10, 900),
 (359, 10, 9000),
-(360, 12, 9005);
+(360, 12, 9005),
+(361, 13, 120);
 -- --------------------------------------------------------
 
 --
@@ -414,7 +503,7 @@ INSERT INTO `sitemin_user` (`id`, `hash`, `username`, `password`, `email`, `user
 (9, '', 'cc', '9c2c08be573de301f5c3e08bf96dcb03', 'cc@cc.cc', 'sitemin, ', '2017-06-01 23:31:51', 0, 'suspend', '2017-06-05 01:46:08'),
 (11, '', 'dd', 'a901b0e9e8e95755802bc91d623494a3', 'dd@dd.dd', 'admin, data matcher, ', '2017-06-01 23:31:51', 0, 'suspend', '2017-06-05 01:46:08'),
 (12, '', 'test', '8e505b3cb59b82bd8ff278e2465393d7', 'test@test.test', 'Level 1, ', '2017-06-01 23:31:51', 0, 'suspend', '2017-06-05 01:46:08'),
-(13, '', 'ee', 'e76ffb6d8361599fcb6e0983698cea2a', 'ee@ee.ee', 'admin', '2017-06-04 11:11:41', 0, 'suspend', '2017-06-05 01:46:08'),
+(13, '', 'ee', '92e57654108d717ad19b301707da2402', 'ee.ee@mailinator.com', 'Level 1, ', '2017-06-04 11:11:41', 0, 'active', '2017-06-05 01:46:08'),
 (14, '', 'ff', '42c1208369f55c49edc989e7aab25848', 'ff@ff.ff', 'admin,', '2017-07-27 06:30:40', 0, 'active', '2017-07-27 06:30:40'),
 (15, '', 'my', '252a17c7412d87f0d9d992da1a2f0803', 'my@my.my', 'sitemin', '2017-06-01 23:31:51', 0, 'active', '2017-06-05 01:46:08');
 -- --------------------------------------------------------
@@ -438,102 +527,19 @@ ALTER TABLE `var`
 --
 -- Dumping data for table `var`
 --
-
 INSERT INTO `var` (`name`, `value`, `note`, `date`) VALUES
 ('sitemin/log/keeped_in_days', '30', 'log before archive', '2018-11-14 00:45:44'),
 ('sitemin/message/max_days', '60', 'message stored peroid', '2018-06-18 12:20:28'),
 ('sitemin/message/max_list_items', '12', 'message in a list page', '2018-06-18 12:20:28'),
 ('sitemin/note/max', '6', 'max note number', '2018-07-05 08:07:53'),
 ('sitemin/testing/value', '36', 'for testing', '2018-08-06 09:26:08'),
-('sitemin/log', '0', 'values:\r\n0: log off; \r\n1: log on;\r\n', '2020-01-07 22:47:42'),
-('sitemin/resetpassword/hash/valid'. '7200', 'two hours(in seconds)', '2020-01-07 22:47:42'),
+('sitemin/log', '1', 'values:\r\n0: log off; \r\n1: log on;\r\n', '2020-02-26 04:04:35'),
 ('sitemin/google/captcha/api', 'https://www.google.com/recaptcha/api/siteverify', '', '2020-01-07 22:14:50'),
 ('sitemin/google/captcha/key', '6LdVH2EUAAAAAD_CVXDvOmRZ3IQvM60XkBy_Kke_', '', '2020-01-07 22:15:54'),
 ('sitemin/google/captcha/secret', '6LdVH2EUAAAAAOuilzwTZko59-xxMP5s30WBO_Mz', '', '2020-01-07 22:17:31'),
-('sitemin/captcha', 'off', 'values:\r\n\"off\": no captcha; \r\n\"google\": use google v2.invisible; \r\n\"local\": use simple SITEMIN generated, no need API calls;', '2020-01-07 22:26:16');
+('sitemin/captcha', 'off', 'values:\r\n\"off\": no captcha; \r\n\"google\": use google v2.invisible; \r\n\"local\": use simple SITEMIN generated, no need API calls;', '2020-01-07 22:26:16'),
+('sitemin/resetpassword/hash/valid', '7200', 'two hours(in seconds)', '2020-03-02 03:09:15');
 -- --------------------------------------------------------
-
---
--- Table structure for table `sitemin_mail_attachment`
---
-DROP TABLE IF EXISTS `sitemin_mail_attachment`;
-CREATE TABLE `sitemin_mail_attachment` (
-  `id` bigint(20) NOT NULL,
-  `mail_id` bigint(20) NOT NULL,
-  `name` varchar(222) NOT NULL,
-  `content` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
---
--- `sitemin_mail_attachment`
---
-ALTER TABLE `sitemin_mail_attachment`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `mail_id` (`mail_id`),
-  ADD KEY `name` (`name`);
---
--- AUTO_INCREMENT `sitemin_mail_attachment`
---
-ALTER TABLE `sitemin_mail_attachment`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
--- --------------------------------------------------------
-
---
--- Table structure for table `sitemin_mail_recipient`
---
-DROP TABLE IF EXISTS `sitemin_mail_recipient`;
-CREATE TABLE `sitemin_mail_recipient` (
-  `id` bigint(20) NOT NULL,
-  `mail_id` bigint(20) NOT NULL,
-  `to` varchar(222) NOT NULL,
-  `ccbcc` varchar(22) DEFAULT 'to'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
---
--- `sitemin_mail_recipient`
---
-ALTER TABLE `sitemin_mail_recipient`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `mail_id` (`mail_id`),
-  ADD KEY `ccbcc` (`ccbcc`),
-  ADD KEY `to` (`to`);
---
--- AUTO_INCREMENT `sitemin_mail_recipient`
---
-ALTER TABLE `sitemin_mail_recipient`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
--- --------------------------------------------------------
-
---
--- Table structure for table `sitemin_mail`
---
-DROP TABLE IF EXISTS `sitemin_mail`;
-CREATE TABLE `sitemin_mail` (
-  `id` bigint(20) NOT NULL,
-  `sender` bigint(20) NOT NULL,
-  `subject` varchar(222) NOT NULL,
-  `body` text NOT NULL,
-  `created` timestamp NOT NULL DEFAULT current_timestamp(),
-  `sent` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
-  `status` varchar(222) NOT NULL,
-  `try` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
---
--- Indexes for table `sitemin_mail`
---
-ALTER TABLE `sitemin_mail`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `sender` (`sender`),
-  ADD KEY `subject` (`subject`),
-  ADD KEY `created` (`created`),
-  ADD KEY `sent` (`sent`),
-  ADD KEY `status` (`status`),
-  ADD KEY `try` (`try`);
---
--- AUTO_INCREMENT for table `sitemin_mail`
---
-ALTER TABLE `sitemin_mail`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
--- --------------------------------------------------------
-
 ";
 
 
