@@ -1,0 +1,72 @@
+<?php
+
+
+?>
+
+
+<?php include _X_LAYOUT . '/sitemin/include_vue.phtml'; ?>
+
+<script>
+var _token='<?=$rs['_token'];?>';
+</script>
+<div class="container-fluid" id="sixthTable">
+	<div class="container">
+			<h3 class="text-uppercase mt-5">Install Zipped Module</h3>
+	</div>
+	<div class="row">
+		<div class="col-md-3">
+		</div>
+		<div class="col-md-6 left-panel">
+			<?php if($rs['msg']):?>
+			<div class="jumbotron">
+			  <h1>File Received</h1>
+			  <?php foreach($rs['msg'] as $k=>$v):?>
+				  <p><?php
+				  	switch(true){
+						case preg_match('/^\*/ims', $v):
+							echo "<span class='alert alert-warning'>$v</span>";
+							break;
+						case preg_match('/^\-\-\-/ims', $v):
+							echo "<hr>";
+							break;
+						case preg_match('/^\-\s/ims', $v):
+							echo "<b>$v</b>";
+							break;
+						default:
+							echo "<span>$v</span>";
+							break;
+					}
+				  ?></p>
+			  <?php endforeach;?>
+			</div>
+			<?php endif;?>
+
+			<?php if(!$rs['unzip']):?>
+				<div class="alert alert-warning">
+				<strong>Missing command line "UNZIP"!</strong> please install command line 'UNZIP'.
+				</div>
+			<?php else:?>
+			<form method="post" enctype="multipart/form-data">
+				<input type="hidden" name='_token' value="<?=$rs['_token'];?>"/>
+				<div class="form-group">
+					<label for="email">Select zip file to upload:</label>
+					<input type="file" name="name" id="name" class="form-control-file border" required/>
+					<button type="submit" class="btn btn-primary">Upload Now</button>
+				</div>
+			</form>
+			<?php endif;?>
+			<p><?=$rs['tree'];?></p>
+
+		</div>
+	</div>
+
+</div>
+<?php //_d($rs['msg']);?>
+<script>
+(function(){
+
+
+})()
+
+</script>
+<hr>

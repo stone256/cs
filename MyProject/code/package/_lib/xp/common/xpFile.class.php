@@ -165,7 +165,7 @@ class xpFile {
             if (is_dir($directory . $r)) {
                 $dirs[] = $r;
                 //$dirs[$r] = self::dir_array($directory.$r,$max_level,$level);
-                
+
             } else {
                 $files[] = $r;
             }
@@ -411,7 +411,7 @@ class xpFile {
                 //				$dy = max(0,($ny - $oy)/2);
                 //				$nw = $ow= $ox < $nx ? $ox : $nx;
                 //				$nh = $oh= $oy < $ny ? $oy : $ny;
-                
+
             break;
         }
         $img = imagecreatetruecolor($nw, $nh);

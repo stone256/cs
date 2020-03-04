@@ -3,6 +3,25 @@
  * depend on sitemin module
  */
 class module_indexController extends sitemin_indexController {
+        function installAction() {
+                $q = $this->q;
+                $token_name = 'module,install';
+                $_token = defaultHelper::page_hash_get($token_name);
+
+
+                $b = shell_exec("unzip --version 2>&1");
+                $rs['unzip'] = preg_match('/not\s+found/ims', $b) ? 0 : 1;
+
+                if ($_FILES['name']/* && $q['_token'] == $_token */) {
+                        //uploading
+                        $rs['msg'] = _factory('module_model')->upload('name');
+
+                }
+                $rs['_token'] = defaultHelper::page_hash_set($token_name);
+                $rs['tpl'] = '/module/view/_install.phtml';
+                $rs['TITLE'] = 'MODULE INSTALL';
+                return array('view' => '/sitemin/view/index.phtml', 'data' => array('rs' => $rs));
+        }
     function controlAction() {
         $q = $this->q;
         $token_name = 'module,control';

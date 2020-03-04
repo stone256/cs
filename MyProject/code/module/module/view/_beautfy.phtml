@@ -9,20 +9,17 @@
 <script>
 var _token='<?=$rs['_token'];?>';
 </script>
-
 <div class="container-fluid" id="sixthTable">
 	<div class="container">
-
 			<h3 class="text-uppercase mt-5">PHP Code Beautfy</h3>
-
 	</div>
 	<div class="row">
 		<div class="col-md-5">
 			<div class="CODE status"></div>
 		</div>
-		<div class="col-md-7">
+		<div class="col-md-7 left-panel">
 			<?php if(!$rs['beautifier']):?>
-				<div class="alert alert-Warning">
+				<div class="alert alert-warning">
 				<strong>Missing command line "PHP_Beautifier"!</strong> run "pear install PHP_Beautifier" ,  click <a href="https://pear.php.net/package/PHP_Beautifier" target="_blank" class="alert-link">here</a> for more info.
 				</div>
 			<?php else:?>
@@ -57,17 +54,19 @@ var aa=0;
 			$(this).remove();
 			//console.log($(this).css({border:"3px red solid"}));
 	})
+
+
+	$('.status').parent().height( Math.max(1000, $('.left-panel').height())).css({background:'#eee'});
+
+
 })()
 
 
 
 function beautify(){
-
 	if(!$('#sixthTable input:checked').length){
 		return common.mask.down();
-
 	}
-
 
 	var e = $('#sixthTable input:checked')[0];
 	$(e).prop( "checked", false );

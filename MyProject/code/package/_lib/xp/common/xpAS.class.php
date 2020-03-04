@@ -1397,7 +1397,7 @@ class xpAS {
             $d = func_get_arg($i);
             if (trim($d) !== '' && $d !== null) return $d;
             //if(isset($d)) return $d;
-            
+
         }
         return null;
     }
@@ -1469,7 +1469,7 @@ class xpAS {
         }
         if (($i = strpos($str, $ptn)) === false) return false;
         return ($after ? $ptn : '') . substr($str, $i); //+($after?-strlen($ptn):0));
-        
+
     }
     /**
      * read til anchor
@@ -1684,7 +1684,7 @@ class xpAS {
                 if (isset($attributes)) {
                     foreach ($attributes as $attr => $val) {
                         if ($get_attributes == 1) $result[$attr] = $val; //Set all the attributes in a array called 'attr'
-                        
+
                         /**  :TODO: should we change the key name to '_attr'? Someone may use the tagname 'attr'. Same goes for 'value' too */
                     }
                 }
@@ -1715,10 +1715,10 @@ class xpAS {
                     if ((is_array($current[$tag]) and $get_attributes == 0) //If it is already an array...
                      or (isset($current[$tag][0]) and is_array($current[$tag][0]) and $get_attributes == 1)) {
                         array_push($current[$tag], $result); // ...push the new element into that array.
-                        
+
                     } else { //If it is not an array...
                         $current[$tag] = array($current[$tag], $result); //...Make it an array using using the existing value and the new value
-                        
+
                     }
                 }
             } elseif ($type == 'close') { //End of tag '</tag>'
@@ -1925,7 +1925,7 @@ class xpAS {
         if (!preg_match('/^https*\:\/\//i', $location) && ($location{0} != '/' && $_SERVER['REDIRECT_URL'])) $location = xpAS::path($_SERVER['REDIRECT_URL']) . $location;
         header("location:$location");
         exit; //stop script
-        
+
     }
     /**
      * redirect to url
@@ -2101,6 +2101,13 @@ class xpAS {
         }
         return '#' . ($arr['grey'] ? $c['r'] . $c['r'] . $c['r'] : implode('', $c));
     }
+     function random_string($length=6, $include_cap=false ) {   //option
+             $string='abcdefghijklmnopqrstuvwxyz0123456789';
+             if($include_cap) $string .= 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+             $deep = strlen($string);
+             for($i=0; $i<$length; $i++) $r .= $string{mt_rand(0, $deep-1)};
+             return $r;
+     }
     /**
      * generate gibberish for html mockup
      *

@@ -6,7 +6,13 @@ class examples_examplesController extends _system_defaultController {
         $rs['menu'] = $menu;
         $rs['root'] = _factory('examples_model')->path;
         $_REQUEST['in'] = $_REQUEST['in'] ? $_REQUEST['in'] : str_replace($rs['root'], '', $menu[0]['content']);
-        return array('data' => array('rs' => $rs));
+        return array(/*'view'=>'xx/xx/xx', will use default view file:examples/view/examples/index.phtml  */ 'data' => array('rs' => $rs)); //data show in view as $rs
+        //THE VIEW DEFAULT:
+        // Modules name : "examples"
+        // VIEW : "view" - system wording
+        // CONTROLLER: "examples"
+        // /action method: "index.phtml" - "indexAction" remove Action, add ".phtml"
+        // examples/view/examples/index.phtml
     }
     function bladeAction() {
         if (_X_VENDOR_PSR !== true) {

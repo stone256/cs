@@ -21,7 +21,7 @@ define('_X_MODULE', _X_CODE . DS . 'module');
 define('_X_PACKAGE', _X_CODE . DS . 'package');
 define('_X_PACKAGE_LIB', _X_PACKAGE . DS . '_lib');
 define('_X_PACKAGE_VENDOR', _X_PACKAGE . DS . '_vendor');
-define('_X_DATA', _X_ROOT . DS . 'data');
+define('_X_DATA',  _X_CODE . DS . 'data');
 define('_X_SYSTEM_DATA', _X_DATA . DS . 'system');
 define('_X_CACHE', _X_DATA . DS . 'cache');
 define('_X_HISTORY', _X_DATA . DS . 'history');
@@ -53,3 +53,6 @@ define('_X_URL_MEDIA', _X_URL_PUBLIC . '/media');
 define('_X_URL_IMAGE', _X_URL_MEDIA . '/image');
 define('_X_URL_VIDEO', _X_URL_MEDIA . '/video');
 define('_X_URL_UPLOAD', _X_URL_MEDIA . '/upload');
+
+define('_X_FAILED', 'failed');
+define('_X_SUCCESS', 'success');

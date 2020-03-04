@@ -1,5 +1,56 @@
 <?php
 class module_model {
+    function upload($f){
+
+// 1..........[
+// 2................name=>b.zip
+// 2................type=>application/x-zip-compressed
+// 2................tmp_name=>/tmp/phpoAVnl5
+// 2................error=>0
+// 2................size=>2386
+// 1..........]
+
+                //move to pool to ubzip it
+                $tmp = "m_".xpAS::random_string(5);
+                $path =  _X_TMP . '/'. $tmp;
+                $new_filename = 'module.zip';
+                xpFile::upload($f, $path, $new_filename);
+                $zip = new ZipArchive();
+                $zip->open($path .'/'.$new_filename);
+                $zip->extractTo($path);
+                $zip->close();
+                unlink($path.'/'.$new_filename);
+                $m = glob("$path/*");
+                if(count($m) != 1 ){
+                        $err[] = "* Module must be zipped with module folder!";
+                        $err[] = " - the folder name will be used as module's name";
+                }
+                if(!$err){
+                        $name = $m[0];
+                        $_n = basename($m[0]);
+                }
+                if(!$err){
+                        if(file_exists(_X_MODULE.'/'.$_n)){
+                                $err[] = '* module already existed!';
+                                $err[] = ' - installation stopped!';
+                        }
+                }
+                if(!$err){
+                        //moving the module
+                        rename($name, _X_MODULE.'/'.$_n);
+                        $note[] =  "The module: \"$_n\" installed.";
+                        $note[] =  "- Please use 'setting->module->enable disable' to enable the module";
+                        if(file_exists(_X_MODULE.'/'.$_n.'/installation.txt')){
+                                $nn = explode("\n", file_get_contents(_X_MODULE.'/'.$_n.'/installation.txt') );
+                                $mm[] = '---';
+                                $note = xpAS::extend($note,$mm);
+                                $note = xpAS::extend($note,$nn);
+                        }
+                }
+                rmdir($path);
+                return $err ? $err : $note;
+
+    }
     function gets() {
         $do_not_touch = ['module', 'sitemin']; //not control here
         $enrr = $this->_enabled_modules();
@@ -15,6 +66,7 @@ class module_model {
         }
         return $crr;
     }
+
     function status($q) {
         $enrr = $this->_enabled_modules();
         //remove backpoint
