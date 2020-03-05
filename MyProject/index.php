@@ -11,8 +11,8 @@
 //fix issue $_SERVER['REQUEST_TIME.. with microtime
 define('_X_START_TIME', microtime(1));
 
-// DIRECTORY_SEPARATOR force window into the correct way 
-define('DS', '/');	
+// DIRECTORY_SEPARATOR force window into the correct way
+define('DS', '/');
 if(!defined('PHP_EOL')) define('PHP_EOL', "\n");
 
 //my root

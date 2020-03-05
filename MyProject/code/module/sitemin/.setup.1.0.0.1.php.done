@@ -33,6 +33,14 @@ ALTER TABLE `api`
   ADD KEY `url` (`url`),
   ADD KEY `description` (`description`),
   ADD KEY `batch` (`batch`);
+--
+-- Dumping data for table `api`
+--
+INSERT INTO `api` (`id`, `batch`, `gateway`, `method`, `path`, `url`, `description`, `created`) VALUES
+('4229544f96aa2e7d870648c6ad9556f2', '5e6046f9e45fc', '_test', 'v', '/sitemin/api/gateway/test/index.php', '/api/test/v', 'testing function return php array', '2020-03-05 00:24:34'),
+('a16234c9ac4e13b9c15ead7db2034787', '5e6046f9e45fc', '_test', 'a', '/sitemin/api/gateway/test/index.php', '/api/test/a', 'testing function return \"ssss\"', '2020-03-05 00:24:34'),
+('d3d2d40c1ce68ea4d7f061f1fa723d8a', '5e6046f9e45fc', '_v2', 'price_history', '/sitemin/api/gateway/v2/index.php', '/api/v2/price_history', 'products', '2020-03-05 00:24:34'),
+('f2a49b6ccb37e9be5029b25d35adaef4', '5e6046f9e45fc', '_test', 'zxzx', '/sitemin/api/gateway/test/index.php', '/api/test/zxzx', 'return json(array) string', '2020-03-05 00:24:34');
 -- --------------------------------------------------------
 
 --
@@ -56,10 +64,10 @@ ALTER TABLE `api_acl`
 -- Dumping data for table `api_acl`
 --
 INSERT INTO `api_acl` (`api_id`, `api_user_id`, `modified`) VALUES
-  ('a16234c9ac4e13b9c15ead7db2034787', 3, '2020-03-03 02:20:00'),
-  ('4229544f96aa2e7d870648c6ad9556f2', 3, '2020-03-03 02:20:00'),
-  ('f2a49b6ccb37e9be5029b25d35adaef4', 3, '2020-03-03 02:20:00'),
-  ('d3d2d40c1ce68ea4d7f061f1fa723d8a', 3, '2020-03-03 02:20:00');
+('a16234c9ac4e13b9c15ead7db2034787', 3, '2020-03-03 02:20:00'),
+('4229544f96aa2e7d870648c6ad9556f2', 3, '2020-03-03 02:20:00'),
+('f2a49b6ccb37e9be5029b25d35adaef4', 3, '2020-03-03 02:20:00'),
+('d3d2d40c1ce68ea4d7f061f1fa723d8a', 3, '2020-03-03 02:20:00');
 -- --------------------------------------------------------
 --
 -- Table structure for table `api_user`
