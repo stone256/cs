@@ -1,0 +1,33 @@
+
+<br><br>
+<div class="row justify-content-center">
+        <div class="modal-content col-6">
+                        <div class="modal-header  login-logo">
+                                <div class="title">
+                                        <h4 class="">QR Code Generator</h4>
+                                </div>
+                        </div>
+                        <div class="modal-body text-center">
+
+                                        <input type="text" placeholder="contents" required="" name="hints" class="form-control input-lg" id="contents">
+                                </br>
+                                        <button type="button" value="1" name="save" class="btn btn-lg btn-alert" onclick="qrcode()" id="save">
+                                                <span>Generate</span>
+                                        </button>
+                                <br/><br/>
+                                <div class="Hide status"></div>
+
+                        </div>
+                </div>
+        </div>
+</div>
+
+<script>
+function qrcode(){
+        common.mask.up();
+        var con = $('#contents').val() || window.location.href;
+        var api = 'https://api.qrserver.com/v1/create-qr-code/?data=' + encodeURIComponent(con);
+
+        $('.status').html('').show().append('<img src="'+api+'" onload="common.mask.down()" />')
+}
+</script>

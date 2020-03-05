@@ -37,7 +37,7 @@ ALTER TABLE `acl_menu`
 --
 INSERT INTO `acl_menu` (`id`, `parent_id`, `display`, `router`, `order`) VALUES
 (1, 0, 'ROOT', NULL, 0),
-(2, 75, 'User Control', '', 2),
+(2, 75, 'User Control', '', 3),
 (82, 2, 'Users', '/sitemin/user', 0),
 (5, 5, 'Router', '/sitemin/acl/router', 0),
 (6, 2, 'Role', '/sitemin/acl/role', 2),
@@ -49,23 +49,27 @@ INSERT INTO `acl_menu` (`id`, `parent_id`, `display`, `router`, `order`) VALUES
 (19, 19, 'Menu Control', '/sitemin/acl/menutree', 0),
 (28, 10, 'Example', '/examples', 0),
 (91, 91, 'router', '/sitemin/acl/router', 0),
-(90, 75, 'mail queue', '/sitemin/mail/queue', 5),
-(77, 75, 'Var', '/sitemin/var', 4),
+(90, 75, 'mail queue', '/sitemin/mail/queue', 6),
+(77, 75, 'Var', '/sitemin/var', 5),
 (85, 85, 'API', '', 0),
 (73, 73, 'Cron', '/sitemin/cron', 0),
 (75, 1, 'Setting', '', 2),
 (88, 85, 'ACL', '/api/acl', 3),
 (92, 75, 'menu control', '/sitemin/acl/menutree', 0),
 (94, 2, 'router', '/sitemin/acl/router', 1),
-(93, 75, 'cron', '/sitemin/cron', 3),
+(93, 75, 'cron', '/sitemin/cron', 4),
 (95, 1, 'api', '', 1),
 (96, 95, 'list', '/api/list', 0),
 (97, 95, 'user', '/api/user', 2),
 (98, 95, 'acl', '/api/acl', 1),
-(99, 75, 'modules', '', 1),
-(100, 99, 'enadle disable', '/module/control', 0),
+(99, 75, 'modules', '', 2),
+(100, 99, 'enadle disable', '/module/control', 1),
 (101, 99, 'beautify', '/module/beautify', 2),
-(102, 99, 'zipped module install', '/module/install', 1);
+(103, 99, 'install', '/module/install', 0),
+(104, 1, 'tools', '', 4),
+(105, 104, 'my-ip', '/sitemin/helper/checkmyip', 0),
+(106, 104, 'hash generator', '/sitemin/helper/passwordgenerator', 2),
+(107, 104, 'qr-code generator', '/sitemin/helper/qrcode', 1);
 -- --------------------------------------------------------
 
 --
@@ -148,7 +152,7 @@ INSERT INTO `acl_router` (`id`, `router`, `role`, `modified`) VALUES
 (43, '/sitemin/acl/object/search', 'admin,', '2017-06-11 21:38:12'),
 (44, '/sitemin/acl/router', 'sitemin,', '2017-07-16 20:32:02'),
 (45, '/sitemin/acl/router/change', 'sitemin,', '2017-07-16 20:32:03'),
-(46, '/sitemin/login', 'public,admin,sitemin,designer,cms,crawler master,Level 1,Level 2,', '2017-07-16 20:31:40'),
+(46, '/sitemin/login', 'public,admin,sitemin,designer,cms,crawler master,Level 1,Level 2,s-master,', '2017-07-16 20:31:40'),
 (47, '/sitemin/loginajax', 'public,admin,sitemin,cms,designer,crawler master,Level 1,Level 2,', '2017-07-16 20:31:43'),
 (48, '/sitemin/user', 'sitemin,', '2017-07-16 20:31:53'),
 (49, '/sitemin/user/password', 'sitemin,', '2017-07-16 20:31:54'),
@@ -165,7 +169,7 @@ INSERT INTO `acl_router` (`id`, `router`, `role`, `modified`) VALUES
 (73, '/sitemin/acl/menutree/item_move_1', 'sitemin,', '2017-07-16 20:32:09'),
 (74, '/sitemin/acl/menutree/item_move_2', 'sitemin,', '2017-07-16 20:32:09'),
 (75, '/sitemin/dashboard', 'sitemin,crawler master,admin,designer,Level 1,Level 2,', '2017-07-16 20:31:25'),
-(138, '/sitemin/logout', 'public,cms,designer,sitemin,admin,crawler master,Level 1,Level 2,', '2017-07-16 20:31:48'),
+(138, '/sitemin/logout', 'public,cms,designer,sitemin,admin,crawler master,Level 1,Level 2,s-master,', '2017-07-16 20:31:48'),
 (139, '/sitemin/log/crawlers', 'sitemin,admin,cms,', NULL),
 (140, '/sitemin/log/tasks', 'sitemin,admin,cms,', NULL),
 (141, '/sitemin/log/tasks/data', 'sitemin,admin,cms,', NULL),
@@ -175,7 +179,7 @@ INSERT INTO `acl_router` (`id`, `router`, `role`, `modified`) VALUES
 (145, '/sitemin/maintenance/crawlerinfo', 'sitemin,admin,', NULL),
 (149, '/sitemin/maintenance/proxy_gets', 'sitemin,', NULL),
 (150, '/sitemin/maintenance/proxylist', 'sitemin,admin,public,cms,designer,', NULL),
-(210, '/sitemin/keepalive', 'cms,designer,sitemin,admin,Level 1,Level 2,crawler master,', NULL),
+(210, '/sitemin/keepalive', 'cms,designer,sitemin,admin,Level 1,Level 2,crawler master,s-master,', NULL),
 (222, '/sitemin/user/message', 'sitemin,', NULL),
 (247, '/sitemin/cron', 'sitemin,', NULL),
 (248, '/sitemin/backup', 'sitemin,', NULL),
@@ -212,7 +216,10 @@ INSERT INTO `acl_router` (`id`, `router`, `role`, `modified`) VALUES
 (284, '/sitemin/requestpassword', 'sitemin,', NULL),
 (285, '/sitemin/resetpassword', 'sitemin,', NULL),
 (286, '/sitemin/mail/cron', 'public,', NULL),
-(287, '/module/install', 'sitemin,', NULL);
+(287, '/module/install', 'sitemin,', NULL),
+(288, '/sitemin/helper/checkmyip', 'public,sitemin,admin,', NULL),
+(289, '/sitemin/helper/passwordgenerator', 'sitemin,admin,public,', NULL),
+(290, '/sitemin/helper/qrcode', 'sitemin,admin,public,', NULL);
 -- --------------------------------------------------------
 
 --

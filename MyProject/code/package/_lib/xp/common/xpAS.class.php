@@ -1414,15 +1414,6 @@ class xpAS {
         return $str;
     }
     /**
-     * blank of cc number
-     *
-     * @param str $ccn
-     */
-    function cc_blank($ccn, $m = 8, $t = 4) {
-        $ccn = preg_replace('/\s/', '', $ccn);
-        return preg_replace('/(\d*)(\d{' . $m . '})(\d{' . $t . '})/', "$1********$3", $ccn);
-    }
-    /**
      * reading string unitil $del; or to the end, if no $del
      *
      * @param string $str
@@ -1600,6 +1591,25 @@ class xpAS {
             $str{$i} = $str{$i} ^ ($cipher[$i % $keylength]);
         }
         return $str;
+    }
+    /**
+     * shorting hash
+     *
+     * @param string $hash	:hash
+     * @param int $l            :length
+     * @return string
+     */
+    function short($hash='1234567890', $l=8){
+            //$hash='13!Asf#!$!@$';
+            $len = strlen($hash)-1;     //index start from 0;
+            $b = '';
+            $p=0;
+            while(strlen($b) < $l){
+                $a = $hash{$p};
+                $p = ord($a) % $len;
+                $b .= base_convert(ord($hash{$p}), 10, 36);
+            }
+            return $b;
     }
     /**
      * generate password

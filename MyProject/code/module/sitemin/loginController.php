@@ -21,7 +21,7 @@ class sitemin_loginController extends _system_defaultController {
         $this->captcha = _factory('sitemin_model_captcha_' . $type);
         //testing
         //$this->captcha->test();
-        
+
     }
     function dashboardAction() {
         $rs['tpl'] = 'user' . DS . '_dashboard.phtml';
@@ -32,59 +32,6 @@ class sitemin_loginController extends _system_defaultController {
         $rs['tpl'] = '_test.phtml';
         $rs['TITLE'] = 'SITEMIN TEST';
         return array('view' => '/sitemin/view/index.phtml', 'data' => array('rs' => $rs));
-    }
-    function hashgeneratorAction() {
-        $q = $this->q;
-        $cmds = array('crypt', 'htmlentities', 'htmlspecialchars', 'md5', 'metaphone', 'nl2br', 'sha1', 'base64_decode', 'base64_encode', 'strlen', 'strtolower', 'strtoupper',);
-        if ($q['save']) {
-            if (in_array($cmd = $q['cmd'], $cmds)) {
-                $r = $q['short'] ? $cmd($q['hint'], $q['short']) : $cmd($q['hint']);
-            } else {
-                $r = '1234129086628726923972393453485934858349563492';
-            }
-            echo ($r);
-            die();
-        }
-        $rs['cmds'] = $cmds;
-        $rs['tpl'] = 'user/_hashgenerator.phtml';
-        $rs['TITLE'] = 'SITEMIN HASH GENERATOR';
-        return array('view' => '/sitemin/view/index.phtml', 'data' => array('rs' => $rs));
-    }
-    function passwordgeneratorAction() {
-        $q = $_REQUEST;
-        if ($q['save']) {
-            //$l = new admin_model_login;
-            //if($l->captcha($q)) die("Google said: you are robot!");
-            $r = md5(md5($q['hint']) . xpAS::roller($q['hint']));
-            if ($q['short']) $r = $this->_short($r);
-            die($r);
-        }
-        $rs['tpl'] = '_passwordgenerator.phtml';
-        $rs['TITLE'] = 'PASSWORD GENERATOR';
-        return array('view' => '/sitemin/view/user/index.phtml', 'data' => array('rs' => $rs));
-    }
-    function csv2jsonAction() {
-        ini_set('memory_limit', '664M');
-        $q = $_REQUEST;
-        if ($q['save']) {
-            //$l = new admin_model_login;
-            //if($l->captcha($q)) die("Google said: you are robot!");
-            $name = $_FILES['csv']['tmp_name'];
-            //_dv(file_get_contents($name));
-            $r = xpCSV::gets("$name");
-            switch ($q['type']) {
-                case 'JSON':
-                    $data = json_encode($r);
-                break;
-                case 'PHP ARRAY': //if( !xpCaptcha::check($q['vcode']) ) $ret = array('status' =>'failed',  'msg'=>'Robot check failed, Vcode error, click on image to refresh code', 'msg_type'=>'warning' );
-                    
-                break;
-            }
-            $rs['data'] = $data;
-        }
-        $rs['tpl'] = '_csv2json.phtml';
-        $rs['TITLE'] = 'SITEMIN CSV2JSON';
-        return array('view' => '/sitemin/view/user/index.phtml', 'data' => array('rs' => $rs));
     }
     function _short($r) {
         //return base_convert(array_sum(str_split($r)), 16, 36);
