@@ -21,4 +21,12 @@ class sitemin_varController extends sitemin_indexController {
         $rs['TITLE'] = 'SITEMIN VAR';
         return array('view' => '/sitemin/view/index.phtml', 'data' => array('rs' => $rs));
     }
+    function constantAction() {
+
+        $rs['constants'] = xpAS::get_globals('user');
+        $rs['tpl'] = '_defined.phtml';
+        $rs['TITLE'] = 'SITEMIN DEFINED';
+        return array('view' => '/sitemin/view/index.phtml', 'data' => array('rs' => $rs));
+    }
+
 }

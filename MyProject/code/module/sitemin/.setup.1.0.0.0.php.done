@@ -69,7 +69,8 @@ INSERT INTO `acl_menu` (`id`, `parent_id`, `display`, `router`, `order`) VALUES
 (104, 1, 'tools', '', 4),
 (105, 104, 'my-ip', '/sitemin/helper/checkmyip', 0),
 (106, 104, 'hash generator', '/sitemin/helper/passwordgenerator', 2),
-(107, 104, 'qr-code generator', '/sitemin/helper/qrcode', 1);
+(107, 104, 'qr-code generator', '/sitemin/helper/qrcode', 1),
+(108, 75, 'System Constants', '/sitemin/constant', 1);
 -- --------------------------------------------------------
 
 --
@@ -131,7 +132,6 @@ ALTER TABLE `acl_router`
 --
 -- Dumping data for table `acl_router`
 --
-
 INSERT INTO `acl_router` (`id`, `router`, `role`, `modified`) VALUES
 (1, '/exception', 'public,sitemin,client,sales,cms,admin,Level 1,Level 2,crawler master,designer,', '2017-06-24 15:53:13'),
 (2, '/404', 'public,sitemin,admin,cms,Level 2,Level 1,crawler master,designer,', '2017-06-24 15:53:16'),
@@ -219,7 +219,8 @@ INSERT INTO `acl_router` (`id`, `router`, `role`, `modified`) VALUES
 (287, '/module/install', 'sitemin,', NULL),
 (288, '/sitemin/helper/checkmyip', 'public,sitemin,admin,', NULL),
 (289, '/sitemin/helper/passwordgenerator', 'sitemin,admin,public,', NULL),
-(290, '/sitemin/helper/qrcode', 'sitemin,admin,public,', NULL);
+(290, '/sitemin/helper/qrcode', 'sitemin,admin,public,', NULL),
+(291, '/sitemin/constant', 'sitemin,admin,', NULL);
 -- --------------------------------------------------------
 
 --

@@ -33,7 +33,9 @@ $routers = [
 '/sitemin/acl/role' => '/sitemin/acl@role', '/sitemin/acl/role/edit' => '/sitemin/acl@roleedit',
 '/sitemin/acl/role/delete' => '/sitemin/acl@roledelete', '/sitemin/acl/role/search' => '/sitemin/acl@rolesearch',
 //sitemin config var
-'/sitemin/var' => '/sitemin/var@index', '/sitemin/status' => '/sitemin/index@status', '/sitemin/cron' => '/sitemin/cron@index',
+'/sitemin/var' => '/sitemin/var@index',
+'/sitemin/constant' => '/sitemin/var@constant',
+'/sitemin/status' => '/sitemin/index@status', '/sitemin/cron' => '/sitemin/cron@index',
 //called by system cron or external cron
 '/sitemin/cron/call' => '/sitemin/cron@run',
 //called by internal cron (via cron@run and sitemin_crontab table!)
