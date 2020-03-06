@@ -6,7 +6,7 @@
 //error_reporting(E_ALL);
 class sitemin_loginController extends _system_defaultController {
     var $captcha;
-    var $captcha_type = ['off' => 'off', 'google' => 'google', 'local' => 'local'];
+    var $captcha_type = ['off' => 'off', 'googlev2' => 'googlev2', 'local' => 'local'];
     function __construct() {
         $this->q = $_REQUEST;
         $_p = _url();
@@ -18,6 +18,7 @@ class sitemin_loginController extends _system_defaultController {
     function _captcha() {
         $type = $this->captcha_type[_factory('sitemin_model_var')->get('sitemin/captcha') ];
         $type = $type ? : 'off';
+        //_d($type, 1);
         $this->captcha = _factory('sitemin_model_captcha_' . $type);
         //testing
         //$this->captcha->test();
@@ -68,7 +69,7 @@ class sitemin_loginController extends _system_defaultController {
         //check hash
         //if google bot check used
         //f**k the captcha which is not able to work in old firefox: _x_captcha ...com/sitemin/login
-        $rs['google_key'] = _config('google,bot check,key');
+        $rs['google_key'] = _factory('sitemin_model_var')->get('sitemin/google/captcha/key');
         $rs['captcha_html'] = $this->captcha->html();
         $rs['no_captcha'] = !$this->captcha;
         $rs['tpl'] = 'user/_resetpassword.phtml';
@@ -92,6 +93,7 @@ class sitemin_loginController extends _system_defaultController {
             die(json_encode($ret));
         }
         $rs['captcha_html'] = $this->captcha->html();
+        $rs['google_key'] = _factory('sitemin_model_var')->get('sitemin/google/captcha/key');
         $rs['ret'] = $r;
         $rs['tpl'] = 'user/_login.phtml';
         $rs['TITLE'] = 'SITEMIN LOGIN';

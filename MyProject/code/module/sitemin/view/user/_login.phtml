@@ -31,28 +31,6 @@ $captcha = !$rs['no_captcha'];
 	    	<?=$rs['captcha_html'];?>
 
 
-<!--
-					<label for="vcode" ><span class="fa fa-picture-o"></span> Vcode (Click the image to get a new one)</label>
-					<img class="vcode-image mt-2 mb-2" style="cursor:pointer;border:1px solid #bbb;padding:1%;width:100%" onclick="this.src='<?=_X_URL?>/helper/vcode?a='+Math.random()" src="<?=_X_URL?>/helper/vcode">
-					<input type="text" placeholder="Click the image to get a new one" required="" name="vcode" class="form-control input-lg vcode-input" id="vcode">
--->
-		<!--			<label> &nbsp;	<br/>
-						<div class="g-recaptcha" data-sitekey="<?=$rs['google_key'];?>"></div>
-						&nbsp;	<br/>
-
-					</label>
-					<label for="save" class="hidden-xs">&nbsp;</label>
-		-->
-
-		<!--<script src="https://www.google.com/recaptcha/api.js?render=reCAPTCHA_site_key"></script>
-		  <script>
-		  grecaptcha.ready(function() {
-		      grecaptcha.execute('<?=$rs['google_key'];?>', {action: 'login'}).then(function(token) {
-		      });
-		  });
-		  </script>
-		-->
-
                     <div class="ml-4 my-4">
                         <label class="form-check-label">
                             <input type="checkbox" class="form-check-input" name="keeplogin" value="1"><strong>Keep me logged in</strong>
