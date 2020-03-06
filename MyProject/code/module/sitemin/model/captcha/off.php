@@ -1,5 +1,5 @@
 <?php
-class sitemin_model_captcha_off implements sitemin_model_captcha {
+class sitemin_model_captcha_off extends sitemin_model_captcha {
     static $on = false;
     //validate returns
     function validate($data) {

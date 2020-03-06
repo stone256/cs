@@ -1,7 +1,10 @@
 <?php
-interface sitemin_model_captcha {
+class sitemin_model_captcha {
+
+        var $type = ['off' => 'off', 'googlev2' => 'googlev2', 'local' => 'local', "QR"=>"QR"];
+
     //validate returns
-    function validate($data);
+    function validate($data){}
     //generate html block
-    function html();
+    function html(){}
 }

@@ -6,7 +6,7 @@
 //error_reporting(E_ALL);
 class sitemin_loginController extends _system_defaultController {
     var $captcha;
-    var $captcha_type = ['off' => 'off', 'googlev2' => 'googlev2', 'local' => 'local'];
+   // var $captcha_type = ['off' => 'off', 'googlev2' => 'googlev2', 'local' => 'local', "QR"];
     function __construct() {
         $this->q = $_REQUEST;
         $_p = _url();
@@ -16,7 +16,7 @@ class sitemin_loginController extends _system_defaultController {
         $this->_captcha();
     }
     function _captcha() {
-        $type = $this->captcha_type[_factory('sitemin_model_var')->get('sitemin/captcha') ];
+        $type = _factory('sitemin_model_captcha')->type[_factory('sitemin_model_var')->get('sitemin/captcha') ];
         $type = $type ? : 'off';
         //_d($type, 1);
         $this->captcha = _factory('sitemin_model_captcha_' . $type);
@@ -79,6 +79,18 @@ class sitemin_loginController extends _system_defaultController {
     function loginAction() {
         if (!($r = defaultHelper::return_url())) $r = _X_URL . '/sitemin/dashboard';
         $q = $_REQUEST;
+        if($q['cmd'] == 'QRcheck'){
+                $data= json_decode(base64_decode($q['data']), 1);
+                if(!$this->captcha->check($data)) die('Check Failed');
+                $q['email'] = $data[0];
+                $q['password'] = $data[1];
+                $r = $this->_login($q);
+                $_SESSION['QRmark'] = $r['status'] == 'failed' ? 0 : 1;
+                die($r['status'] == 'failed' ? 'Check Failed' : 'Check OK<script>window.close();</script>');
+        }
+        if($q['isQRlogin']){
+                die($_SESSION['QRmark'] ?  'ok':'failed');
+        }
         if ($q['password']) { //try login
             $ret = $this->_login($q);
             if ($ret['status'] == 'ok') {

@@ -1,5 +1,5 @@
 <?php
-class sitemin_model_captcha_local implements sitemin_model_captcha {
+class sitemin_model_captcha_local extends sitemin_model_captcha {
     static $on = false;
     //validate returns
     function validate($q) {
