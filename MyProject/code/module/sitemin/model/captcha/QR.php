@@ -30,8 +30,9 @@ class sitemin_model_captcha_QR extends sitemin_model_captcha {
                                     window.location = "sitemin/dashboard";
                                     return 0;
                             }
-                            if(isQRloginCheck++ > 900){
+                            if(data =="failed:failed" || isQRloginCheck++ > 600 ){
                                     alert("Login failed, refresh window and try again");
+                                     window.location = "sitemin/login";
                                     return ;
                             }
                             setTimeout(function(){ qrcheck() ;}, 100) ;
@@ -52,7 +53,11 @@ class sitemin_model_captcha_QR extends sitemin_model_captcha {
                         imglink += encodeURIComponent(callback);
                         //alert(imglink);
                         var p = $("#save").parent();
-                        $(this).parent().html("<img src=\""+imglink+"\"  >");
+                        var con = "";
+                        con += "<div id=\"tbar\"  data-time=\"60\" ></div>"
+                        con += "<img class=\"fl mr8\" src=\""+imglink+"\"  ><p class=\"ml8\">scan QR Code to verify login</p>";
+                        $(this).parent().html(con);
+                        common.time_bar.init("#tbar");
                         setTimeout(function(){ qrcheck() ;}, 500)
                         return false;
                 });

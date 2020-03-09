@@ -27,6 +27,42 @@ var common ={
 		}
 
 	},
+	time_bar:{
+			count: 0,
+			width : 0,
+			tick : 60,
+			timer : 30000,
+			handler:null,
+			selector:'#time-bar',
+			cursor:'#time-bar-display',
+			f: function(){common.mask.up();  $(common.time_bar.selector).attr('id', 'pass0000').css({height:'4px',background:'red'}).html(' '); setTimeout(function(){ window.location.reload();}, 10); },
+			init:function(sel){
+				sel = sel || '#time-bar';
+				common.time_bar.selector = sel;
+				if(!$(sel) ) return;
+				var e = $(sel);
+				common.time_bar.timer = e.attr('data-time') * 1000;
+				common.time_bar.width = e.width();
+				if(e.attr('data-func'))
+					common.time_bar.f = e.attr('data-func');
+				e.css({background: '#ddd', height:'2px'}).html('<div id="time-bar-display" style="width:0;height:2px;background:#00f;"></div>');
+				common.time_bar.bar();
+			},
+			bar: function(func){
+				if(common.time_bar.count++ >= common.time_bar.timer/common.time_bar.tick -1 ) {
+					setTimeout(common.time_bar.f, 1);
+					common.time_bar.count = 0;
+				}
+				$(common.time_bar.cursor).css({'width': common.time_bar.count * common.time_bar.width * common.time_bar.tick / common.time_bar.timer + "px"});
+				common.time_bar.start();
+			},
+			start:function(){
+				common.time_bar.handler = setTimeout(common.time_bar.bar, common.time_bar.tick);
+			},
+			stop:function(){
+				clearTimeout(common.time_bar.handler);
+			}
+	},
 	sound:{	//AV alerts
 		_a:false ,
 		_alert:{ok:{frequency:2120,duration:200}, alarm:{frequency:900,duration:200}, error:{frequency:390, duration:450}, ping:{frequency:[555, 555], duration:[200, 140]}, keyin:{frequency:15, duration:35}},

@@ -85,16 +85,22 @@ class sitemin_loginController extends _system_defaultController {
                 $q['email'] = $data[0];
                 $q['password'] = $data[1];
                 $r = $this->_login($q);
-                $_SESSION['QRmark'] = $r['status'] == 'failed' ? 0 : 1;
+                $_SESSION['QRmark'] = $r['status'] == 'failed' ? -1 : 1;
                 die($r['status'] == 'failed' ? 'Check Failed' : 'Check OK<script>window.close();</script>');
         }
         if($q['isQRlogin']){
-                if($_SESSION['QRmark']){
-                        $_SESSION['QRmark'] = null;
-                        $_SESSION['QR'] = null;
-                        die('ok');
+                switch(true){
+                        case $_SESSION['QRmark'] == 1:
+                                $_SESSION['QRmark'] = null;
+                                $_SESSION['QR'] = null;
+                                die('ok');
+                        case $_SESSION['QRmark'] == -1:
+                                $_SESSION['QRmark'] = null;
+                                $_SESSION['QR'] = null;
+                                die('failed:failed');
+                        default:
+                                die('failed');
                 }
-                die('failed');
         }
         if ($q['password']) { //try login
             $ret = $this->_login($q);
