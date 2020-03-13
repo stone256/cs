@@ -83,7 +83,7 @@ class app {
             rename($v, $v . ".done");
         }
 
-        include_once ($router['file']);
+        //include_once ($router['file']);
         //init control
         $controller = new $router['controller']($router);
         if (!method_exists($controller, $action = $router['action'])) $this->at_404("missing action : {$controller}->{$action}");
