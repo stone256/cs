@@ -54,8 +54,15 @@ var _token='<?=$rs['_token'];?>';
 
 	<div class="container">
 
-			<h3 class="text-uppercase mt-5">System Vars</h3>
-			<table class="table table-striped table-hover">
+			
+			<table class="table">
+				<tr><td colspan="5"> </td></tr>
+				<tr><td colspan="5">
+						<div class="row">
+						<h3 class="text-uppercase mt-5">System Vars</h3>
+						</div>
+					</td>
+				</tr>
 				<tr>
 					<th v-on:click="sortTable('name')">[name]
 						<div class="arrow"  v-if=" 'name' == sortColumn" v-bind:class="[ascending ? 'arrow_up' : 'arrow_down']"></div>
