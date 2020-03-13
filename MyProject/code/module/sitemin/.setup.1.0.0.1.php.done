@@ -80,7 +80,7 @@ CREATE TABLE `api_user` (
   `detail` text NOT NULL,
   `quota` bigint(20) NOT NULL DEFAULT 0,
   `quota_type` enum('day','month','year','topup') NOT NULL,
-  `quota_start` date NOT NULL DEFAULT current_timestamp(),
+  `quota_start` date,
   `quota_remain` bigint(20) NOT NULL DEFAULT 0,
   `created` datetime DEFAULT NULL,
   `modified` timestamp NULL DEFAULT NULL,
