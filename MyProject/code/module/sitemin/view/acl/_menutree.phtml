@@ -20,10 +20,10 @@
 
 ?>
 
-	<div class="medications-action row">
-       <div class="px-5 mt-4">
-	        <h3>MENU <span class = "small">- sitemin menu edit</span> </h3>
-        </div>
+<div class="medications-action row">
+	<div class="col-sm-12 pl-5">
+		        	<h3>MENU <span class = "small">- sitemin menu edit</span> </h3>
+	</div>
 	</div>
 
 
@@ -89,7 +89,7 @@ overflow:scroll;
 $template = <<<EOF
 
 <div  class="menu-root" >
-	<h4 class="menu-title pl-5 pb-4">Menu <small>You can drag, edit, add and delete menu item <small></h4>
+	<h3 class="menu-title">Menu <small>You can drag, edit, add and delete menu item <small></h3>
 	<ul class="tree pb-3"  >
 		<!-- recursion start children -->
 		<li id="m_{{id}}" class="pt-3">
@@ -133,7 +133,7 @@ $menutree_html = $tpl->html(false);
 	<div class="row">
 
 		<div class="col-sm-4 pl-5">
-			<h4 class="menu-title pb-4">Router</h4>
+			<h3 class="menu-title">Router</h3>
 			<div class="router mt-5 pt-3">
 				<?php foreach($rs['router'] as $k=>$v):?>
 				<a href="<?=$k;?>" class="px-3 "><!--<i class="fa fa-long-arrow-right " aria-hidden="true"></i> &#8259; &#8669;&#8872; -->&#8887;</a><?=$k;?> &nbsp;

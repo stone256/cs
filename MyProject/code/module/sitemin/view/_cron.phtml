@@ -89,10 +89,9 @@ var _token='<?=$rs['_token'];?>';
 			<ul>
 				<li>To run system command: attached "$" in front of the command. e.g. <CODE>$echo "abc"</CODE><br>&nbsp;</li>
 				<li>When you use ">" to redirect outout, please use "|" pipeline and some command at end as the corn call will attached ">/dev/null 2>&1" at end of the command.<br>
-					<br> e.g. <CODE>$date > /tmp/daterecord.txt</CODE> to <CODE>$date > /tmp/daterecord.txt | echo "done"</CODE>
+					e.g. <CODE>$date > /tmp/daterecord.txt</CODE> to <CODE>$date > /tmp/daterecord.txt | echo "done"</CODE>
 				</li>
-                <li></li>
-				<li>Each time, "/sitemin/cron/call" been call, it will issue the task that the next is less the now
+				<li>Each time, "/sitemin/cron/call" been call, it will issue the task which  has next value in past(less than now)
 			</ul>
 			<div >
 				<table class="table table-striped table-hover mt-5">

@@ -1,5 +1,8 @@
 <?php
 class examples_examplesController extends _system_defaultController {
+        function __construct(){
+                session_start();
+        }
     function indexAction() {
         global $cfg;
         $menu = _factory('examples_model')->get_menu();

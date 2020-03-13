@@ -58,7 +58,7 @@ class module_indexController extends sitemin_indexController {
             $a = shell_exec("php_beautifier --version 2>&1");
             $rs['beautifier'] = preg_match('/not\s+found/ims', $a) ? 0 : 1;
             //quick tree build
-            $rs['tree'] = xpAS::tree_with_tick(xpFile::dir_tree(_X_ROOT), 'root', 5);
+            $rs['tree'] = xpAS::tree_with_tick(xpFile::dir_tree(_X_ROOT), 'root', 50);
             //_d($rs, 1);
             $rs['_token'] = defaultHelper::page_hash_set($token_name);
             $rs['tpl'] = '/module/view/_beautfy.phtml';

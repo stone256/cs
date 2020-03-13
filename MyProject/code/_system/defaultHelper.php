@@ -275,7 +275,7 @@ function _factory() {
     return $objects[$name] = new $name(...$args[0]);
     //else use
     //  return  $objects[$name] = call_user_func_array([ $name, '__construct'], $args[0]);
-    
+
 }
 function _config($name, $value=null) {
     static $cnf;
@@ -293,7 +293,7 @@ function _url() {
 }
 function _r_url() {
     return $_SERVER['REDIRECT_URL']; // REQUEST_URI
-    
+
 }
 function _rp($path) {
     return str_replace(_X_ROOT, '', _WDF($path));
@@ -314,4 +314,8 @@ function _ud($d) {
 //fix windows directory divider
 function _WDF($d){
     return str_replace('\\', '/', $d);
+}
+
+function _alter($str, $from=' ' , $to='_'){
+                return str_replace($from, $to, $str);
 }
