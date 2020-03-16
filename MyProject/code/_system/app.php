@@ -168,7 +168,7 @@ class app {
      * @return return uri
      */
     function _get_url() {
-        $u = $_SERVER['REQUEST_URI'];
+        $u = $_SERVER['REDIRECT_URL'];
         $u = str_replace(_X_OFFSET, '', $u);
         //in case of none encode http:// [ // ] - preg_quote, does not qoute / -
         $q = preg_quote($_SERVER['QUERY_STRING']);
