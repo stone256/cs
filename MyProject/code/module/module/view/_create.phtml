@@ -1,0 +1,163 @@
+<?php
+?>
+
+<div class="container">
+		<div class="title">
+			<h3 class="mt-4 textAlignCenter">Create a module from simple template</h3>
+		</div>
+
+
+		 <!-- file permission-->
+		 <div class="form-group file-permission">
+			 <!-- file permission-->
+			 <div class="permission"> </div>
+			 <div class="clear"></div>
+			 <!-- retry -->
+			 <span class="floatRight re-test-file"> Please change the permission  by "chmod", "chown", and  <button type="button" id="re-test-file" class="none btn btn-danger " onclick="test_file_permission()"> Test again</button></span>
+		 </div>
+		 <div class="clear"></div>
+
+
+		 <!-- module name-->
+		 <form action="?" id="db-form" method="post">
+		 	<div class="form-items">
+			 	<input type="hidden" name="step" id="step" value="test name" />
+				<div class="form-group">
+					<label for="host">Name: (allowed character: a-z, 0-9, _ ; start a-z)</label>
+					<input type="text" class="form-control" placeholder="Enter module name " value="" id="name" name="name" required>
+				</div>
+				<!-- retry -->
+				<span class="floatRight re-test-name"> <button type="button"  class="none btn btn-danger " onclick="test_name()">Test Name</button></span>
+			</div>
+			<div class="clear"></div>
+			<div>&nbsp;</div>
+			<pre class="msg p20 mt-20 Black Hide "></pre>
+
+			<!-- to install after all checks ok -->
+			<span class="floatRight Hide next" >
+				All checks OK,
+				 <br>to create click <button type="button"  onclick="create()" class="btn btn-info " >here</button>,
+				 <br> it may take a few seconds,
+			 </span>
+		</form>
+
+		<div class="clear"></div>
+		<div class="form-group created Hide">
+			<div class="jumbotron alert alert-warning">
+				<h1>Module created!</h1>
+				<div class="clear"></div>
+				<h4 class="fr"> <a></a></h4>
+				<div class="clear"></div>
+				<p class="fr"><b>To enable it go to Setting->Module-><a href="module/control">Enable/Disable</a></b></p>
+				<div class="clear"></div>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="clear"></div>
+</div>
+
+<script>
+
+var checked = {file:0, db:0};
+
+(function($){
+	test_file_permission()
+})(jQuery)
+
+
+
+function create(){
+
+	$('.file-permission').fadeOut();
+	$('#db-form').fadeOut();
+	$('#step').val("create")
+
+	common.mask.up();
+	$.ajax({
+		dataType:'json',
+		type:'post',
+		data: $('#db-form').serialize(),
+		success: function(ret){
+			common.mask.down();
+			if(ret && ret.status !='failed'){
+				$('.created').fadeIn();
+			}else{
+				$('#db-form').fadeIn();
+				$('.re-test-name').show();
+				$('.form-items').fadeIn();
+				$('.msg').html(ret.data).fadeIn();
+				$('.next').hide();
+			}			
+		}
+	});
+
+}
+
+
+function test_file_permission(){
+
+	$('.permission').fadeOut().html("");
+	$('.re-test-file').hide();
+	common.mask.up();
+	$.ajax({
+		dataType:'json',
+		data:{step:'file permission', a:Math.random()},
+		type:'post',
+		success: function(ret){
+			if(ret.data.ok)
+				ret.data.ok.forEach(function(v, i){
+					$('.permission').append('<div class="alert alert-success wp100"><strong><i class="fa fa-check-square" aria-hidden="true"></i></strong> ' + v + ' <span class="badge badge-success">Check\'s OK</span></div>')
+				})
+			if(ret.data.failed){
+				ret.data.failed.forEach(function(v, i){
+					$('.permission').append('<div class="alert alert-warning wp100"><strong><i class="fa fa-window-close" aria-hidden="true"></i></strong> ' + v + ' <span class="badge badge-warning">Check\'s failed</span></div>')
+				})
+			}
+			common.mask.down();
+			$('.permission').fadeIn()
+			if((ret.status == 'failed')){
+				$('.re-test-file').show();
+			}else{
+				checked.file = 1;
+			}
+			to_create()
+		}
+	});
+
+}
+
+
+function test_name(){
+	$('.msg').fadeOut();
+	$('.re-test-name').hide();
+	common.mask.up();
+	$.ajax({
+        dataType:'json',
+	type: 'post',
+        data: $('#db-form').serialize(),
+		success: function(ret){
+			common.mask.down();
+			if(ret && ret.status =='failed'){
+				$('.msg').html('Name conflict').fadeIn();	
+				$('.re-test-name').show();
+			}else{
+				checked.db = 1
+				$('.form-items').fadeOut();
+				$('.msg').html('Name "' + ret.data + '" ok').fadeIn();
+				$('#name').val(ret.data);
+			}
+			to_create()
+		}
+	});
+
+}
+
+
+function to_create(){
+
+	if(!checked.file || !checked.db) return;
+	$('.next').show();
+
+}
+
+</script>

@@ -37,7 +37,7 @@ ALTER TABLE `acl_menu`
 --
 INSERT INTO `acl_menu` (`id`, `parent_id`, `display`, `router`, `order`) VALUES
 (1, 0, 'ROOT', NULL, 0),
-(2, 75, 'User Control', '', 3),
+(2, 75, 'User Control', '', 0),
 (82, 2, 'Users', '/sitemin/user', 0),
 (5, 5, 'Router', '/sitemin/acl/router', 0),
 (6, 2, 'Role', '/sitemin/acl/role', 2),
@@ -50,27 +50,28 @@ INSERT INTO `acl_menu` (`id`, `parent_id`, `display`, `router`, `order`) VALUES
 (28, 10, 'Example', '/examples', 0),
 (91, 91, 'router', '/sitemin/acl/router', 0),
 (90, 75, 'mail queue', '/sitemin/mail/queue', 6),
-(77, 75, 'Var', '/sitemin/var', 5),
+(77, 75, 'Var', '/sitemin/var', 4),
 (85, 85, 'API', '', 0),
 (73, 73, 'Cron', '/sitemin/cron', 0),
 (75, 1, 'Setting', '', 2),
 (88, 85, 'ACL', '/api/acl', 3),
-(92, 75, 'menu control', '/sitemin/acl/menutree', 0),
+(92, 75, 'menu control', '/sitemin/acl/menutree', 1),
 (94, 2, 'router', '/sitemin/acl/router', 1),
-(93, 75, 'cron', '/sitemin/cron', 4),
+(93, 75, 'cron', '/sitemin/cron', 3),
 (95, 1, 'api', '', 1),
 (96, 95, 'list', '/api/list', 0),
 (97, 95, 'user', '/api/user', 2),
 (98, 95, 'acl', '/api/acl', 1),
 (99, 75, 'modules', '', 2),
-(100, 99, 'enadle disable', '/module/control', 1),
-(101, 99, 'beautify', '/module/beautify', 2),
-(103, 99, 'install', '/module/install', 0),
+(100, 99, 'enadle disable remove', '/module/control', 2),
+(101, 99, 'beautify', '/module/beautify', 3),
+(103, 99, 'install zipped module', '/module/install', 1),
 (104, 1, 'tools', '', 4),
 (105, 104, 'my-ip', '/sitemin/helper/checkmyip', 0),
 (106, 104, 'hash generator', '/sitemin/helper/passwordgenerator', 2),
 (107, 104, 'qr-code generator', '/sitemin/helper/qrcode', 1),
-(108, 75, 'System Constants', '/sitemin/constant', 1);
+(108, 75, 'System Constants', '/sitemin/constant', 5),
+(109, 99, 'create module from template', '/module/create', 0);
 -- --------------------------------------------------------
 
 --

@@ -3,6 +3,30 @@
  * depend on sitemin module
  */
 class module_indexController extends sitemin_indexController {
+        function createAction(){
+
+            $q = $this->q;
+            $token_name = 'module,create';
+            $_token = defaultHelper::page_hash_get($token_name);
+
+            switch ($q['step']) {
+                case 'file permission':
+                    $r = _factory('module_model')->test_permission($q);
+                    die(json_encode(['status' => $r['failed'] ? 'failed' : 'success', 'data' => $r]));
+                break;
+                case 'test name':
+                    $r = _factory('module_model')->test_name($q);
+                    die(json_encode(['status' => $r ? 'success' : 'failed', 'data' => $r]));
+                break;                
+                case "create":
+                    $r = _factory('module_model')->create($q);
+                    die(json_encode(['status' => $r ? 'failed' : 'success', 'data' => $r]));
+                break;
+            }
+            $rs['tpl'] = '/module/view/_create.phtml';
+            $rs['TITLE'] = 'MODULE INSTALL';
+            return array('view' => '/sitemin/view/index.phtml', 'data' => array('rs' => $rs));            
+        }
         function installAction() {
                 $q = $this->q;
                 $token_name = 'module,install';

@@ -1,5 +1,97 @@
 <?php
 class module_model {
+
+    //check module 
+    var $access_file = [ _X_MODULE ];
+    function test_permission(){
+        foreach ($this->access_file as $f) {
+            $p[is_writable($f) ? 'ok' : 'failed'][] = $f;
+        }
+        return $p;
+    }
+    function test_name($q) {
+        $name = preg_replace('/[^a-z0-9_]/ms', '', $q['name']);
+        $name = preg_replace('/^[^a-z]+/ms', '', $name);
+        //check if already existed
+        $has_module = file_exists(_X_MODULE . "/{$name}");
+        $has_enable0 = file_exists(_X_MODULE_ENABLED . "/{$name}");
+        $has_enable1 = file_exists(_X_MODULE_ENABLED . "/{$name}.php");
+
+        //any about , failed!
+        return $has_module  ||   $has_enable0 || $has_enable1  ?  false : $name;
+    }
+
+    function create($q){
+
+        $name = preg_replace('/[^a-z0-9_]/ms', '', $q['name']);
+        $name = preg_replace('/^[^a-z]+/ms', '', $name);
+
+        //create module folder
+        $p = _X_MODULE . "/{$name}";
+        if(!mkdir($p, 0775,1))
+            $msh[] = 'module create failed';
+
+        //create controller (index)
+        $con = "<";
+        $con .= "?php
+        //to extends sitemin_indexController, you will also change user->router->alc
+        class {$name}_indexController  /* extends sitemin_indexController */{
+            function indexAction(){
+                return array('data' => array('rs' => ['controller'=>__FILE__, 'model'=>_factory('{$name}_model_default')->get()]));      
+            }
+        }
+        ";
+        if(!file_put_contents("{$p}/indexController.php", $con))
+            $msg[] = "write to controll file failed\n - {$path}/indexController";
+        
+
+
+        //create default view
+        $con ='
+            <h1>default view</h1>
+            
+            <h3>Controller file : <?=_rp($rs["controller"]);?></h3>
+            <h3>Model file : <?=_rp($rs["model"]);?></h3>
+            <h3>View file : <?=_rp(__FILE__);?></h3>
+
+        ';
+        $p = _X_MODULE . "/{$name}/view/index";
+        if(!mkdir($p, 0775,1))
+            $msh[] = 'view folder create failed';
+        if(!file_put_contents("{$p}/index.phtml", $con))
+            $msg[] = 'write to default view file failed';
+
+        //create default model
+        $con = '<';
+        $con .= "?php
+
+                class {$name}_model_default{
+                    
+                    function get(){
+                        return __FILE__;
+                    }
+                }
+                ";
+        $p = _X_MODULE . "/{$name}/model";
+        if(!mkdir($p, 0775,1))
+            $msh[] = 'model folder create failed';
+        if(!file_put_contents("{$p}/default.php", $con))
+            $msg[] = 'write to model file failed';
+
+        //create default router
+        $con ="<";
+        $con .= '?php
+            $routers = [
+                "/'.$name.'/index" => "/'.$name.'/index@index",
+            ];
+        ';
+        $p = _X_MODULE . "/{$name}/.router.php";
+        if(!file_put_contents("{$p}", $con))
+            $msg[] = 'write to .reouer.php file failed';
+
+        return $msg;
+    }
+
     function upload($f){
 
 // 1..........[
