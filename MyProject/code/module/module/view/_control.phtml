@@ -22,12 +22,16 @@ var _token='<?=$rs['_token'];?>';
 					</th>
 					<th>path</th>
 					<th>status</th>
+					<th><a href="module/create"><i class="fa fa-plus-square" aria-hidden="true"></i></a></th>
 				</tr>
 				<tr v-for="row in get_rows()" >
 				    <td valign="top" v-for="col in columns" :class="'v-'+col">
-					<a v-if="row[col] == 'YES' || row[col] == 'NO'" href="javascript:void(0)" v-on:click="status(row['path'],row[col])">{{row[col]}}</a>
-					<span v-else>{{row[col]}}</span>
+						{{row[col]}}
 				    </td>
+					<td>
+						<a v-if="row['enabled'] == 'YES'" href="javascript:void(0)" v-on:click="status(row['path'],row['enabled'])">Disable</a>
+						<a v-if="row['enabled'] == 'NO'" href="javascript:void(0)" v-on:click="status(row['path'],row['enabled'])">Enabled</a>
+					</td>
 				</tr>
 			</table>
 
