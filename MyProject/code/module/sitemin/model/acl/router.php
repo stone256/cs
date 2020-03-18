@@ -28,7 +28,15 @@ class sitemin_model_acl_router {
                 }
             }
         }
-        return $_routers = $rs;
+        foreach($routers as $k=>$r){
+            //get controller file, if is not extends from sitemin_indexController, no need acl 
+            $f = _X_MODULE. preg_replace('/\@.*$/', '', $r) . 'Controller.php';
+            $con = file_get_contents($f);
+            $n = str_replace('/', '_', xpAS::preg_get($r, '/^\/([^\@]+)/ims', 1)).'Controller';
+            $pattern = '/class\s+'.$n.'\s+extends\s+sitemin_indexController/ims';
+            if( xpAS::preg_get($con, $pattern)) $arr[$k] = $r;
+        }
+        return $_routers = $arr;
     }
     function change($q) {
         $routers = $this->gets();

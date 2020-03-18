@@ -3,7 +3,9 @@
  * _X_CRON_SYSTEN = true to allow system command.
  */
 define('_X_CRON_SYSTEN', true);
-class sitemin_cronController extends sitemin_indexController {
+class sitemin_cronController 
+        extends     
+sitemin_indexController {
     function indexAction() {
         $q = $this->q;
         $token_name = 'sitemin,cron';
