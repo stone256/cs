@@ -1,6 +1,6 @@
 WHAT IS
 =======
-xs framework is simple and fast php framework with minimum code. Idea for if you do not want write tons of code
+cs framework is simple and fast php framework with minimum code. Idea for if you do not want write tons of code
 
 
 LICENCE FREE MIT 
