@@ -1,12 +1,12 @@
 <h3>Models</h3>
 
 <ol type="A">
-	<li>all model are under folder "model", as the result it has "model" attached<br>
+	<li>recommend all models are under folder "model", as the result it has "model" attached<br>
 	e.g.<br>
-	[ROOT]/module/<u>demo/model/light.php</u> will has class name "demo_model_light"
+	[ROOT]/code/module/<u><span class="_Red">demo/model/light</span>.php</u> will has class name "demo_model_light"
 	<b class="code">
 	&lt;?php
-	class demo_model_light  {
+	class <span class="_Red">demo_model_light</span>  {
 		function get_number_of_lights_on($color='red') {
 			.....
 			return $_status['on'][$color];
@@ -21,7 +21,7 @@
 	&lt;?php
 		..
 		..
-		echo _factory('demo_model_light')->get_number_of_lights_on('yellow');
+		echo _factory('<span class="_Red">demo_model_light</span>')->get_number_of_lights_on('yellow');
 		..
 	?&gt;
 	</b>

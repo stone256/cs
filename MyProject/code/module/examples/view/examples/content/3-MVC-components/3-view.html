@@ -6,14 +6,14 @@
 	e.g.<br>
 		<b class="code">
 		&lt;?php
-			class demo_redController extends _system_defaultController {
-				function powerAction() {
+			class <span class="_Red">demo_red</span>Controller extends _system_defaultController {
+				function <span class="_Yellow">power</span>Action() {
 					.....
 					return array('data' => array('rs' => $rs));
 				}
 			}
 		?&gt;
-		default "view" will be [ROOT]/module/<u>demo/view/red/power.phtml</u>
+		default "view" will be [ROOT]/code/module/<span class="_Red">demo</span>/view/<span class="_Red">red</span>/<span class="_Yellow">power</span>.phtml
 		</b>
 
 	</li>
@@ -22,28 +22,28 @@
 	e.g. <br>
 		<b class="code">
 		&lt;?php
-			class demo_redController extends _system_defaultController {
-				function powerAction() {
+		   class <span class="_Red">demo_red</span>Controller extends _system_defaultController {
+			function <span class="_Yellow">power</span>Action() {
 					.....
-					return array('view' => 'index.tpl.html', 'data' => array('rs' => $_SERVER));
+					return array('view' => '<b class="_Blue">index.tpl.html</b>', 'data' => array('rs' => $_SERVER));
 				}
 			}
 		?&gt;
-		default "view" will be [ROOT]/module/<u>demo/view/red/index.tpl.html</u>
+		default "view" will be [ROOT]/code/module/<span class="_Red">demo</span>/view/<span class="_Red">red</span>/<b class="_Blue">index.tpl.html</b>
 		</b>
 	</li>
 	<li>all data will be passed to the view in return array's 'data' field from controller<br>
 	e.g. <br>
 		<b class="code">
 		&lt;?php
-			class demo_redController extends _system_defaultController {
-				function powerAction() {
+  		    class <span class="_Red">demo_red</span>Controller extends _system_defaultController {
+			function <span class="_Blue">power</span>Action() {
 					.....
-					return array('data' => array('rs' => array(a=>1,b=>2);
+					return array('data' => array('<span class="_Yellow">rs</span>' => array(a=>1,b=>2);
 				}
 			}
 		?&gt;
-		will show in [ROOT]/module/<u>demo/view/red/power.phtml</u> as variable $rs /** $rs = array(a=>1,b=>2) **/
+		<span class="_Yellow">$rs</span> /** $rs = array(a=>1,b=>2) **/ as variable, will be pass to view file: [ROOT]/code/module/<span class="_Red">demo</span>/view/<span class="_Red">red</span>/<span class="_Blue">power</span>.phtml
 		</b>
 	</li>
 </ol>
