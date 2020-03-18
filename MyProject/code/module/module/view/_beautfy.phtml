@@ -11,14 +11,52 @@ var _token='<?=$rs['_token'];?>';
 </script>
 <div class="container-fluid" id="sixthTable">
 	<div class="row">
-		<p class="col-md-12">
+		<div class="col-md-12">
 			<h3 class="text-uppercase mt-5">PHP Code Beautfy</h3>
 			<br>
-		</p>	
-		<div class="col-md-5">
+			<!-- file permission-->
+			<div class="form-group file-permission">
+				<div class="alert alert-info">Follow permission required</div>
+				<!-- file permission-->
+				<div class="permission"> </div>
+				<div class="clear"></div>
+				<!-- retry -->
+				<span class="floatRight re-test-file"> Please change the permission  by "chmod", "chown", and  <button type="button" id="re-test-file" class="none btn btn-danger " onclick="test_file_permission()"> Test again</button></span>
+				<br/>
+				<script>
+					(function($){
+						test_file_permission()
+					})(jQuery)
+					function test_file_permission(){
+						$('.permission').html("");
+						common.mask.up();
+						$.ajax({
+							dataType:'json',
+							data:{cmd:'file permission', _token:'<?=$rs['_token'];?>', a:Math.random()},
+							type:'post',
+							success: function(ret){
+								if(ret.data.failed)
+								ret.data.failed.forEach(function(v, i){
+										$('.permission').append('<div class="alert alert-warning wp100"><strong><i class="fa fa-window-close" aria-hidden="true"></i></strong> ' + v + ' <span class="badge badge-warning">Check\'s failed</span></div>')
+									})
+								if(ret.status != 'failed'){
+									$('.action-table').show();
+									$('.file-permission').hide();
+								}
+								common.mask.down();
+							}
+						});
+					}
+				</script>
+			</div>
+			<div class="clear"></div>
+		
+		</div>	
+			
+		<div class="col-md-5 action-table Hide">
 			<div class="CODE status"></div>
 		</div>
-		<div class="col-md-7 left-panel">
+		<div class="col-md-6 left-panel  action-table Hide">
 			<?php if(!$rs['beautifier']):?>
 				<div class="alert alert-warning">
 				<strong>Missing command line "PHP_Beautifier"!</strong> run "pear install PHP_Beautifier" ,  click <a href="https://pear.php.net/package/PHP_Beautifier" target="_blank" class="alert-link">here</a> for more info.

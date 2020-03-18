@@ -14,27 +14,25 @@ class sitemin_helperController {
         exit;
     }
     function checkmyipAction() {
-            echo xpAS::get_client_ip();
+        echo xpAS::get_client_ip();
     }
     function passwordgeneratorAction() {
-            $q = $_REQUEST;
-            if ($q['save']) {
-                    $r = md5(md5($q['hint']) . xpAS::roller($q['hint']));
-                    if($q['short']) $r = xpAS::short($r);
-                    die($r);
-            }
-            $rs['tpl'] = '_password_generator.phtml';
-            $rs['TITLE'] = 'PASSWORD GENERATOR';
-            return array('view'=>'/sitemin/view/index.phtml','data' => array('rs' => $rs));
+        $q = $_REQUEST;
+        if ($q['save']) {
+            $r = md5(md5($q['hint']) . xpAS::roller($q['hint']));
+            if ($q['short']) $r = xpAS::short($r);
+            die($r);
+        }
+        $rs['tpl'] = '_password_generator.phtml';
+        $rs['TITLE'] = 'PASSWORD GENERATOR';
+        return array('view' => '/sitemin/view/index.phtml', 'data' => array('rs' => $rs));
     }
     function qrcodeAction() {
-            $q = $_REQUEST;
-           
-            $rs['tpl'] = '_qrcode_generator.phtml';
-            $rs['TITLE'] = 'QRCODE GENERATOR';
-            return array('view'=>'/sitemin/view/index.phtml','data' => array('rs' => $rs));
+        $q = $_REQUEST;
+        $rs['tpl'] = '_qrcode_generator.phtml';
+        $rs['TITLE'] = 'QRCODE GENERATOR';
+        return array('view' => '/sitemin/view/index.phtml', 'data' => array('rs' => $rs));
     }
-
     function module_createAction() {
         //$rs = "aaa";
         $q = $_REQUEST;

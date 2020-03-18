@@ -153,7 +153,7 @@ class xpPdo {
      * @param int $max_size
      */
     function log($on = false, $path = null, $max_size = 4000000) { //4mb
-        $this->params['log']['path'] = $path ? $path :  '/tmp/mysql.log';
+        $this->params['log']['path'] = $path ? $path : '/tmp/mysql.log';
         mkdir($this->params['log']['path'], 0777, 1);
         $this->params['log']['on'] = $on;
         $this->params['log']['size'] = $max_size;

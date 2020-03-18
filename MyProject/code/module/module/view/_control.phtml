@@ -1,41 +1,74 @@
 <?php
 
-
 ?>
-
-
 <?php include _X_LAYOUT . '/sitemin/include_vue.phtml'; ?>
-
 <script>
-var _token='<?=$rs['_token'];?>';
+	var _token='<?=$rs['_token'];?>';
 </script>
-
 <div class="container-fluid" id="sixthTable">
-
 	<div class="container">
-
-			<h3 class="text-uppercase mt-5">Module Control</h3>
-			<table class="table table-striped table-hover">
-				<tr>
-					<th v-on:click="sortTable('name')">[name]
-						<div class="arrow"  v-if=" 'name' == sortColumn" v-bind:class="[ascending ? 'arrow_up' : 'arrow_down']"></div>
-					</th>
-					<th>path</th>
-					<th>status</th>
-					<th><a href="module/create"><i class="fa fa-plus-square" aria-hidden="true"></i></a></th>
-				</tr>
-				<tr v-for="row in get_rows()" >
-				    <td valign="top" v-for="col in columns" :class="'v-'+col">
-						{{row[col]}}
-				    </td>
-					<td>
-						<a v-if="row['enabled'] == 'YES'" href="javascript:void(0)" v-on:click="status(row['path'],row['enabled'])">Disable</a>
-						<a v-if="row['enabled'] == 'NO'" href="javascript:void(0)" v-on:click="status(row['path'],row['enabled'])">Enabled</a>
-					</td>
-				</tr>
-			</table>
-
+		<h3 class="text-uppercase mt-5">Module Control</h3>
+		<!-- file permission-->
+		<div class="form-group file-permission">
+			<div class="alert alert-info">Follow permission required</div>
+			<!-- file permission-->
+			<div class="permission"> </div>
+			<div class="clear"></div>
+			<!-- retry -->
+			<span class="floatRight re-test-file"> Please change the permission  by "chmod", "chown", and  <button type="button" id="re-test-file" class="none btn btn-danger " onclick="test_file_permission()"> Test again</button></span>
+			<br/>
 			<script>
+				(function($){
+					test_file_permission()
+				})(jQuery)
+				function test_file_permission(){
+					$('.permission').html("");
+					common.mask.up();
+					$.ajax({
+						dataType:'json',
+						data:{cmd:'file permission', _token:'<?=$rs['_token'];?>', a:Math.random()},
+						type:'post',
+						success: function(ret){
+							if(ret.data.ok)
+							ret.data.ok.forEach(function(v, i){
+									$('.permission').append('<div class="alert alert-success wp100"><strong><i class="fa fa-check-square" aria-hidden="true"></i></strong> ' + v + ' <span class="badge badge-success">Check\'s OK</span></div>')
+								})
+							if(ret.data.failed)
+							ret.data.failed.forEach(function(v, i){
+									$('.permission').append('<div class="alert alert-warning wp100"><strong><i class="fa fa-window-close" aria-hidden="true"></i></strong> ' + v + ' <span class="badge badge-warning">Check\'s failed</span></div>')
+								})
+							if(ret.status != 'failed'){
+								$('.control-table').show();
+								$('.re-test-file').hide();
+							}
+							common.mask.down();
+						}
+					});
+				}
+			</script>
+		</div>
+		<div class="clear"></div>
+		<table class="table table-striped table-hover control-table Hide">
+			<tr>
+				<th v-on:click="sortTable('name')">
+					[name]
+					<div class="arrow"  v-if=" 'name' == sortColumn" v-bind:class="[ascending ? 'arrow_up' : 'arrow_down']"></div>
+				</th>
+				<th>path</th>
+				<th>status</th>
+				<th><a href="module/create"><i class="fa fa-plus-square" aria-hidden="true"></i> new</a> </th>
+			</tr>
+			<tr v-for="row in get_rows()" >
+				<td valign="top" v-for="col in columns" :class="'v-'+col">
+					{{row[col]}}
+				</td>
+				<td>
+					<a v-if="row['enabled'] == 'YES'" href="javascript:void(0)" v-on:click="status(row['path'],row['enabled'])">Disable</a>
+					<a v-if="row['enabled'] == 'NO'" href="javascript:void(0)" v-on:click="status(row['path'],row['enabled'])">Enabled</a>
+				</td>
+			</tr>
+		</table>
+		<script>
 			var sixthTable = new Vue({
 				el: '#sixthTable',
 				data: {
@@ -58,9 +91,7 @@ var _token='<?=$rs['_token'];?>';
 								this.ascending = true;
 								this.sortColumn = col;
 							}
-
 							var ascending = this.ascending;
-
 							this.rows.sort(function(a, b) {
 								if (a[col] > b[col]) {
 									return ascending ? 1 : -1
@@ -90,15 +121,16 @@ var _token='<?=$rs['_token'];?>';
 				},
 				computed: {
 					"columns": function columns() {
+			
 						if (this.rows.length == 0) return [];
+			
 						return Object.keys(this.rows[0])
+			
 					}
 				}
 			});
-
-			</script>
-
+		</script>
 	</div>
-
 </div>
 <hr>
+

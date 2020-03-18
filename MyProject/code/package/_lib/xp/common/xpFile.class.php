@@ -105,14 +105,17 @@ class xpFile {
      * @param string path
      * @return  array of files
      */
-    function dir_in_dir($path) {
+    function dir_in_dir($path, $r = false) {
         if (!is_dir($path)) return false;
         $entry = scandir($path);
         foreach ($entry as $f) {
             if ($f == '.') continue;
             if ($f == '..') continue;
             if (!is_dir($path . '/' . $f)) continue;
-            $files[] = $f;
+            $files[] = $r ? $path . '/' . $f : $f;
+            if ($r && $s = self::dir_in_dir($path . '/' . $f, 1)) {
+                $files = $files + $s;
+            }
         }
         return $files;
     }
@@ -165,7 +168,7 @@ class xpFile {
             if (is_dir($directory . $r)) {
                 $dirs[] = $r;
                 //$dirs[$r] = self::dir_array($directory.$r,$max_level,$level);
-
+                
             } else {
                 $files[] = $r;
             }
@@ -411,7 +414,7 @@ class xpFile {
                 //				$dy = max(0,($ny - $oy)/2);
                 //				$nw = $ow= $ox < $nx ? $ox : $nx;
                 //				$nh = $oh= $oy < $ny ? $oy : $ny;
-
+                
             break;
         }
         $img = imagecreatetruecolor($nw, $nh);
