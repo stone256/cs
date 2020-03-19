@@ -15,6 +15,7 @@ $routers = [
 '/sitemin/helper/vcode' => '/sitemin/helper@vcode', '/sitemin/helper/checkmyip' => '/sitemin/helper@checkmyip', 
 '/sitemin/helper/passwordgenerator' => '/sitemin/helper@passwordgenerator', '/sitemin/helper/qrcode' => '/sitemin/helper@qrcode',
 '/sitemin/helper/tidy' => '/sitemin/helper@tidy', 
+'/sitemin/helper/beautify' => '/sitemin/helper@beautify', 
  '/sitemin/keepalive' => '/sitemin/index@keepalive', '/sitemin/mail/queue' => '/sitemin/mail@queue', '/sitemin/mail/cron' => '/sitemin/mail@cron', 
  '/sitemin/requestpassword' => '/sitemin/login@requestpassword', '/sitemin/resetpassword' => '/sitemin/login@resetpassword', 
  '/sitemin/login' => '/sitemin/login@login', '/sitemin/logout' => '/sitemin/login@logout', '/sitemin/dashboard' => '/sitemin/login@dashboard', 

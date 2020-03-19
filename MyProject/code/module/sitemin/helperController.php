@@ -16,6 +16,21 @@ class sitemin_helperController {
     function checkmyipAction() {
         echo xpAS::get_client_ip();
     }
+    function beautifyAction() {
+        $q = $_REQUEST;
+        if($q['save']){
+            $tmpfile = tmpfile();       
+            $tmpfile_path = stream_get_meta_data($tmpfile)['uri'];
+            $tmpfile_content = file_put_contents($tmpfile_path, $q['con']);
+            $cmd = "php_beautifier -f {$tmpfile_path} 2>&1";
+            $con = shell_exec($cmd);
+
+            die($con);
+        }
+        $rs['tpl'] = '_php_beautify.phtml';
+        $rs['TITLE'] = 'PHP BEAUTIFY';
+        return array('view' => '/sitemin/view/index.phtml', 'data' => array('rs' => $rs));
+    }  
     function tidyAction() {
         $q = $_REQUEST;
         if($q['save']){
