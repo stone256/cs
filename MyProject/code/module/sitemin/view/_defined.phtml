@@ -9,6 +9,7 @@ $_SYSTEM = [
 	'uname'=>php_uname(),
 	'phpversion'=>phpversion(),
 	'php_sapi_name'=>php_sapi_name(),
+	'php_ini'=>get_cfg_var('cfg_file_path'),
 	'current_user'=>get_current_user(),
 	'temp_dir'=>sys_get_temp_dir(),
 ];

@@ -222,7 +222,8 @@ select {
 }
 /** alter bootstrap */
 CODE{
-        padding:3px 8px;
+        padding: 8px;
+        line-height:40px;
         color:#fff;
         background:#222;
 }

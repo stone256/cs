@@ -103,6 +103,25 @@ var common ={
 			v.stop(a.currentTime+duration*0.001)
 		},
 	},
+	typing:(sel, con)=>{
+		if(con.length){
+			var s = con.charAt(0); con = con.replace(/^./g, '');
+			$(sel).append(s);
+			snd = $(sel).attr('data-snd') || 1
+			if(snd && s != ' ') common.sound.keyin();
+			if(s=="\n") {
+				$(sel).append(' ');
+				window.scrollTo(0, document.body.scrollHeight);
+				$(sel)[0].scrollTop = $(sel)[0].scrollHeight;
+			}
+			// rt = common.random(10,200);
+			rt = common.ND(1, 250);
+			rt = rt - 100;
+			rt = rt < 1 ? common.random(1, 20) : rt;
+			$(sel).attr('data-snd', rt > 40);
+			setTimeout(function(){common.typing(sel, con);}, rt);
+		}	
+	},
 	random : (min, max)=> {
 	  return Math.floor(Math.random() * (max - min)) + min;
   	},

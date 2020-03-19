@@ -20,7 +20,13 @@ class sitemin_helperController {
         $q = $_REQUEST;
         if ($q['save']) {
             $r = md5(md5($q['hint']) . xpAS::roller($q['hint']));
-            if ($q['short']) $r = xpAS::short($r);
+            if ($q['short']){
+                for($i=0; $i<7; $i++){
+                    $r = md5(preg_replace('/^./ims', '', $r));
+                    $a .= $r{0};
+                }
+                $r = $a;
+            } 
             die($r);
         }
         $rs['tpl'] = '_password_generator.phtml';

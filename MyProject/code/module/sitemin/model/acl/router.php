@@ -15,24 +15,26 @@ class sitemin_model_acl_router {
         return array_splice($names, 0, 12);
     }
     function gets($clean = false) {
-        static $_routers;
-        if ($_routers) return $_routers;
-        global $routers;
-        $rs = array_flip(array_keys($routers));
-        foreach ((array)xpTable::load($this->table)->gets() as $k => $v) {
-            if (isset($rs[$v['router']])) {
-                $rs[$v['router']] = $v['role'];
-            } else {
-                if ($clean) {
-                    xpTable::load($this->table)->deletes(['id' => $v['id']]);
-                }
-            }
+		static $_routers;
+		if($_routers) return $_routers;
+		global $routers;
+		$rs = array_flip(array_keys($routers));
+		foreach((array)xpTable::load($this->table)->gets() as $k=>$v){
+			if(isset($rs[$v['router']])){
+				$rs[$v['router']] = $v['role'];
+			}else{
+				if($clean){
+					xpTable::load($this->table)->deletes(['id'=>$v['id']]);
+				}
+			}
         }
-        foreach($routers as $k=>$r){
+        
+        foreach($rs as $k=>$r){
             //get controller file, if is not extends from sitemin_indexController, no need acl 
-            $f = _X_MODULE. preg_replace('/\@.*$/', '', $r) . 'Controller.php';
+            $p = $routers[$k];
+            $f = _X_MODULE. preg_replace('/\@.*$/', '', $p) . 'Controller.php';
             $con = file_get_contents($f);
-            $n = str_replace('/', '_', xpAS::preg_get($r, '/^\/([^\@]+)/ims', 1)).'Controller';
+            $n = str_replace('/', '_', xpAS::preg_get($p, '/^\/([^\@]+)/ims', 1)).'Controller';
             $pattern = '/class\s+'.$n.'\s+extends\s+sitemin_indexController/ims';
             if( xpAS::preg_get($con, $pattern)) $arr[$k] = $r;
         }
