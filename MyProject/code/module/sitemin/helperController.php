@@ -16,6 +16,23 @@ class sitemin_helperController {
     function checkmyipAction() {
         echo xpAS::get_client_ip();
     }
+    function tidyAction() {
+        $q = $_REQUEST;
+        if($q['save']){
+            $config = array(
+                'indent'         => true,
+                'output-xhtml'   => true,
+                'wrap'           => 200
+            );
+            $tidy = new tidy();
+            $tidy->ParseString($q['con'], $config, 'utf8');
+            $tidy->cleanRepair();
+            die($tidy);
+        }
+        $rs['tpl'] = '_html_tidy.phtml';
+        $rs['TITLE'] = 'HTML TIDY';
+        return array('view' => '/sitemin/view/index.phtml', 'data' => array('rs' => $rs));
+    }   
     function passwordgeneratorAction() {
         $q = $_REQUEST;
         if ($q['save']) {

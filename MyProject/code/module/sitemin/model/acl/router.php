@@ -5,7 +5,8 @@ class sitemin_model_acl_router {
     }
     function search($q) {
         //return xpTable::load($this->table)->gets(array("router like '%{$q['term']}%'"), '*', 'router', 8 );
-        $rs = $this->gets();
+		global $routers;
+		$rs = array_flip(array_keys($routers));
         $pattern = '/' . str_replace('/', '.', preg_quote($q['term'])) . '/ims';
         foreach ($rs as $k => $v) {
             //_dv($v);
@@ -14,7 +15,7 @@ class sitemin_model_acl_router {
         }
         return array_splice($names, 0, 12);
     }
-    function gets($clean = false) {
+	function gets($clean = false){
 		static $_routers;
 		if($_routers) return $_routers;
 		global $routers;
@@ -27,19 +28,9 @@ class sitemin_model_acl_router {
 					xpTable::load($this->table)->deletes(['id'=>$v['id']]);
 				}
 			}
-        }
-        
-        foreach($rs as $k=>$r){
-            //get controller file, if is not extends from sitemin_indexController, no need acl 
-            $p = $routers[$k];
-            $f = _X_MODULE. preg_replace('/\@.*$/', '', $p) . 'Controller.php';
-            $con = file_get_contents($f);
-            $n = str_replace('/', '_', xpAS::preg_get($p, '/^\/([^\@]+)/ims', 1)).'Controller';
-            $pattern = '/class\s+'.$n.'\s+extends\s+sitemin_indexController/ims';
-            if( xpAS::preg_get($con, $pattern)) $arr[$k] = $r;
-        }
-        return $_routers = $arr;
-    }
+		}
+		return $_routers = $rs;
+	}
     function change($q) {
         $routers = $this->gets();
         if (!isset($routers[$q['router']])) return 0;
