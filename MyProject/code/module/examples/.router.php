@@ -13,4 +13,9 @@ $routers = [
 ##examples
 ##
 #!!!change this to your own
-'/' => '/examples/examples@index', '/examples' => '/examples/examples@index', '/examples/blade' => '/examples/examples@blade', '/examples/pdo' => '/examples/examples@pdo', ];
+'/' => '/examples/examples@index', 
+'/examples' => '/examples/examples@index', 
+'/examples/blade' => '/examples/examples@blade', 
+'/examples/batch' => '/examples/examples@batch', 
+
+'/examples/pdo' => '/examples/examples@pdo', ];

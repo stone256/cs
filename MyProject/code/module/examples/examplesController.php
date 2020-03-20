@@ -27,4 +27,29 @@ class examples_examplesController extends _system_defaultController {
         $blade->run('sub/bar', null, array('controller' => __CLASS__ . "::" . __FUNCTION__));
         exit;
     }
+    /**
+     * example of batch  method
+     */
+    function batchAction() {
+        
+        $q = $_REQUEST;
+        if($q['save']){ //ajax call
+
+            $batch = array(
+                'start'=>$q['index'],
+                'total'=>$q['total'],
+                'size'=>$q['size'],
+            );
+
+
+            $batch = defaultHelper::batch($batch, h);
+            $batch['msg'] = "block : ".($batch['start']+1)." - ".($batch['end']+1)." of {$batch['total']}" ;
+            
+            sleep(1);
+            die(json_encode($batch));    
+        }
+
+        return array('data'=>['rs'=>$rs]);
+    }
+    /**** batch testing ***/    
 }

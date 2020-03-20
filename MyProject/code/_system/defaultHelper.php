@@ -152,22 +152,19 @@ class defaultHelper {
         Myhelper::data_set($massage_name, $msg, $type);
     }
     /**
-     * ajax batching
+     * ajax batching helper
+     * start index start from 0;
+     * if total =12 block size=4
+     *  block: 0-3; 4-7; 8-11;
      */
-    function batch($batch, $handlers) {
-        if (!$handler = $handlers[$batch['handler']]) return array('status' => 'error', 'msg' => 'please provide case handler name');
-        $handler = explode('@', $handler);
-        if (!method_exists($handler[0], $handler[1])) return array('status' => 'error', 'msg' => 'case handler is on holday');
-        $batch['size'] = $batch['size'] ? $batch['size'] : 10;
-        $batch['next'] = $batch['next'] ? $batch['next'] : 1;
+    function batch($batch) {
+        if(!$batch['total']) return false;
+        $batch['size'] = $batch['size'] ? $batch['size'] : 1;
         $batch['start'] = $batch['start'] ? $batch['start'] : 0;
-        $batch['end'] = $batch['end'] ? $batch['end'] : -1;
-        $ret = call_user_method($handler[1], new $handler[0], $batch);
-        $ret['msg'] = $ret['msg'] ? $ret['msg'] : $ret['status'];
+        $batch['end'] =min($batch['total']-1,  $batch['start'] + $batch['size']  - 1);
+        $ret = array('status'=> $batch['end']>=$batch['total']-1 ? 'end' : 'next') ;
+        $batch['next'] = $batch['end']  + 1;
         return xpAS::merge($batch, $ret);
-    }
-    function test($s, $e) {
-        return array('msg' => "$s - $e", 'status' => $e > 300 ? 'end' : 'next');
     }
 }
 function _log($data, $level = 1, $name = 'log', $path = null, $max = 8000000) {
