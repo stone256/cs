@@ -15,7 +15,7 @@ array (
   'HTTP_ORIGIN' => 'http://192.168.0.110',
   'HTTP_CONNECTION' => 'keep-alive',
   'HTTP_REFERER' => 'http://192.168.0.110/cs/MyProject/sitemin/install',
-  'HTTP_COOKIE' => '9a004w87=1584416487',
+  'HTTP_COOKIE' => '9a004w87=1584416487; PHPSESSID=e0u16p1e2tni72rm8vlgd0h2e0',
   'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
   'SERVER_SIGNATURE' => '<address>Apache/2.4.25 (Debian) Server at 192.168.0.110 Port 80</address>
 ',
@@ -30,7 +30,7 @@ array (
   'CONTEXT_DOCUMENT_ROOT' => '/var/www/html',
   'SERVER_ADMIN' => 'webmaster@localhost',
   'SCRIPT_FILENAME' => '/var/www/html/cs/MyProject/index.php',
-  'REMOTE_PORT' => '56406',
+  'REMOTE_PORT' => '42888',
   'REDIRECT_URL' => '/cs/MyProject/sitemin/install',
   'GATEWAY_INTERFACE' => 'CGI/1.1',
   'SERVER_PROTOCOL' => 'HTTP/1.1',
@@ -39,8 +39,8 @@ array (
   'REQUEST_URI' => '/cs/MyProject/sitemin/install',
   'SCRIPT_NAME' => '/cs/MyProject/index.php',
   'PHP_SELF' => '/cs/MyProject/index.php',
-  'REQUEST_TIME_FLOAT' => 1584658411.2969999,
-  'REQUEST_TIME' => 1584658411,
+  'REQUEST_TIME_FLOAT' => 1584683513.4679999,
+  'REQUEST_TIME' => 1584683513,
   'X2CLI_CALL' => true,
 )
 define('__X_DEBUG', true);

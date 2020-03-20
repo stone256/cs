@@ -79,5 +79,10 @@ class sitemin_helperController {
         }
         return array('data' => array('rs' => $q));
     }
+    function timerAction() {
+        $rs['tpl'] = '_timer.phtml';
+        $rs['TITLE'] = 'TIMER';
+        return array('view' => '/sitemin/view/index.phtml', 'data' => array('rs' => $rs));
+    }    
 
 }

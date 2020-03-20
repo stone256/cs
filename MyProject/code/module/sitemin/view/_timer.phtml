@@ -1,0 +1,130 @@
+
+<br><br>
+<div class="row justify-content-center">
+<div class="modal-content col-6">
+                <div class="modal-header  login-logo">
+                        <h3 class="">Quick timer</h3>
+                </div>
+                <div class="modal-body text-center">
+                        <div id="timer" class="row">
+                                <div class="col-md-6">
+
+                                <h2><i class="fa fa-chevron-up hand"  onclick="m_add(-1)"  aria-hidden="true"></i>&nbsp;&nbsp;<i class="fa fa-chevron-up" onclick="s_add(-1)" aria-hidden="true"></i></h2> 
+                                <h2 id="display">00:00</h> 
+                                <h2><i class="fa fa-chevron-down"  onclick="m_add(1)" aria-hidden="true"></i>&nbsp;&nbsp;<i class="fa fa-chevron-down"  onclick="s_add(1)"  aria-hidden="true"></i></h2> 
+                                </div>
+                                <div class="col-md-6">
+                                <h2><label><input type="checkbox" id="tick" value="1" onclick="change_tick()"> &nbsp;Ticking sound</label></h2>
+                                <h2><i class="fa fa-stop" onclick="stop()" aria-hidden="true"></i>&nbsp;&nbsp;<i class="fa fa-pause" onclick="pause()" aria-hidden="true"></i>&nbsp;&nbsp;<i class="fa fa-play" onclick="go()" aria-hidden="true"></i></i></h2> 
+                                <h2>&nbsp;</h2>
+                                </div>
+                        </div>                
+                </div>
+                <div class="modal-body text-center">
+                                <button type="button" class="btn btn-lg btn-warning" onclick="done()" id="save">
+                                        <span>DONE</span>
+                                </button>
+                </div>
+        </div>
+</div>
+
+<script>
+
+var m=0;
+var s=0;
+var on=false;
+var ticked=false;
+var _done=false;
+var ls=0;
+common.sound._vol = 200
+$('#save').hide()
+
+function change_tick(){ ticked = $('#tick').is(':checked') }
+
+function m_add(i){
+        if(ticked) common.sound.keyin()
+        m = m+i;
+        if(m < 0) m=59;
+        if(m > 59) m=0;
+        paint();
+}
+function s_add(i){
+        if(ticked) common.sound.keyin()
+        s = s+i;
+        if(s < 0) s=59;
+        if(s > 59) s=0;
+        paint();
+}
+
+function s_sub(){
+        s -= 1;
+        if(s < 0){
+                s=0;
+                if(s==0 && m == 0) {
+                        _done = false;
+                        stop();
+                        $('#save').show();
+                        return finished()
+                }
+                m -= 1;
+                s=59;
+        }
+        paint();
+}
+
+function paint(){
+        var a='';
+        a += m > 9 ? m: "0"+m;
+        a +=":";
+        a += s > 9 ? s: "0"+s;
+        $('#display').html(a);
+}
+
+function go(){
+        if(!s && !m) return;
+        $('.fa-stop, .fa-pause').addClass('_Red');
+        on = true
+}
+
+function pause(){
+        on = false;
+        $('.fa-pause').removeClass('_Red');
+}
+
+function stop(){
+        s=m=0;
+        on = false;
+        $('.fa-stop, .fa-pause').removeClass('_Red');
+
+        paint();
+}
+
+function finished(){
+        common.sound.ok();
+        $( "body" ).effect( "highlight");
+        setTimeout(function(){ if(!_done){ $('title').html(++ls %2 ? 'Alarm':'ALARM'); finished()}else{ $('#save').hide();  $('title').html('TIMER')}; }, ls %2 ? 250:850  ) 
+}
+
+function done(){
+        _done = true;
+}
+
+setInterval(() => {
+        if(!on) return;
+        if(ticked) common.sound.keyin()
+        s_sub();
+}, 1000);
+</script>
+
+<style>
+#timer{
+font-family:"Lucida Console", Monaco, monospace;
+}
+#timer h2{
+padding:0;
+margin:0;
+background:#000;
+color:#fff;
+font-weight: 900;
+}
+</style>

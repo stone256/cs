@@ -66,28 +66,29 @@ var common ={
 	sound:{	//AV alerts
 		_a:false ,
 		_alert:{ok:{frequency:2120,duration:200}, alarm:{frequency:900,duration:200}, error:{frequency:390, duration:450}, ping:{frequency:[555, 555], duration:[200, 140]}, keyin:{frequency:15, duration:35}},
+		_vol:600,
 		ok:()=>{
 			//	navigator.vibrate(app._alert.error.duration);
-			common.sound.beep(600,common.sound._alert.ok.frequency,common.sound._alert.ok.duration);
+			common.sound.beep(common.sound._vol,common.sound._alert.ok.frequency,common.sound._alert.ok.duration);
 			return true;
 		},
 		alarm:()=>{
-			common.sound.beep(600,common.sound._alert.alarm.frequency,common.sound._alert.ok.duration);
+			common.sound.beep(common.sound._vol,common.sound._alert.alarm.frequency,common.sound._alert.ok.duration);
 				return true;
 			},
 		error: function(){
 			$( "body" ).effect( "highlight");
-			common.sound.beep(600, common.sound._alert.error.frequency,common.sound._alert.error.duration);
+			common.sound.beep(common.sound._vol, common.sound._alert.error.frequency,common.sound._alert.error.duration);
 			return false;
 		},
 		ping: function(stop){
 			var v = stop ? 1 :0;
-			common.sound.beep(600, common.sound._alert.ping.frequency[v],common.sound._alert.ping.duration[v]);
+			common.sound.beep(common.sound._vol, common.sound._alert.ping.frequency[v],common.sound._alert.ping.duration[v]);
 			if(!stop) setTimeout(function(){ common.sound.alert.ping(1); }, 430);
 			return false;
 		},
 		keyin: function(){
-			common.sound.beep(600, common.sound._alert.keyin.frequency,common.sound._alert.keyin.duration);
+			common.sound.beep(common.sound._vol, common.sound._alert.keyin.frequency,common.sound._alert.keyin.duration);
 			return false;
 		},
 		beep:(vol, freq, duration)=>{
