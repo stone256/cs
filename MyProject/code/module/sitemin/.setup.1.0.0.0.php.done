@@ -68,13 +68,14 @@ INSERT INTO `acl_menu` (`id`, `parent_id`, `display`, `router`, `order`) VALUES
 (103, 99, 'install from zipped package', '/module/install', 1),
 (104, 1, 'tools', '', 3),
 (105, 104, 'my-ip', '/sitemin/helper/checkmyip', 0),
-(106, 104, 'hash generator', '/sitemin/helper/passwordgenerator', 4),
-(107, 104, 'qr-code generator', '/sitemin/helper/qrcode', 3),
+(106, 104, 'hash generator', '/sitemin/helper/passwordgenerator', 5),
+(107, 104, 'qr-code generator', '/sitemin/helper/qrcode', 4),
 (108, 75, 'System Constants', '/sitemin/constant', 5),
 (109, 99, 'create module ( simple template)', '/module/create', 0),
-(112, 104, 'PHP beautify', '/sitemin/helper/beautify', 1),
-(111, 104, 'html tidy', '/sitemin/helper/tidy', 2),
-(113, 10, 'batch example', '/examples/batch', 1);
+(112, 104, 'PHP beautify', '/sitemin/helper/beautify', 2),
+(111, 104, 'html tidy', '/sitemin/helper/tidy', 3),
+(113, 10, 'batch example', '/examples/batch', 1),
+(115, 104, 'quick timer', '/sitemin/helper/timer', 1);
 -- --------------------------------------------------------
 
 --
@@ -203,7 +204,9 @@ INSERT INTO `acl_router` (`id`, `router`, `role`, `modified`) VALUES
 (290, '/sitemin/helper/qrcode', 'sitemin,admin,public,', NULL),
 (291, '/sitemin/constant', 'sitemin,admin,', NULL),
 (292, '/module/create', 'sitemin,', NULL),
-(295, '/examples/batch', 'sitemin,public,', NULL);
+(295, '/examples/batch', 'sitemin,public,', NULL),
+(296, '/examples/chat', 'sitemin,public,', NULL),
+(297, '/sitemin/helper/timer', 'sitemin,public,', NULL);
 -- --------------------------------------------------------
 
 --
