@@ -83,6 +83,11 @@ class sitemin_helperController {
         $rs['tpl'] = '_timer.phtml';
         $rs['TITLE'] = 'TIMER';
         return array('view' => '/sitemin/view/index.phtml', 'data' => array('rs' => $rs));
-    }    
+    }   
+    function alarmAction() {
+        $rs['tpl'] = '_alarm.phtml';
+        $rs['TITLE'] = 'ALARM';
+        return array('view' => '/sitemin/view/index.phtml', 'data' => array('rs' => $rs));
+    }     
 
 }
