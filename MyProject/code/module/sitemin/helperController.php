@@ -89,5 +89,10 @@ class sitemin_helperController {
         $rs['TITLE'] = 'ALARM';
         return array('view' => '/sitemin/view/index.phtml', 'data' => array('rs' => $rs));
     }     
+    function stopwatchAction() {
+        $rs['tpl'] = '_stopwatch.phtml';
+        $rs['TITLE'] = 'STOPWATCH';
+        return array('view' => '/sitemin/view/index.phtml', 'data' => array('rs' => $rs));
+    }     
 
 }

@@ -3,13 +3,24 @@
 <div class="row justify-content-center">
 <div class="modal-content col-6">
                 <div class="modal-header  login-logo">
-                        <h3 class="">Web Alarm</h3>
+                        <h3 class="">Alarm</h3>
                 </div>
                 <div class="modal-body text-center">
                         <div id="timer" class="row">
-                                <div class="col-md-12">
-                                        <h2 id="clock">00:00:00</h> 
+                                <div class="col-md-6">
+                                        <h2>TIME LEFT</h> 
                                 </div>
+
+                                <div class="col-md-6">
+                                        <h2>DIGITAL CLOCK</h> 
+                                </div>
+
+                                <div class="col-md-6">
+                                        <h2 id="left">00:00:00</h> 
+                                </div>
+                                <div class="col-md-6">
+                                        <h2 id="clock">00:00:00</h> 
+                                </div>                                
                                 <div class="col-md-12">
                                 &nbsp;
                                 </div>
@@ -34,33 +45,9 @@
 </div>
 
 <script>
-    $(document).ready(function() {
-// Create two variable with the names of the months and days in an array
-//         var monthNames = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
-//         var dayNames= ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
-
-// // Create a newDate() object
-//         var newDate = new Date();
-// // Extract the current date from Date object
-//         newDate.setDate(newDate.getDate());
-// // Output the day, date, month and year
-//         $('#_date').html(  monthNames[newDate.getMonth()]+ " " + newDate.getDate() + ' ' +dayNames[newDate.getDay()] );
-
-        setInterval( function() {
-            // Create a newDate() object and extract the seconds of the current time on the visitor's
-            var seconds = new Date().getSeconds();
-            // Create a newDate() object and extract the minutes of the current time on the visitor's
-            var minutes = new Date().getMinutes();
-            // Create a newDate() object and extract the hours of the current time on the visitor's
-            var hours = new Date().getHours();
-
-            var t =     ( hours < 10 ? "0" : "" ) + hours + ":" + (minutes < 10 ? "0" : "" ) + minutes + ":" + ( seconds < 10 ? "0" : "" ) + seconds
-
-                $('#clock').html(t);
-
-
-        }, 1000);
-    });
+var _seconds;
+var _minutes;
+var _hours;
 
 var h=0;
 var m=0;
@@ -125,6 +112,7 @@ function go(){
 function stop(){
         h=m=s=0;
         on = false;
+        $('#left').html("00:00:00")
         $('.fa-stop, .fa-pause').removeClass('_Red');
         paint();
 }
@@ -136,14 +124,57 @@ function finished(){
 }
 
 function done(){
+        $('#left').html("00:00:00")
         _done = true;
+
 }
 
-setInterval(() => {
-        if(!on) return;
-        if(ticked) common.sound.keyin()
-        s_sub();
-}, 1000);
+$(document).ready(function() {
+// Create two variable with the names of the months and days in an array
+//         var monthNames = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+//         var dayNames= ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
+
+// // Create a newDate() object
+//         var newDate = new Date();
+// // Extract the current date from Date object
+//         newDate.setDate(newDate.getDate());
+// // Output the day, date, month and year
+//         $('#_date').html(  monthNames[newDate.getMonth()]+ " " + newDate.getDate() + ' ' +dayNames[newDate.getDay()] );
+
+        setInterval( function() {
+            // Create a newDate() object and extract the seconds of the current time on the visitor's
+            _seconds = new Date().getSeconds();
+            // Create a newDate() object and extract the minutes of the current time on the visitor's
+            _minutes = new Date().getMinutes();
+            // Create a newDate() object and extract the hours of the current time on the visitor's
+            _hours = new Date().getHours();
+
+            var t =     ( _hours < 10 ? "0" : "" ) + _hours + ":" + (_minutes < 10 ? "0" : "" ) + _minutes + ":" + ( _seconds < 10 ? "0" : "" ) + _seconds
+
+            $('#clock').html(t);
+
+
+
+
+
+                if(!on) return;
+                if(ticked) common.sound.keyin()
+                s_sub();
+
+
+
+                var delta = h*60*60 + m*60 + s -_hours*60*60 - _minutes*60 - _seconds
+                if(delta <0) delta += 24 * 60 * 60;
+                var _h = Math.floor(delta / (60*60) ) 
+                var _m = Math.floor((delta - _h*60*60) / 60)
+                var _s = (delta - _h*60*60 - _m*60)
+
+                var t =     ( _h < 10 ? "0" : "" ) + _h + ":" + (_m < 10 ? "0" : "" ) + _m + ":" + ( _s < 10 ? "0" : "" ) + _s
+                $('#left').html(t);
+
+        }, 1000);
+    });
+
 </script>
 
 <style>

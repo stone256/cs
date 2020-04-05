@@ -18,6 +18,7 @@ $routers = [
 '/sitemin/helper/beautify' => '/sitemin/helper@beautify', 
 '/sitemin/helper/timer' => '/sitemin/helper@timer', 
 '/sitemin/helper/alarm' => '/sitemin/helper@alarm', 
+'/sitemin/helper/stopwatch' => '/sitemin/helper@stopwatch', 
 
  '/sitemin/keepalive' => '/sitemin/index@keepalive', '/sitemin/mail/queue' => '/sitemin/mail@queue', '/sitemin/mail/cron' => '/sitemin/mail@cron', 
  '/sitemin/requestpassword' => '/sitemin/login@requestpassword', '/sitemin/resetpassword' => '/sitemin/login@resetpassword', 
