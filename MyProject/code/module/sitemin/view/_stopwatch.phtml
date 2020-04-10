@@ -1,0 +1,123 @@
+
+<br><br>
+<div class="row justify-content-center">
+<div class="modal-content col-6">
+                <div class="modal-header  login-logo">
+                        <h3 class="">Stopwatch</h3>
+                </div>
+                <div class="modal-body text-center">
+                        <div id="timer" class="row">
+                                <div class="col-md-6">
+                                <h2>STOPWATCH</h> 
+                                <br>
+                                <h2 id="display">00:00:00</h>
+                                <h2>&nbsp;</h2> 
+                                </div>
+                                <div class="col-md-6">
+                                <h2><label><input type="checkbox" id="tick" value="1" onclick="change_tick()"> &nbsp;Ticking sound</label></h2>
+                                <h2><i class="fa fa-stop" onclick="stop()" aria-hidden="true"></i>&nbsp;&nbsp;<i class="fa fa-play" onclick="go()" aria-hidden="true"></i></i></h2> 
+                                <h2>&nbsp;</h2>
+                                </div>
+                        </div>                
+                </div>
+
+        </div>
+</div>
+
+<script>
+var _seconds;
+var _minutes;
+var _hours;
+
+var h=0;
+var m=0;
+var s=0;
+var on=false;
+var ticked=false;
+var _done=false;
+var ls=0;
+common.sound._vol = 200
+$('#save').hide()
+
+function change_tick(){ ticked = $('#tick').is(':checked') }
+
+function h_add(i){
+        if(ticked) common.sound.keyin()
+        h = h+i;
+        if(h < 0) h=23;
+        if(h > 23) h=0;
+        paint();
+}
+function m_add(i){
+        if(ticked) common.sound.keyin()
+        m = m+i;
+        if(m < 0) m=59;
+        if(m > 59) m=0;
+        paint();
+}
+function s_add(i){
+        if(ticked) common.sound.keyin()
+        s = s+i;
+        if(s < 0) s=59;
+        if(s > 59) s=0;
+        paint();
+}
+
+function paint(){
+        var a='';
+        a += h > 9 ? h: "0"+h;
+        a +=":";
+        a += m > 9 ? m: "0"+m;
+        a +=":";
+        a += s > 9 ? s: "0"+s;
+        $('#display').html(a);
+}
+
+function go(){
+        h=m=s=0;
+        on = true
+        $('.fa-stop').css({color:'red'})
+}
+
+
+function stop(){
+        on = false;
+        $('.fa-stop').css({color:'white'})
+        paint();
+}
+
+$(document).ready(function() {
+// Create two variable with the names of the months and days in an array
+//         var monthNames = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+//         var dayNames= ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
+
+// // Create a newDate() object
+//         var newDate = new Date();
+// // Extract the current date from Date object
+//         newDate.setDate(newDate.getDate());
+// // Output the day, date, month and year
+//         $('#_date').html(  monthNames[newDate.getMonth()]+ " " + newDate.getDate() + ' ' +dayNames[newDate.getDay()] );
+
+        setInterval( function() {
+
+                if(!on) return;
+                if(ticked) common.sound.keyin()
+                s_add(1);
+
+        }, 1000);
+    });
+
+</script>
+
+<style>
+#timer{
+font-family:"Lucida Console", Monaco, monospace;
+}
+#timer h2{
+padding:0;
+margin:0;
+background:#000;
+color:#fff;
+font-weight: 900;
+}
+</style>
