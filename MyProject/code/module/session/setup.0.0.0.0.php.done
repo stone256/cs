@@ -1,0 +1,24 @@
+<?php
+
+$sql="
+DROP TABLE IF EXISTS `sessions`;
+CREATE TABLE `sessions` (
+  `id` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `access` int(16) NOT NULL,
+  `data` text COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+--
+-- Indexes for table `sessions`
+--
+ALTER TABLE `sessions`
+  ADD UNIQUE KEY `id` (`id`),
+  ADD KEY `access` (`access`);
+-- --------------------------------------------------------
+";
+
+
+
+/**
+ * note: this script used default databse configuration, so no cfg been set.
+ */
+xpPdo::conn()->exec($sql);
