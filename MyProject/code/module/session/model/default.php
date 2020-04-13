@@ -7,7 +7,7 @@
        With this class you can validate php session id and update the timestamp of php session data
        with the OOP prototype of session_set_save_handler() in PHP 7.0+
     */
-    class session_model_default implements SessionHandlerInterface, SessionUpdateTimestampHandlerInterface {
+    class session_model_default implements SessionHandlerInterface /*, SessionUpdateTimestampHandlerInterface*/ {
         var $table;
 
         public function __construct(){

@@ -10,7 +10,7 @@ SET time_zone = \"+00:00\";
 --
 -- Table structure for table `acl_menu`
 --
-DROP TABLE IF EXISTS `alc_menu`;
+DROP TABLE IF EXISTS `acl_menu`;
 CREATE TABLE `acl_menu` (
   `id` bigint(20) NOT NULL,
   `parent_id` int(11) NOT NULL DEFAULT '0',
@@ -290,7 +290,7 @@ CREATE TABLE `sitemin_mail` (
   `subject` varchar(222) NOT NULL,
   `body` text NOT NULL,
   `created` timestamp NOT NULL DEFAULT current_timestamp(),
-  `sent` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
+  `sent` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `status` varchar(222) NOT NULL,
   `try` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
