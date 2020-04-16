@@ -34,15 +34,7 @@ RewriteEngine on
 #do not rewrite these directory
 #RewriteRule ^css/ - [L]
 #RewriteRule ^js/ - [L]
-
-RewriteRule ^media/ - [L]
-RewriteRule ^package/ - [L]
-
 #RewriteRule ^upload/ - [L]
-#RewriteRule ^fonts/ - [L]
-#RewriteRule ^_fonts/ - [L]
-#RewriteRule ^pma/ - [L]
-
 
 
 # everything to index.php ecxept those ..
@@ -50,7 +42,5 @@ RewriteRule .*\.(swf|flv|mov|xml|mxml|css|js|jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF|d
 #all stuff under public
 RewriteRule ^public\/.*$ - [L]
 
-#follow may not work for some v-host
-#RewriteCond %{QUERY_STRING}  ^(.*)$
-
+#everything else to index.php(single enter point) 
 RewriteRule .* index.php [QSA,L]
