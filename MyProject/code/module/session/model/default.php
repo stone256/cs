@@ -42,7 +42,8 @@
             return true;
         }
         public function read($sessionId){
-            return xpAS::get($this->table->get(['id'=>$sessionId]), 'data');
+            $r = xpAS::get($this->table->get(['id'=>$sessionId]), 'data');
+            return is_null($r) ? '' : $r;
         }
         public function write($sessionId, $sessionData){
             $this->table->write(['id'=>$sessionId, 'access'=>time(), 'data'=>$sessionData],['id'=>$sessionId]);
