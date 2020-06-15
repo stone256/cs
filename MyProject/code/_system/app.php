@@ -31,6 +31,7 @@ class app {
     static $_mapper = '';
     static $_controller = '';
     static $_overwrite = [];
+    static $default_view; 
     var $update_scripts = array();
     static $models = array();
     function __construct() {
@@ -92,6 +93,8 @@ class app {
         $name = preg_replace('/Action$/', '', $action);
         $_v = $ret['view'] ? $ret['view'] : $name . '.phtml';
 
+        self::$default_view = dirname($router['file']) . DS . 'view' . DS . xpAS::preg_get($router['controller'], '|\_([a-zA-Z0-9]*?)Controller|', 1) . DS . $name . '.phtml';
+
         switch (true) {
                 //FOR _SYSTEM
 
@@ -112,7 +115,7 @@ class app {
                 //FOR DEFAULT WITH PATH, IT USE CONTROLLER POSITION AS GUIDE
 
             default:
-                $view = dirname($router['file']) . DS . 'view' . DS . xpAS::preg_get($router['controller'], '|\_([a-zA-Z0-9]*?)Controller|', 1) . DS . $_v;
+                $view = self::$default_view; //dirname($router['file']) . DS . 'view' . DS . xpAS::preg_get($router['controller'], '|\_([a-zA-Z0-9]*?)Controller|', 1) . DS . $_v;
         }
         $viewData = $ret['data'];
         $viewData['_controller'] = $router;

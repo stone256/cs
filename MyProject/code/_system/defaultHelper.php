@@ -264,10 +264,15 @@ function _factory() {
     global $overwrites;
     static $objects = array();
     $args = func_get_args();
+
     $name = array_shift($args);
     if ($overwrites[$name]) $name = $overwrites[$name];
     $no_singleton = array_shift($args);
     if (!$no_singleton && $objects[$name]) return $objects[$name];
+
+	$r = new ReflectionClass($name);
+    return  $objects[$name] = $r->newInstanceArgs((array)$args[0]);
+
     //use if(phpversion()>7)
     return $objects[$name] = new $name(...$args[0]);
     //else use
@@ -315,4 +320,7 @@ function _WDF($d){
 
 function _alter($str, $from=' ' , $to='_'){
                 return str_replace($from, $to, $str);
+}
+function _default_view(){
+    return app::$default_view;
 }

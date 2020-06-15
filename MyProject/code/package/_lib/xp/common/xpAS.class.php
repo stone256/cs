@@ -302,9 +302,9 @@ class xpAS {
      */
     function first($arr, $value = true) {
         $crr = $arr;
-        if (!$value) return each($crr);
-        list($k, $v) = each($crr);
-        return $v;
+        if (!$value) return array('key'=>key($crr), 'value'=>current($crr)) ;//return each($crr);
+        //list($k, $v) = each($crr);
+        return current($crr);
     }
     /**
      * last element of array
@@ -312,9 +312,9 @@ class xpAS {
      */
     function last($arr, $value = true) {
         $crr = array_reverse($arr, true);
-        if (!$value) return each($crr);
-        list($k, $v) = each($crr);
-        return $v;
+        if (!$value) return array('key'=>key($crr), 'value'=>current($crr)) ;//return each($crr);
+        //list($k, $v) = each($crr);
+        return current($crr);
     }
     /** @ php5 :
      *	  1> if one of it is null, it return wrong
@@ -469,7 +469,9 @@ class xpAS {
      */
     function insert($arr, $key, $value = null) {
         if (is_array($key)) {
-            list($key, $value) = each($key);
+            //list($key, $value) = each($key);
+            $key = key($key);
+            $value = current($key);
         }
         foreach ($arr as $k => $v) {
             $arr[$k][$key] = $value;

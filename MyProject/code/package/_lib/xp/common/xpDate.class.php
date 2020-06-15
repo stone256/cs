@@ -98,7 +98,7 @@ class xpDate {
         $now = $from;
         while ($now <= $to) {
             $darr[] = $now;
-            $now = self::returnDate(self::next_day($now));
+            $now = self::returnDate(self::next_date($now));
         }
         return $darr;
     }
@@ -156,7 +156,7 @@ class xpDate {
         while (1) {
             $obj = self::dateOBJ($now);
             if ($obj['day'] == 7) return $now;
-            $now = self::next_day($now);
+            $now = self::next_date($now);
             unset($obj);
         }
     }
@@ -262,116 +262,7 @@ class xpDate {
     function nextNyear($date, $n) {
         return self::returnMYSQLTimestampFromUNIX(strtotime($date . " +" . (int)$n . " year"));
     }
-    //
-    //	/**
-    //	 * get previous date
-    //	 *	name alias of last_day
-    //	 * @param  isodate  $date	:date
-    //	 * @return  isodate		: 2009-02-01 -> 2009-01-31
-    //	 */
-    //	function previous_day($date) 	{
-    //		return self::last_day($date);
-    //	}
-    //	/**
-    //	 * get previous date
-    //	 *
-    //	 * @param  isodate $date	:date
-    //	 * @return isodate
-    //	 */
-    //	function last_day($date) {
-    //		return self::returnMYSQLTimestampFromUNIX(strtotime($date." -1 day"));
-    //	}
-    //	/**
-    //	 * get previous month
-    //	 *	synonymous TO LAST_MONTH
-    //		 * @param  isodate $date	:date
-    //	 * @return isodate of previous month
-    //	 */
-    //	function previous_month($date){
-    //		return self::last_month($date);
-    //	}
-    //	/**
-    //	 * get previous n* month
-    //		 * @param  isodate $date	:date
-    //	 * @return isodate of previous 	n * month
-    //	 */
-    //	function previousNmonth($date,$n){
-    //		return self::lastNmonth($date,$n);
-    //	}
-    //	/**
-    //	 * returen previous n* day
-    //	 *
-    //	 * @param   isodate $date	: date
-    //	 * @param   int $n		:
-    //	 * @return  isodate
-    //	 */
-    //	function previousNday($date,$n) {
-    //		return self::lastNday($date,$n);
-    //	}
-    //	/**
-    //	 * returen previous n* day
-    //	 *
-    //	 * @param   isodate $date	: date
-    //	 * @param   int $n		:
-    //	 * @return  isodate
-    //	 */
-    //	function lastNday($date,$n) {
-    //		for($i=0;$i<$n;$i++) $date = self::previous_day($date);
-    //		return $date;
-    //	}
-    //	/**
-    //	 * return next date
-    //	 *
-    //	 * @param   isodate $date
-    //	 * @return  isodate
-    //	 */
-    //	function next_day($date) {
-    //		return self::returnMYSQLTimestampFromUNIX(strtotime($date." +1 day"));
-    //	}
-    //
-    //	/**
-    //	 * next n* day
-    //	 *
-    //	 * @param   isodate $date
-    //	 * @param   int $n
-    //	 * @return  isodate
-    //	 */
-    //	function nextNday($date,$n) 	{
-    //		for($i=0;$i<$n;$i++) $date = self::next_day($date);
-    //		return $date;
-    //	}
-    //	/**
-    //	 * get prevoius date of ut
-    //	 *
-    //	 * @param   $tm
-    //	 * @return  unix timestamp
-    //	 */
-    //	function previous_day_ut($tm) {
-    //		return self::last_day_ut($tm);
-    //	}
-    //	/**
-    //	 * previous date of ut
-    //	 *
-    //	 * @param   unix timestamp $tm
-    //	 * @return  unix timestamp
-    //	 */
-    //	function last_day_ut($tm) {
-    //		$date =self::previous_day($date);
-    //		return self::returnUNIXTimestampFromMYSQL($date);
-    //	}
-    //
-    //	/**
-    //	 *  get next date for unix timestamp
-    //	 *
-    //	 * @param   unix timestamp $tm
-    //	 * @return   unix timestamp
-    //	 */
-    //	function next_day_ut($tm) {
-    //		$date = self::returnMYSQLTimestampFromUNIX($tm);
-    //		$date =self::next_day($date);
-    //		return self::returnUNIXTimestampFromMYSQL($date);
-    //
-    //	}
+   
     
     /**
      *  check 2 iso date time is in same date
@@ -445,6 +336,14 @@ class xpDate {
         }
         return $sign * $c;
     }
+
+    //nned php >5.3
+    function _numberDays3($from, $to){
+        $earlier = new DateTime($from);
+        $later = new DateTime($to);
+       return $later->diff($earlier)->format("%a");
+    }
+
     /**
      * return number of day between two dates
      *
@@ -463,6 +362,9 @@ class xpDate {
             break;
             case 2:
                 return self::_numberDays2($d1, $d2);
+            break;
+            case 3:
+                return self::_numberDays3($d1, $d2);
             break;
         }
         return 0;
