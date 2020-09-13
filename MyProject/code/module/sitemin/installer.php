@@ -6,6 +6,6 @@ define('_X_INSTALL_URL', _X_URL_OFFSET . '/sitemin/install');
 $_url = xpAS::get($_SERVER, 'REDIRECT_URL');
 if ($_url !== _X_INSTALL_URL) xpAS::go(_X_INSTALL_URL);
 //instalation routers
-$routers = [
+
 //sitemin_installer_install
-'/sitemin/install' => '/sitemin/installer/install@run', ];
+$routers['/sitemin/install'] = '/sitemin/installer/install@run';

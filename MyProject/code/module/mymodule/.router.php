@@ -1,2 +1,2 @@
 <?php
-$routers = ['/myurl' => '/mymodule/index@myfunction', ];
+$routers['/myurl'] = '/mymodule/index@myfunction';

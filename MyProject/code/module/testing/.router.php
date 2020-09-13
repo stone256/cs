@@ -7,6 +7,8 @@
  * 		 * 		'/yrouter'=>'topview/ycon@zact' will map y to modules/[topview]/[ycon]Controller::[zact]Action()
  * 	 3> custom router always overwrites defaultone
  */
-$routers = array(
+
 //testing
-'/testing' => '/testing/index@index', '/testing/myip' => '/testing/index@myip',);
+$routers['/testing'] = '/testing/index@index';
+$routers['/testing/myip'] = '/testing/index@myip';
+

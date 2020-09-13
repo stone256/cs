@@ -8,14 +8,14 @@
  * 	 3> custom router always overwrites defaultone
  */
 // * note :  this module relay on sitemin module
-$routers = [
 ##
 ##examples
 ##
 #!!!change this to your own
-'/' => '/examples/examples@index', 
-'/examples' => '/examples/examples@index', 
-'/examples/blade' => '/examples/examples@blade', 
-'/examples/batch' => '/examples/examples@batch', 
 
-'/examples/pdo' => '/examples/examples@pdo', ];
+$routers['/'] = '/examples/examples@index';
+$routers['/examples'] = '/examples/examples@index';
+$routers['/examples/blade'] = '/examples/examples@blade';
+$routers['/examples/batch'] = '/examples/examples@batch';
+
+$routers['/examples/pdo'] = '/examples/examples@pdo';
